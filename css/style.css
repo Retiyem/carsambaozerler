@@ -1,0 +1,457 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap');
+
+/* Genel Ayarlar ve Geliştirilmiş Renk Değişkenleri */
+:root {
+    --bg-primary-dark: #1a1a2e; /* Ana koyu arka plan (Koyu lacivert tonu) */
+    --bg-secondary-dark: #16213e; /* İkincil koyu arka plan (Biraz daha koyu lacivert) */
+    --primary-accent: #0f4c75; /* Canlı mavi vurgu (Futbol temasına daha uygun) */
+    --secondary-accent: #e07b39; /* Turuncu/Amber ikincil vurgu (Enerjik) */
+    --text-light: #e0e0e0; /* Açık gri metin */
+    --text-dark: #333333; /* Koyu metin (nadiren kullanılacak) */
+
+    /* Glassmorphism ve Kart Renkleri - Şeffaf Siyah ile Koyu Cam Etkisi */
+    --glass-card-bg: rgba(0, 0, 0, 0.5); /* Kartlar için şeffaf koyu arka plan (Biraz daha opak) */
+    --glass-card-border: rgba(255, 255, 255, 0.1); /* Kart kenarlıkları (daha az belirgin) */
+
+    --shadow-subtle: rgba(0, 0, 0, 0.4); /* Daha hafif gölge */
+    --shadow-medium: rgba(0, 0, 0, 0.6); /* Orta güçlü gölge */
+    --gradient-bg: linear-gradient(135deg, var(--bg-primary-dark), var(--bg-secondary-dark)); /* Koyu lacivert gradient */
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    background: var(--gradient-bg);
+    color: var(--text-light);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    background-color: var(--bg-secondary-dark);
+    padding: 1.8rem 0;
+    box-shadow: 0 4px 15px var(--shadow-medium); /* Gölge azaltıldı */
+    border-bottom: 2px solid var(--primary-accent);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px var(--primary-accent), 0 0 10px var(--primary-accent); /* Parlama azaltıldı */
+}
+
+.logo a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.logo a:hover {
+    color: var(--primary-accent);
+}
+
+.glow-text {
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px var(--primary-accent), 0 0 10px var(--primary-accent); }
+    to { text-shadow: 0 0 8px var(--primary-accent), 0 0 15px var(--primary-accent), 0 0 20px var(--primary-accent); } /* Parlama azaltıldı */
+}
+
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 25px;
+}
+
+.nav-link {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 15px;
+    position: relative;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0%;
+    height: 3px;
+    background-color: var(--secondary-accent);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover {
+    color: var(--secondary-accent);
+    transform: translateY(-2px);
+}
+
+.nav-link:hover::before {
+    width: 100%;
+}
+
+
+/* Main Content */
+main {
+    flex: 1;
+    padding: 2.5rem 0;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 15px;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5); /* Metin gölgesi azaltıldı */
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--primary-accent);
+    border-radius: 2px;
+}
+
+.section-title .icon {
+    margin-left: 10px;
+    color: var(--secondary-accent);
+}
+
+/* Glassmorphism Card Effect */
+.glassmorphism-card {
+    background: var(--glass-card-bg); /* Şeffaf siyah ile koyu cam efekti */
+    border-radius: 16px;
+    box-shadow: 0 8px 25px var(--shadow-medium); /* Gölge azaltıldı */
+    backdrop-filter: blur(8px); /* BLUR EFEKTİ AZALTILDI */
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-card-border);
+    padding: 30px;
+    margin-bottom: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glassmorphism-card:hover {
+    transform: translateY(-5px); /* Hareket azaltıldı */
+    box-shadow: 0 10px 35px var(--shadow-medium); /* Hover gölgesi azaltıldı */
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 50px 30px;
+}
+
+.hero h2 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: var(--text-light);
+    text-shadow: 0 0 10px var(--primary-accent); /* Parlama azaltıldı */
+}
+
+.hero .subtitle {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 40px;
+    text-shadow: none; /* Alt başlıkta metin gölgesi kaldırıldı */
+}
+
+.hero-image-container {
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
+}
+
+.hero-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px var(--shadow-medium); /* Gölge azaltıldı */
+    transition: transform 0.5s ease;
+}
+
+.hero-image:hover {
+    transform: scale(1.02); /* Büyüme oranı azaltıldı */
+}
+
+/* Pulse efekti kaldırıldı veya çok inceltildi, görsel gürültüyü azaltmak için */
+/* .pulse-effect { animation: pulse 2s infinite; } */
+/* @keyframes pulse { ... } */
+/* Eğer çok istiyorsan, pulse animasyonunu daha az belirgin hale getirebiliriz: */
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(15, 76, 117, 0.4); } /* Vurgu rengi, daha az opaklık */
+    70% { transform: scale(1.01); box-shadow: 0 0 0 10px rgba(15, 76, 117, 0); } /* Daha az yayılma */
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(15, 76, 117, 0); }
+}
+
+
+.cta-button {
+    background: linear-gradient(45deg, var(--primary-accent), #0a3a5a);
+    color: var(--text-light);
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(15, 76, 117, 0.4); /* Gölge azaltıldı */
+    text-decoration: none;
+    display: inline-block;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px) scale(1.02); /* Hareket azaltıldı */
+    box-shadow: 0 8px 20px rgba(15, 76, 117, 0.6); /* Hover gölgesi azaltıldı */
+    background: linear-gradient(45deg, #0a3a5a, var(--primary-accent));
+}
+
+/* Summary Boxes (Ana Sayfa) */
+.summary-box {
+    background: var(--glass-card-bg);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    color: var(--text-light);
+    border: 1px solid var(--glass-card-border);
+}
+
+.summary-box p, .summary-box ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 1.1rem;
+}
+
+.summary-box ul li {
+    padding: 5px 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.summary-box ul li:last-child {
+    border-bottom: none;
+}
+
+/* Tablo Stilleri (Puan Durumu, Maçlar) */
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background: var(--glass-card-bg); /* Tablo arka planı da glass-card-bg ile aynı */
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--glass-card-border);
+    color: var(--text-light);
+}
+
+th {
+    background-color: rgba(15, 76, 117, 0.6); /* Başlık için vurgu rengi şeffaf (biraz daha opak) */
+    color: var(--text-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.15); /* Zebra deseni için şeffaf siyah (biraz daha opak) */
+}
+
+tr:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Daha belirgin hover */
+    transform: scale(1.01);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* İlk 3 sıradaki oyuncuları vurgulama */
+tr.rank-1 {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.25), rgba(255, 215, 0, 0.1)); /* Altın renkli gradient (opaklık azaltıldı) */
+    border-left: 5px solid gold;
+    font-weight: bold;
+    color: #FFD700;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.4); /* Gölge azaltıldı */
+    animation: rank1-glow 1.8s infinite alternate ease-in-out; /* Animasyon hızı ayarlandı */
+}
+
+tr.rank-2 {
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.25), rgba(192, 192, 192, 0.1)); /* Gümüş renkli gradient (opaklık azaltıldı) */
+    border-left: 5px solid silver;
+    font-weight: bold;
+    color: #C0C0C0;
+}
+
+tr.rank-3 {
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.25), rgba(205, 127, 50, 0.1)); /* Bronz renkli gradient (opaklık azaltıldı) */
+    border-left: 5px solid #CD7F32;
+    font-weight: bold;
+    color: #CD7F32;
+}
+
+/* Rank 1 için özel parlama animasyonu */
+@keyframes rank1-glow {
+    0% { box-shadow: 0 0 8px rgba(255, 215, 0, 0.4); }
+    50% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), 0 0 20px rgba(255, 215, 0, 0.3); } /* Parlama azaltıldı */
+    100% { box-shadow: 0 0 8px rgba(255, 215, 0, 0.4); }
+}
+
+/* Vurgulu satırların hover efekti */
+tr.rank-1:hover, tr.rank-2:hover, tr.rank-3:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px) scale(1.005); /* Hareket azaltıldı */
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); /* Rank 1 için hover gölgesi azaltıldı */
+}
+
+
+/* Footer */
+footer {
+    background-color: var(--bg-secondary-dark);
+    color: var(--text-light);
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: auto;
+    border-top: 2px solid var(--primary-accent);
+    box-shadow: 0 -4px 15px var(--shadow-medium);
+}
+
+.social-links {
+    margin-top: 15px;
+}
+
+.social-icon {
+    color: var(--text-light);
+    font-size: 1.5rem;
+    margin: 0 10px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icon:hover {
+    color: var(--primary-accent);
+    transform: translateY(-3px) scale(1.1);
+}
+
+/* Animasyonlar */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.hero.animate-fade-in { animation-delay: 0.2s; }
+.latest-results.animate-fade-in { animation-delay: 0.4s; }
+.top-players.animate-fade-in { animation-delay: 0.6s; }
+.scoreboard.animate-fade-in { animation-delay: 0.2s; }
+.match-history.animate-fade-in { animation-delay: 0.2s; }
+
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .logo {
+        margin-bottom: 20px;
+        font-size: 2rem;
+    }
+    
+    nav {
+        width: 100%;
+        justify-content: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 0;
+        padding: 0;
+        align-items: center;
+    }
+
+    .nav-link {
+        padding: 10px 25px;
+        font-size: 1.1rem;
+    }
+
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    .hero .subtitle {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    table {
+        min-width: 700px;
+    }
+
+    th, td {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+    }
+}
