@@ -16,6 +16,7 @@
                     <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
                     <li><a href="puan-durumu.html" class="nav-link">Puan Durumu</a></li>
                     <li><a href="maclar.html" class="nav-link">Maçlar</a></li>
+                    <li><a href="haftanin-en-iyileri.html" class="nav-link">Haftanın En İyileri</a></li> <!-- YENİ -->
                 </ul>
             </nav>
         </div>
@@ -24,11 +25,17 @@
     <main class="container">
         <section class="scoreboard glassmorphism-card animate-fade-in">
             <h2 class="section-title">Puan Durumu <span class="icon"></span></h2>
+            
+            <div class="filter-container"> <!-- YENİ: Filtreleme alanı -->
+                <input type="text" id="playerSearch" onkeyup="filterTable('player-scoreboard', 2)" placeholder="Oyuncu ara..." class="filter-input">
+            </div>
+
             <div class="table-container">
                 <table id="player-scoreboard">
                     <thead>
                         <tr>
                             <th>Sıra</th>
+                            <th>Fotoğraf</th> <!-- YENİ -->
                             <th>Oyuncu</th>
                             <th>Maç</th>
                             <th>Galibiyet</th>
