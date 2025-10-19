@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halısaha Ligi - Maçlar</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/match-management.css">
+    <link rel="stylesheet" href="css/user-interaction.css">
+    <link rel="stylesheet" href="css/ui-enhancements.css">
+    <link rel="stylesheet" href="css/data-management.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo glow-text"><a href="index.html">Halısaha Ligi</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="puan-durumu.html" class="nav-link">Puan Durumu</a></li>
+                    <li><a href="maclar.html" class="nav-link">Maçlar</a></li>
+                    <li><a href="oyuncular.html" class="nav-link">Oyuncular</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="match-history glassmorphism-card animate-fade-in">
+            <h2 class="section-title">Geçmiş Maçlar <span class="icon">📅</span></h2>
+            <div class="table-container">
+                <table id="match-results-table">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Takım A</th>
+                            <th>Takım B</th>
+                            <th>Skor</th>
+                            <th>Kazanan</th>
+                            <!-- İsteğe bağlı: MVP -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- JavaScript buraya maç verilerini dolduracak -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; Onur Mustafa Köse . Tüm Hakları Saklıdır.</p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/enhanced-data.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/match-management.js"></script>
+    <script src="js/user-interaction.js"></script>
+    <script src="js/ui-enhancements.js"></script>
+    <script src="js/data-management.js"></script>
+    <!-- Font Awesome ikonları için CDN -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
