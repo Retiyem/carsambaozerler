@@ -279,7 +279,7 @@ section {
     border-bottom: none;
 }
 
-/* Tablo Stilleri (Puan Durumu, Maçlar, Haftanın En İyileri) */
+/* Tablo Stilleri (Puan Durumu, Maçlar) */
 .table-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -358,6 +358,62 @@ tr.rank-1:hover, tr.rank-2:hover, tr.rank-3:hover {
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); /* Rank 1 için hover gölgesi azaltıldı */
 }
 
+/* Oyuncu Avatar Stilleri - Puan Tablosunda */
+.player-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.player-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-accent);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.player-avatar:hover {
+    transform: scale(1.1);
+    border-color: var(--secondary-accent);
+    box-shadow: 0 0 10px rgba(15, 76, 117, 0.5);
+}
+
+.player-name {
+    font-weight: 600;
+    color: var(--text-light);
+    white-space: nowrap;
+}
+
+.player-link {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.player-link:hover {
+    color: var(--primary-accent);
+    text-shadow: 0 0 5px rgba(15, 76, 117, 0.5);
+}
+
+/* Rank vurgulu satırlarda avatar kenarlığı */
+tr.rank-1 .player-avatar {
+    border-color: #FFD700;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+tr.rank-2 .player-avatar {
+    border-color: #C0C0C0;
+    box-shadow: 0 0 6px rgba(192, 192, 192, 0.4);
+}
+
+tr.rank-3 .player-avatar {
+    border-color: #CD7F32;
+    box-shadow: 0 0 6px rgba(205, 127, 50, 0.4);
+}
+
 
 /* Footer */
 footer {
@@ -402,225 +458,6 @@ footer {
 .top-players.animate-fade-in { animation-delay: 0.6s; }
 .scoreboard.animate-fade-in { animation-delay: 0.2s; }
 .match-history.animate-fade-in { animation-delay: 0.2s; }
-
-/* YENİ: Oyuncu Fotoğraf Stilleri */
-.player-photo-small {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--primary-accent);
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-    vertical-align: middle;
-    margin-right: 10px;
-}
-
-/* YENİ: Filtreleme Alanı Stilleri */
-.filter-container {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.filter-input {
-    width: 100%;
-    max-width: 300px;
-    padding: 10px 15px;
-    border: 1px solid var(--glass-card-border);
-    border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.3); /* Şeffaf koyu */
-    color: var(--text-light);
-    font-size: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.filter-input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.filter-input:focus {
-    outline: none;
-    border-color: var(--primary-accent);
-    box-shadow: 0 0 0 3px rgba(15, 76, 117, 0.5);
-}
-
-/* YENİ: Oyuncu Detay Sayfası Stilleri */
-.player-detail-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.player-detail-photo {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 5px solid var(--primary-accent);
-    box-shadow: 0 0 20px rgba(15, 76, 117, 0.8), 0 0 30px rgba(0, 0, 0, 0.7);
-    margin-bottom: 25px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.player-detail-photo:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 25px rgba(15, 76, 117, 1), 0 0 40px rgba(0, 0, 0, 0.9);
-}
-
-.player-detail-name {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2.8rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--text-light);
-    text-shadow: 0 0 10px var(--primary-accent);
-}
-
-.player-detail-info {
-    font-size: 1.1rem;
-    margin-bottom: 15px;
-    color: var(--text-light);
-}
-
-.player-detail-bio {
-    max-width: 600px;
-    font-size: 1.05rem;
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 30px;
-}
-
-.player-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    width: 100%;
-    max-width: 800px;
-    margin-top: 30px;
-}
-
-.stat-item {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid var(--glass-card-border);
-    border-radius: 10px;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.stat-item:hover {
-    transform: translateY(-5px);
-    background-color: rgba(15, 76, 117, 0.4);
-}
-
-.stat-item h4 {
-    margin: 0 0 8px 0;
-    font-size: 1.1rem;
-    color: var(--secondary-accent);
-    font-family: 'Montserrat', sans-serif;
-}
-
-.stat-item p {
-    margin: 0;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--text-light);
-}
-
-/* YENİ: Haftanın En İyileri Sayfası Stilleri */
-.best-performers-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 30px;
-}
-
-.best-performers-category {
-    background: var(--glass-card-bg);
-    border-radius: 16px;
-    box-shadow: 0 8px 25px var(--shadow-medium);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid var(--glass-card-border);
-    padding: 25px;
-    text-align: center;
-}
-
-.best-performers-category h3 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.8rem;
-    color: var(--secondary-accent);
-    margin-bottom: 20px;
-    position: relative;
-    padding-bottom: 10px;
-}
-
-.best-performers-category h3::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background-color: var(--secondary-accent);
-    border-radius: 1.5px;
-}
-
-.best-performers-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.best-performers-list li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
-    font-size: 1.1rem;
-}
-
-.best-performers-list li:last-child {
-    border-bottom: none;
-}
-
-.best-performers-list li .player-info {
-    display: flex;
-    align-items: center;
-}
-
-.best-performers-list li .player-info span {
-    margin-left: 10px;
-    font-weight: 600;
-    color: var(--text-light);
-}
-
-.best-performers-list li .score {
-    font-weight: 700;
-    color: var(--primary-accent);
-    font-size: 1.2rem;
-}
-
-.best-performers-list li:nth-child(1) .player-info span,
-.best-performers-list li:nth-child(1) .score {
-    color: gold;
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-}
-
-.best-performers-list li:nth-child(2) .player-info span,
-.best-performers-list li:nth-child(2) .score {
-    color: silver;
-    text-shadow: 0 0 3px rgba(192, 192, 192, 0.5);
-}
-
-.best-performers-list li:nth-child(3) .player-info span,
-.best-performers-list li:nth-child(3) .score {
-    color: #CD7F32; /* Bronz */
-    text-shadow: 0 0 3px rgba(205, 127, 50, 0.5);
-}
 
 
 /* Responsive Tasarım */
@@ -673,25 +510,14 @@ footer {
         padding: 10px 8px;
         font-size: 0.85rem;
     }
-
-    .player-detail-name {
-        font-size: 2rem;
+    
+    /* Mobile'da avatar boyutu */
+    .player-avatar {
+        width: 30px;
+        height: 30px;
     }
-
-    .player-detail-photo {
-        width: 120px;
-        height: 120px;
-    }
-
-    .player-stats-grid {
-        grid-template-columns: 1fr; /* Küçük ekranlarda tek sütun */
-    }
-
-    .best-performers-grid {
-        grid-template-columns: 1fr; /* Küçük ekranlarda tek sütun */
-    }
-
-    .best-performers-category h3 {
-        font-size: 1.5rem;
+    
+    .player-name-cell {
+        gap: 8px;
     }
 }

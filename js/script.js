@@ -1,8 +1,7 @@
-// js/script.js
-
-// Yardımcı fonksiyon: Oyuncu ID'sine göre oyuncu objesini bulur
-function getPlayerById(playerId) {
-    return players.find(p => p.id === playerId);
+// Yardımcı fonksiyon: Oyuncu ID'sine göre oyuncu adını bulur
+function getPlayerNameById(playerId) {
+    const player = players.find(p => p.id === playerId);
+    return player ? player.name : 'Bilinmeyen Oyuncu';
 }
 
 // Tüm oyuncuların istatistiklerini hesaplayan fonksiyon
@@ -14,7 +13,6 @@ function calculatePlayerStats() {
         playerStats[player.id] = {
             id: player.id,
             name: player.name,
-            photo: player.photo, // YENİ: Oyuncu fotoğrafını ekle
             M: 0, // Maç
             W: 0, // Galibiyet
             D: 0, // Beraberlik
@@ -23,8 +21,7 @@ function calculatePlayerStats() {
             GA: 0, // Yediği Gol
             GD: 0, // Gol Farkı
             PTS: 0, // Puan
-            Assists: 0, // YENİ: Asist sayısı
-            MVP_Count: 0 // YENİ: MVP Sayısı
+            MVP: 0 // MVP Sayısı (isteğe bağlı)
         };
     });
 
@@ -41,12 +38,11 @@ function calculatePlayerStats() {
 
             // Attığı gol ve asistleri ekle
             stats.GF += performance.goals;
-            stats.Assists += performance.assists; // Asist istatistiği
+            // stats.Assists += performance.assists; // Asist istatistiği eklemek istersen
 
-            // MVP sayısını güncelle (artık mvpPoints > 8 olanları MVP sayabiliriz veya özel bir mvp bayrağı tutabiliriz)
-            // data.js'deki mvpPoints'i MVP sayısına dönüştürelim.
-            if (performance.mvpPoints >= 9) { // Örneğin 9 ve üzeri MVP sayılabilir
-                stats.MVP_Count++;
+            // MVP sayısını güncelle
+            if (performance.mvp) {
+                stats.MVP++;
             }
 
             // Maç sonucuna göre galibiyet, beraberlik, mağlubiyet ve yediği golleri güncelle
@@ -92,12 +88,26 @@ function renderScoreboard() {
     const sortedPlayers = calculatePlayerStats();
     scoreboardBody.innerHTML = ''; // Mevcut içeriği temizle
 
-    sortedPlayers.forEach(player => {
+    sortedPlayers.forEach((player, index) => {
+        // Oyuncu ID'sini bul
+        const playerData = players.find(p => p.name === player.name);
+        const playerId = playerData ? playerData.id : player.name.toLowerCase().replace(/\s+/g, '_');
+        
+        // Rank class'ını belirle
+        let rankClass = '';
+        if (index === 0) rankClass = 'rank-1';
+        else if (index === 1) rankClass = 'rank-2';
+        else if (index === 2) rankClass = 'rank-3';
+        
         const row = `
-            <tr class="${player.P === 1 ? 'rank-1' : (player.P === 2 ? 'rank-2' : (player.P === 3 ? 'rank-3' : ''))}">
+            <tr class="${rankClass}">
                 <td>${player.P}</td>
-                <td><img src="${player.photo || 'img/players/default.jpg'}" alt="${player.name}" class="player-photo-small"></td> <!-- YENİ: Fotoğraf -->
-                <td><a href="oyuncu-detay.html?id=${player.id}">${player.name}</a></td> <!-- YENİ: Detay sayfasına link -->
+                <td class="player-name-cell">
+                    <img src="img/oyuncular/${playerId}.jpg" alt="${player.name}" class="player-avatar" onerror="this.src='img/oyuncular/default.svg'">
+                    <span class="player-name">
+                        <a href="oyuncu-profili.html?id=${playerId}" class="player-link">${player.name}</a>
+                    </span>
+                </td>
                 <td>${player.M}</td>
                 <td>${player.W}</td>
                 <td>${player.D}</td>
@@ -121,123 +131,125 @@ function renderMatchResults() {
 
     // Maçları tarihe göre tersten sırala (en yeni en başta)
     const sortedMatches = [...matches].sort((a, b) => {
+        // Tarih formatı GG.AA.YYYY olduğu için parçalayıp YYYY-AA-GG formatına çevirerek karşılaştırıyoruz
         const dateA = new Date(a.date.split('.').reverse().join('-'));
         const dateB = new Date(b.date.split('.').reverse().join('-'));
         return dateB - dateA;
     });
 
     sortedMatches.forEach(match => {
-        let teamANames = match.teamA.map(id => getPlayerById(id)?.name || id).join(', ');
-        let teamBNames = match.teamB.map(id => getPlayerById(id)?.name || id).join(', ');
-
+        const teamAResult = match.teamAGoals > match.teamBGoals ? 'W' : (match.teamAGoals === match.teamBGoals ? 'D' : 'L');
+        const teamBResult = match.teamBGoals > match.teamAGoals ? 'W' : (match.teamBGoals === match.teamAGoals ? 'D' : 'L');
+        
         let winnerText = 'Berabere';
-        if (match.teamAGoals > match.teamBGoals) {
-            winnerText = `Takım A (${teamANames.split(', ').slice(0, 3).join(', ')}...) Kazandı`; // İlk 3 oyuncuyu göster
-        } else if (match.teamBGoals > match.teamAGoals) {
-            winnerText = `Takım B (${teamBNames.split(', ').slice(0, 3).join(', ')}...) Kazandı`; // İlk 3 oyuncuyu göster
-        }
+        if (teamAResult === 'W') winnerText = 'Takım A';
+        else if (teamBResult === 'W') winnerText = 'Takım B';
 
-        // MVP bilgisini de ekleyelim (mvpPoints'i en yüksek olanı MVP sayabiliriz)
-        let mvpPlayer = null;
-        let maxMvpPoints = -1;
-        match.performances.forEach(p => {
-            if (p.mvpPoints > maxMvpPoints) {
-                maxMvpPoints = p.mvpPoints;
-                mvpPlayer = getPlayerById(p.playerId);
-            }
-        });
-        const mvpText = mvpPlayer ? `<br><strong>Maçın Yıldızı:</strong> <a href="oyuncu-detay.html?id=${mvpPlayer.id}">${mvpPlayer.name}</a>` : '';
+        // MVP bilgisini de ekleyelim (isteğe bağlı)
+        const mvpPlayer = match.performances.find(p => p.mvp);
+        const mvpText = mvpPlayer ? `(${getPlayerNameById(mvpPlayer.playerId)} MVP)` : '';
 
         const row = `
             <tr>
                 <td>${match.date}</td>
-                <td>${teamANames}</td> <!-- YENİ: Oyuncu isimleri -->
-                <td>${teamBNames}</td> <!-- YENİ: Oyuncu isimleri -->
+                <td>${match.teamAGoals}</td>
+                <td>${match.teamBGoals}</td>
                 <td>${match.teamAGoals} - ${match.teamBGoals}</td>
-                <td>${winnerText}${mvpText}</td>
+                <td>${winnerText} ${mvpText}</td>
             </tr>
         `;
         matchTableBody.insertAdjacentHTML('beforeend', row);
     });
 }
 
-// YENİ FONKSİYON: Oyuncu Detay Sayfasını render eder
-function renderPlayerDetail() {
-    const playerDetailContent = document.getElementById('player-detail-content');
-    if (!playerDetailContent) return;
+// Ana sayfadaki özet bilgileri gösterir
+function renderHomePageSummary() {
+    const latestMatchSummaryDiv = document.getElementById('latest-match-summary');
+    const topScorersSummaryDiv = document.getElementById('top-scorers-summary');
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const playerId = urlParams.get('id');
+    if (latestMatchSummaryDiv) {
+        // En son maçı bul
+        const latestMatch = [...matches].sort((a, b) => {
+            const dateA = new Date(a.date.split('.').reverse().join('-'));
+            const dateB = new Date(b.date.split('.').reverse().join('-'));
+            return dateB - dateA;
+        })[0];
 
-    if (!playerId) {
-        playerDetailContent.innerHTML = '<p>Oyuncu bulunamadı.</p>';
-        return;
-    }
+        if (latestMatch) {
+            const teamAResult = latestMatch.teamAGoals > latestMatch.teamBGoals ? 'W' : (latestMatch.teamAGoals === latestMatch.teamBGoals ? 'D' : 'L');
+            
+            let resultStatusText = 'Berabere';
+            if (teamAResult === 'W') resultStatusText = 'Takım A Kazandı';
+            else if (teamAResult === 'L') resultStatusText = 'Takım B Kazandı';
 
-    const player = getPlayerById(playerId);
-    if (!player) {
-        playerDetailContent.innerHTML = '<p>Oyuncu bulunamadı.</p>';
-        return;
-    }
+            const mvpPlayer = latestMatch.performances.find(p => p.mvp);
+            const mvpText = mvpPlayer ? `<p><strong>MVP:</strong> ${getPlayerNameById(mvpPlayer.playerId)}</p>` : '';
 
-    // Oyuncunun genel istatistiklerini al
-    const playerStats = calculatePlayerStats().find(s => s.id === playerId);
-    
-    // YENİ: Oyuncunun maç performanslarından asist toplamını da alalım
-    let totalAssists = 0;
-    matches.forEach(match => {
-        const performance = match.performances.find(p => p.playerId === playerId);
-        if (performance) {
-            totalAssists += performance.assists || 0;
+            latestMatchSummaryDiv.innerHTML = `
+                <p><strong>Tarih:</strong> ${latestMatch.date}</p>
+                <p><strong>Skor:</strong> ${latestMatch.teamAGoals} - ${latestMatch.teamBGoals}</p>
+                <p><strong>Sonuç:</strong> ${resultStatusText}</p>
+                ${mvpText}
+            `;
+        } else {
+            latestMatchSummaryDiv.innerHTML = '<p>Henüz maç oynanmadı.</p>';
         }
-    });
+    }
 
-    playerDetailContent.innerHTML = `
-        <img src="${player.photo || 'img/players/default.jpg'}" alt="${player.name}" class="player-detail-photo">
-        <h3 class="player-detail-name">${player.name}</h3>
-        <p class="player-detail-info"><strong>Pozisyon:</strong> ${player.details.position || 'Bilinmiyor'} | <strong>Doğum Tarihi:</strong> ${player.details.birthDate || 'Bilinmiyor'}</p>
-        <p class="player-detail-info"><strong>Forma No:</strong> ${player.details.jerseyNumber || '-'} | <strong>Favori Ayak:</strong> ${player.details.favoriteFoot || '-'}</p>
-        <p class="player-detail-bio">${player.details.bio || 'Oyuncu hakkında bilgi bulunmamaktadır.'}</p>
+    if (topScorersSummaryDiv) {
+        const sortedPlayers = calculatePlayerStats();
+        // Sadece golleri olan oyuncuları al ve sırala
+        const top3Scorers = sortedPlayers.filter(player => player.GF > 0).sort((a, b) => b.GF - a.GF).slice(0, 3); 
 
-        <h3 class="section-title" style="margin-top: 40px;">Genel İstatistikler</h3>
-        <div class="player-stats-grid">
-            <div class="stat-item"><h4>Oynanan Maç</h4><p>${playerStats?.M || 0}</p></div>
-            <div class="stat-item"><h4>Attığı Gol</h4><p>${playerStats?.GF || 0}</p></div>
-            <div class="stat-item"><h4>Asist</h4><p>${totalAssists || 0}</p></div>
-            <div class="stat-item"><h4>Galibiyet</h4><p>${playerStats?.W || 0}</p></div>
-            <div class="stat-item"><h4>Beraberlik</h4><p>${playerStats?.D || 0}</p></div>
-            <div class="stat-item"><h4>Mağlubiyet</h4><p>${playerStats?.L || 0}</p></div>
-            <div class="stat-item"><h4>Gol Farkı</h4><p>${playerStats?.GD || 0}</p></div>
-            <div class="stat-item"><h4>Puan</h4><p>${playerStats?.PTS || 0}</p></div>
-            <div class="stat-item"><h4>Maçın Yıldızı (MVP)</h4><p>${playerStats?.MVP_Count || 0}</p></div>
-        </div>
-    `;
+        if (top3Scorers.length > 0) {
+            let html = '<ul class="top-players-list">';
+            top3Scorers.forEach(player => {
+                html += `<li><strong>${player.name}</strong> - ${player.GF} Gol</li>`;
+            });
+            html += '</ul>';
+            topScorersSummaryDiv.innerHTML = html;
+        } else {
+            topScorersSummaryDiv.innerHTML = '<p>Henüz gol atan oyuncu yok.</p>';
+        }
+    }
 }
 
-// YENİ FONKSİYON: Haftanın En İyileri sıralamasını hesaplar
-function calculateBestPerformers() {
-    const performerScores = {};
 
-    players.forEach(player => {
-        performerScores[player.id] = {
-            id: player.id,
-            name: player.name,
-            photo: player.photo,
-            mvpPoints: 0,
-            forwardPoints: 0,
-            defensePoints: 0,
-            goalQualityPoints: 0,
-            saveQualityPoints: 0,
-            worstPerformancePoints: 0 // Yüksek puan kötü performans
-        };
+// Sayfa yüklendiğinde ilgili fonksiyonları çağır
+document.addEventListener('DOMContentLoaded', () => {
+    // Hangi sayfada olduğumuza göre farklı fonksiyonları çalıştırabiliriz
+    const path = window.location.pathname;
+
+    if (path.includes('puan-durumu.html')) {
+        renderScoreboard();
+        // Maç click eventleri için
+        addMatchClickEvents();
+    } else if (path.includes('maclar.html')) {
+        renderMatchResults();
+        // Maç click eventleri için
+        addMatchClickEvents();
+    } else if (path.includes('index.html') || path === '/') { // Ana sayfa veya kök dizin
+        renderHomePageSummary();
+        // Gelecek maçları render et
+        if (typeof renderUpcomingMatches === 'function') {
+            renderUpcomingMatches();
+            // Geri sayımları başlat
+            setTimeout(startCountdowns, 100);
+        }
+    }
+    
+    // Animasyonları başlatmak için
+    document.querySelectorAll('.animate-fade-in').forEach(el => {
+        el.style.opacity = 1; // opacity'i 1 yaparak animasyonu tetikle
     });
-
-    matches.forEach(match => {
-        match.performances.forEach(performance => {
-            const scores = performerScores[performance.playerId];
-            if (!scores) return;
-
-            scores.mvpPoints += performance.mvpPoints || 0;
-            scores.forwardPoints += performance.forwardPoints || 0;
-            scores.defensePoints += performance.defensePoints || 0;
-            scores.goalQualityPoints += performance.goalQualityPoints || 
+    
+    // Gelişmiş UI özelliklerini başlat
+    if (typeof initializePageTransitions === 'function') {
+        // UI geliştirmeleri script'i yüklenmişse
+        setTimeout(() => {
+            initializePageTransitions();
+            initializeSwipeNavigation();
+            createFloatingActionButton();
+        }, 500);
+    }
+});
