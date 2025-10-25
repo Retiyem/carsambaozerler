@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Halısaha Ligi - Oyuncu Profili</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/player-profile.css">
+    <link rel="stylesheet" href="css/match-management.css">
+    <link rel="stylesheet" href="css/user-interaction.css">
+    <link rel="stylesheet" href="css/ui-enhancements.css">
+    <link rel="stylesheet" href="css/data-management.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo glow-text"><a href="index.html">Halısaha Ligi</a></h1>
+            
+            <button class="hamburger-menu" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav id="nav-menu">
+                <ul>
+                    <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="puan-durumu.html" class="nav-link">Puan Durumu</a></li>
+                    <li><a href="maclar.html" class="nav-link">Maçlar</a></li>
+                    <li><a href="oyuncular.html" class="nav-link">Oyuncular</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Oyuncu Bilgileri -->
+        <section class="player-header glassmorphism-card animate-fade-in">
+            <div class="player-info-grid">
+                <div class="player-avatar">
+                    <img id="player-image" src="" alt="Oyuncu Fotoğrafı" class="profile-image">
+                </div>
+                
+                <div class="player-details">
+                    <h2 class="player-name" id="player-name">Oyuncu Adı</h2>
+                </div>
+
+                <div class="player-achievements">
+                    <div id="achievements-list" class="achievements-grid">
+                        <!-- Başarılar buraya gelecek -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- İstatistik Kartları -->
+        <section class="stats-grid">
+            <div class="stat-card glassmorphism-card animate-fade-in">
+                <div class="stat-icon">⚽</div>
+                <div class="stat-content">
+                    <span class="stat-value" id="total-goals">0</span>
+                    <span class="stat-label">Toplam Gol</span>
+                </div>
+            </div>
+
+            <div class="stat-card glassmorphism-card animate-fade-in">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-content">
+                    <span class="stat-value" id="total-mvps">0</span>
+                    <span class="stat-label">MVP Sayısı</span>
+                </div>
+            </div>
+
+            <div class="stat-card glassmorphism-card animate-fade-in">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <span class="stat-value" id="goals-per-match">0.0</span>
+                    <span class="stat-label">Maç Başına Gol</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detaylı İstatistikler -->
+        <section class="detailed-stats glassmorphism-card animate-fade-in">
+            <h3 class="section-title">Detaylı İstatistikler</h3>
+            <div class="stats-table-container">
+                <table class="detailed-stats-table">
+                    <tbody id="detailed-stats-body">
+                        <tr><td>Oynanan Maç</td><td id="table-matches">0</td></tr>
+                        <tr><td>Toplam Gol</td><td id="table-goals">0</td></tr>
+                        <tr><td>MVP Ödülü</td><td id="table-mvps">0</td></tr>
+                        <tr><td>Maç Başına Gol</td><td id="table-goals-per-match">0.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; Onur Mustafa Köse. Tüm Hakları Saklıdır.</p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/enhanced-data.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/player-profile-simple.js"></script>
+    <script src="js/match-management.js"></script>
+    <script src="js/user-interaction.js"></script>
+    <script src="js/ui-enhancements.js"></script>
+    <script src="js/data-management.js"></script>
+    <!-- Font Awesome ikonları için CDN -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
