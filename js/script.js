@@ -174,16 +174,11 @@ function renderMatchResults() {
 
 // Ana sayfadaki özet bilgileri gösterir
 function renderHomePageSummary() {
-    console.log('renderHomePageSummary çağrıldı');
-    console.log('matches verisi:', matches);
-    
     const latestMatchSummaryDiv = document.getElementById('latest-match-summary');
-    console.log('latest-match-summary elementi:', latestMatchSummaryDiv);
 
     if (latestMatchSummaryDiv) {
         // En yüksek ID'li maçı bul (en son maç)
         if (!matches || matches.length === 0) {
-            console.log('Maç verisi bulunamadı');
             latestMatchSummaryDiv.innerHTML = '<p>Henüz maç oynanmadı.</p>';
             return;
         }
@@ -447,7 +442,7 @@ function displayWeeklyHero() {
     console.log('Fotoğraf yolu:', `img/oyuncular/${latestMatch.macin_adami}.jpg`);
 
     weeklyHeroContainer.innerHTML = `
-        <div class="hero-profile">
+        <div class="hero-profile" onclick="window.location.href='oyuncu-profili.html?id=${latestMatch.macin_adami}'" style="cursor: pointer;">
             <div class="hero-avatar">
                 <img src="img/oyuncular/${latestMatch.macin_adami}.jpg" alt="${mvpPlayer.name}" 
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -496,7 +491,7 @@ function displayWeeklyDonkey() {
 
     // Haftanın eşşeğini göster (sadece fotoğraf ve isim)
     weeklyDonkeyContainer.innerHTML = `
-        <div class="donkey-profile">
+        <div class="donkey-profile" onclick="window.location.href='oyuncu-profili.html?id=${latestMatch.esek_adam}'" style="cursor: pointer;">
             <div class="donkey-avatar">
                 <img src="img/oyuncular/${latestMatch.esek_adam}.jpg" alt="${donkeyPlayer.name}" 
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -504,6 +499,7 @@ function displayWeeklyDonkey() {
             </div>
             <div class="donkey-info">
                 <h4>${donkeyPlayer.name}</h4>
+                <p class="donkey-comment">🤦‍♂️ Eşşek gibi eli cebinde hakemlik yaptı. Verdiği hiç bir karar doğru değildi!</p>
             </div>
         </div>
     `;
@@ -511,8 +507,10 @@ function displayWeeklyDonkey() {
 
 // Hamburger Menü Fonksiyonları
 document.addEventListener('DOMContentLoaded', function() {
-    // Ana sayfa özet bilgilerini göster
-    renderHomePageSummary();
+    // Ana sayfa özet bilgilerini göster - önce verilerin yüklendiğinden emin ol
+    setTimeout(() => {
+        renderHomePageSummary();
+    }, 100);
     
     const hamburgerMenu = document.getElementById('hamburger-menu');
     const navMenu = document.getElementById('nav-menu');
@@ -539,5 +537,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 navMenu.classList.remove('active');
             }
         });
+    }
+});
+
+// Backup çözüm - window onload
+window.addEventListener('load', function() {
+    // Eğer DOM ready'de çalışmadıysa burada tekrar dene
+    const latestMatchSummaryDiv = document.getElementById('latest-match-summary');
+    if (latestMatchSummaryDiv && latestMatchSummaryDiv.innerHTML.includes('Yükleniyor...')) {
+        setTimeout(() => {
+            renderHomePageSummary();
+        }, 200);
     }
 });

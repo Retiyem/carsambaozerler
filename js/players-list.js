@@ -1,25 +1,36 @@
 // OYUNCU LİSTESİ YÖNETİMİ
 
+// Global değişkenler
+let allPlayersData = [];
+let filteredPlayers = [];
+
 // Oyuncu kartlarını oluştur ve göster
-function displayPlayersList() {
+function displayPlayersList(playersToShow = null) {
     const playersContainer = document.getElementById('players-container');
     if (!playersContainer) return;
 
-    // data.js'den oyuncuları al
-    const allPlayers = getAllPlayersFromData();
+    // data.js'den oyuncuları al (ilk çağrıda)
+    if (!allPlayersData.length) {
+        allPlayersData = getAllPlayersFromData();
+    }
     
-    if (allPlayers.length === 0) {
-        playersContainer.innerHTML = '<p class="no-players">Henüz oyuncu bulunamadı.</p>';
+    // Gösterilecek oyuncuları belirle
+    const playersToDisplay = playersToShow || allPlayersData;
+    
+    if (playersToDisplay.length === 0) {
+        playersContainer.innerHTML = '<p class="no-players">Oyuncu bulunamadı.</p>';
+        updateSearchResults(0);
         return;
     }
 
     // Oyuncu kartlarını oluştur
-    const playersHTML = allPlayers.map(player => {
+    const playersHTML = playersToDisplay.map(player => {
         const playerStats = calculatePlayerStats(player.name);
         return createPlayerCard(player, playerStats);
     }).join('');
 
     playersContainer.innerHTML = playersHTML;
+    updateSearchResults(playersToDisplay.length);
 }
 
 // Tüm oyuncuları data.js'den çıkar
@@ -34,6 +45,7 @@ function getAllPlayersFromData() {
             return {
                 id: player.id,
                 name: player.name,
+                mevki: player.mevki || 'Belirsiz', // Mevki bilgisini ekle
                 profileImage: `img/oyuncular/${player.id}.jpg`, // ID ile eşleşen fotoğraf
                 bio: enhancedPlayer ? enhancedPlayer.bio : 'Halısaha Ligi oyuncusu'
             };
@@ -97,6 +109,7 @@ function createPlayerCard(player, stats) {
             </div>
             <div class="player-info">
                 <h3 class="player-name">${player.name}</h3>
+                <p class="player-position">${player.mevki}</p>
                 <div class="player-stats-mini">
                     <div class="stat-item">
                         <span class="stat-label">Goller</span>
@@ -124,7 +137,75 @@ function openPlayerProfile(playerId) {
     window.location.href = `oyuncu-profili.html?id=${playerId}`;
 }
 
+// Arama fonksiyonu
+function filterPlayers() {
+    const searchTerm = document.getElementById('player-search').value.toLowerCase().trim();
+    const positionFilter = document.getElementById('position-filter').value;
+
+    filteredPlayers = allPlayersData.filter(player => {
+        // İsim araması
+        const nameMatch = player.name.toLowerCase().includes(searchTerm);
+        
+        // Mevki araması
+        const positionMatch = player.mevki.toLowerCase().includes(searchTerm);
+        
+        // Genel arama (isim veya mevki)
+        const textMatch = nameMatch || positionMatch;
+        
+        // Mevki filtresi
+        const positionFilterMatch = !positionFilter || player.mevki === positionFilter;
+        
+        return textMatch && positionFilterMatch;
+    });
+
+    displayPlayersList(filteredPlayers);
+}
+
+// Arama sonuçları sayısını güncelle
+function updateSearchResults(count) {
+    const resultsInfo = document.getElementById('search-results-count');
+    if (resultsInfo) {
+        const totalPlayers = allPlayersData.length;
+        resultsInfo.textContent = `Gösterilen: ${count} / ${totalPlayers} oyuncu`;
+    }
+}
+
+// Aramayi temizle
+function clearSearch() {
+    document.getElementById('player-search').value = '';
+    document.getElementById('position-filter').value = '';
+    displayPlayersList(allPlayersData);
+}
+
+// Event listener'ları kur
+function setupSearchListeners() {
+    const searchInput = document.getElementById('player-search');
+    const positionFilter = document.getElementById('position-filter');
+    const clearButton = document.getElementById('clear-search');
+
+    if (searchInput) {
+        // Gerçek zamanlı arama
+        searchInput.addEventListener('input', filterPlayers);
+        
+        // Enter tuşu desteği
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                filterPlayers();
+            }
+        });
+    }
+
+    if (positionFilter) {
+        positionFilter.addEventListener('change', filterPlayers);
+    }
+
+    if (clearButton) {
+        clearButton.addEventListener('click', clearSearch);
+    }
+}
+
 // Sayfa yüklendiğinde oyuncuları göster
 document.addEventListener('DOMContentLoaded', function() {
     displayPlayersList();
+    setupSearchListeners();
 });
