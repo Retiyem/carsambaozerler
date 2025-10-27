@@ -559,22 +559,24 @@ window.addEventListener('load', function() {
 // Kadro verisi - Kullanıcının belirttiği kadro (düzeltilmiş)
 const nextMatchLineup = {
     teamA: [
-        'talha_bulbul',      // 1 - Can (Talha - sadece bir kere)
-        'ömer_erdal',        // 2 - Ömer
-        'onur_mustafa',      // 3 - Onur (Talha yerine farklı oyuncu)
-        'orhan_sariaydin',   // 4 - Orhan
-        'furkan_yilmaz',     // 5 - Furkan Yılmaz
-        'burak_kocabey',     // 6 - Burak
-        'ahmet_sadıkoglu'    // 7 - Ahmet
+        'onur_mustafa',      // 1 - Onur
+        'ozan_necipoglu',    // 2 - Ozan
+        'fatih_atalay',      // 3 - Fatih
+        'ensar_bulbul',      // 4 - Ensar
+        'ahmet_sadıkoglu',   // 5 - Ahmet
+        'ibrahim_erdogdu',   // 6 - İbrahim
+        'burak_kocabey',     // 7 - Burak
+        'furkan_sevimli'     // 8 - Furkan Sevimli
     ],
     teamB: [
-        'onur_mustafa',      // 1 - Onur (farklı takımda)
-        'furkan_demiral',    // 2 - Furkan Demiral
-        'furkan_sevimli',    // 3 - Furkan Sevimli
-        'emre_erdal',        // 4 - Emre
-        'seyfeddin_bulbul',  // 5 - Seyfeddin
-        'tayyip_erdogan_yilmaz', // 6 - Erdoğan
-        'ibrahim_erdogdu'    // 7 - İbrahim
+        'tayyip_erdogan_yilmaz', // 1 - Erdoğan
+        'huseyincan_yuksekdag',  // 2 - Hüseyin Can
+        'talha_bulbul',          // 3 - Talha
+        'firatcan_solmaz',       // 4 - Fırat
+        'furkan_yilmaz',         // 5 - Furkan Yılmaz
+        'ridvan_gumus',          // 6 - Rıdvan
+        'emre_erdal',            // 7 - Emre
+        'seyfeddin_bulbul'       // 8 - Seyfeddin
     ]
 };
 
