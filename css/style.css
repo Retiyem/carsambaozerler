@@ -1367,3 +1367,534 @@ footer {
         font-size: 16px;
     }
 }
+
+/* ==================== FUTBOL SAHASI VE KADRO DÜZENİ ==================== */
+
+.lineup-section {
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.lineup-container {
+    position: relative;
+    padding: 20px;
+    min-height: 700px;
+}
+
+/* Çift Saha Container */
+.dual-field-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.field-wrapper {
+    flex: 1;
+    min-width: 350px;
+    max-width: 500px;
+}
+
+.team-title {
+    text-align: center;
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.team-a-title {
+    background: linear-gradient(135deg, rgba(220, 20, 60, 0.3), rgba(220, 20, 60, 0.1));
+    color: #FF6B8A;
+    border: 1px solid rgba(220, 20, 60, 0.4);
+}
+
+.team-b-title {
+    background: linear-gradient(135deg, rgba(30, 144, 255, 0.3), rgba(30, 144, 255, 0.1));
+    color: #87CEEB;
+    border: 1px solid rgba(30, 144, 255, 0.4);
+}
+
+/* Futbol Sahası Ana Container */
+.football-field {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    margin: 0 auto;
+    background: linear-gradient(45deg, #228B22, #32CD32, #228B22);
+    border: 3px solid #FFFFFF;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Saha Arka Plan Çizgileri - Geliştirilmiş */
+.field-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Orta Çizgi */
+.center-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #FFFFFF;
+    transform: translateY(-50%);
+}
+
+/* Orta Daire */
+.center-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    border: 2px solid #FFFFFF;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Orta Nokta */
+.center-circle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Ceza Alanları - Geliştirilmiş */
+.penalty-area {
+    position: absolute;
+    left: 50%;
+    width: 220px;
+    height: 90px;
+    border: 2px solid #FFFFFF;
+    transform: translateX(-50%);
+}
+
+.penalty-area-top {
+    top: 0;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.penalty-area-bottom {
+    bottom: 0;
+    border-bottom: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+/* Ceza Alanı Yarım Daireleri - Ters Çevrilmiş */
+.penalty-area-top::before {
+    content: '';
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    width: 100px;
+    height: 43px;
+    border: 2px solid #FFFFFF;
+    border-top: none;
+    border-radius: 0 0 50px 50px;
+    transform: translateX(-50%);
+}
+
+.penalty-area-bottom::before {
+    content: '';
+    position: absolute;
+    bottom: 90px;
+    left: 50%;
+    width: 100px;
+    height: 43px;
+    border: 2px solid #FFFFFF;
+    border-bottom: none;
+    border-radius: 50px 50px 0 0;
+    transform: translateX(-50%);
+}
+
+/* Kale Alanları */
+.goal-area {
+    position: absolute;
+    left: 50%;
+    width: 100px;
+    height: 40px;
+    border: 2px solid #FFFFFF;
+    transform: translateX(-50%);
+}
+
+.goal-area-top {
+    top: 0;
+    border-top: none;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.goal-area-bottom {
+    bottom: 0;
+    border-bottom: none;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+/* Köşe Bayrakları - Ters Çevrilmiş */
+.field-background::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #FFFFFF;
+    border-radius: 0 0 100% 0;
+    border-top: none;
+    border-left: none;
+}
+
+.field-background::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #FFFFFF;
+    border-radius: 0  0 0 100%;
+    border-top: none;
+    border-right: none;
+}
+
+/* Alt köşe bayrakları için pseudo elementler - Ters Çevrilmiş */
+.center-line::before {
+    content: '';
+    position: absolute;
+    bottom: -301px;
+    left: -3px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #FFFFFF;
+    border-radius: 0 100% 0 0;
+    border-bottom: none;
+    border-left: none;
+}
+
+.center-line::after {
+    content: '';
+    position: absolute;
+    bottom: -301px;
+    right: -3px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #FFFFFF;
+    border-radius: 100% 0 0 0;
+    border-bottom: none;
+    border-right: none;
+}
+
+/* Oyuncu Container */
+.team-players {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Oyuncu Stili - Büyütülmüş */
+.player {
+    position: absolute;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+    z-index: 5;
+    line-height: 1;
+    padding: 3px;
+    box-sizing: border-box;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* A Takımı Oyuncuları (Kırmızı) */
+.team-a-field .player {
+    background: linear-gradient(135deg, #DC143C, #B22222);
+}
+
+.team-a-field .player:hover {
+    background: linear-gradient(135deg, #FF1493, #DC143C);
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(220, 20, 60, 0.6);
+}
+
+/* B Takımı Oyuncuları (Mavi) */
+.team-b-field .player {
+    background: linear-gradient(135deg, #1E90FF, #0066CC);
+}
+
+.team-b-field .player:hover {
+    background: linear-gradient(135deg, #00BFFF, #1E90FF);
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(30, 144, 255, 0.6);
+}
+
+/* Mevki Bazında Pozisyonlandırma - Tam Saha Orantılı */
+/* Kaleci */
+.player.kaleci {
+    font-size: 9px;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Defans - Orta çizgiden 180px aşağıda */
+.player.defans {
+    font-size: 9px;
+    bottom: 120px;
+}
+
+/* Orta Saha - Orta çizgi referansında (±50px) */
+.player.orta-saha {
+    font-size: 9px;
+    bottom: 280px;
+}
+
+/* Forvet - Orta çizgiden 180px yukarıda */
+.player.forvet {
+    font-size: 9px;
+    bottom: 460px;
+}
+
+/* Oyuncu Tooltip */
+.player-tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    min-width: 150px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.player-tooltip.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tooltip-content h4 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    color: #FFD700;
+}
+
+.tooltip-content p {
+    margin: 0 0 8px 0;
+    font-size: 11px;
+    color: #CCCCCC;
+}
+
+.tooltip-content div {
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+/* MOBİL RESPONSİVE - FUTBOL SAHASI */
+@media (max-width: 1200px) {
+    .dual-field-container {
+        gap: 20px;
+    }
+    
+    .field-wrapper {
+        min-width: 320px;
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dual-field-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+    
+    .field-wrapper {
+        width: 100%;
+        max-width: 400px;
+        min-width: 300px;
+    }
+    
+    .football-field {
+        height: 500px;
+    }
+    
+    .player {
+        width: 55px;
+        height: 55px;
+        font-size: 10px;
+        font-weight: bold;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 15px rgba(255,255,255,0.3);
+    }
+
+    .player .player-name {
+        font-size: 9px;
+        line-height: 1.1;
+    }
+    
+    /* Mobil için sahayı daha iyi çiz */
+    .center-circle {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .penalty-area {
+        width: 180px;
+        height: 70px;
+    }
+
+    .penalty-area-top::before,
+    .penalty-area-bottom::before {
+        width: 80px;
+        height: 40px;
+    }
+    
+    .goal-area {
+        width: 80px;
+        height: 30px;
+    }
+
+    /* Köşe bayrakları mobil için küçült */
+    .field-background::before,
+    .field-background::after,
+    .center-line::before,
+    .center-line::after {
+        width: 15px;
+        height: 15px;
+    }
+    
+    /* Mevki pozisyonları mobil için ayarla - orta çizgi referansında */
+    .player.kaleci {
+        bottom: 12px;
+    }
+    
+    .player.defans {
+        bottom: 90px;
+    }
+    
+    .player.orta-saha {
+        bottom: 220px;
+    }
+    
+    .player.forvet {
+        bottom: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    .lineup-container {
+        padding: 10px;
+    }
+    
+    .field-wrapper {
+        min-width: 280px;
+        max-width: 320px;
+    }
+    
+    .football-field {
+        height: 420px;
+    }
+    
+    .player {
+        width: 45px;
+        height: 45px;
+        font-size: 8px;
+        font-weight: bold;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3), 0 0 12px rgba(255,255,255,0.3);
+    }
+
+    .player .player-name {
+        font-size: 7px;
+        line-height: 1.0;
+    }
+
+    /* Küçük ekranlarda saha elementleri */
+    .center-circle {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .penalty-area {
+        width: 140px;
+        height: 55px;
+    }
+
+    .penalty-area-top::before,
+    .penalty-area-bottom::before {
+        width: 60px;
+        height: 30px;
+    }
+    
+    .goal-area {
+        width: 60px;
+        height: 25px;
+    }
+    
+    .team-title {
+        font-size: 16px;
+        padding: 8px;
+    }
+    
+    .player-tooltip {
+        font-size: 11px;
+        padding: 8px;
+        min-width: 120px;
+    }
+    
+    /* Mobil pozisyon ayarları - orta çizgi referansında */
+    .player.kaleci {
+        bottom: 10px;
+    }
+    
+    .player.defans {
+        bottom: 75px;
+    }
+    
+    .player.orta-saha {
+        bottom: 180px;
+    }
+    
+    .player.forvet {
+        bottom: 285px;
+    }
+}

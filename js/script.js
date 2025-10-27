@@ -370,6 +370,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Haftanın eşşeğini göster
     displayWeeklyDonkey();
     
+    // Sıradaki maç kadrosunu göster
+    displayLineup();
+    
     // Gelişmiş UI özelliklerini başlat
     if (typeof initializePageTransitions === 'function') {
         // UI geliştirmeleri script'i yüklenmişse
@@ -499,7 +502,7 @@ function displayWeeklyDonkey() {
             </div>
             <div class="donkey-info">
                 <h4>${donkeyPlayer.name}</h4>
-                <p class="donkey-comment">🤦‍♂️ Eşşek gibi eli cebinde hakemlik yaptı. Verdiği hiç bir karar doğru değildi!</p>
+                <p class="donkey-comment">🤦‍♂️ Eşşek gibi eli cebinde hakemlik yaptı. Verdiği hiç bir karar doğru değgildi!</p>
             </div>
         </div>
     `;
@@ -550,3 +553,348 @@ window.addEventListener('load', function() {
         }, 200);
     }
 });
+
+// ==================== SIRADAKI MAÇ KADROSU FONKSİYONLARI ====================
+
+// Kadro verisi - Kullanıcının belirttiği kadro (düzeltilmiş)
+const nextMatchLineup = {
+    teamA: [
+        'talha_bulbul',      // 1 - Can (Talha - sadece bir kere)
+        'ömer_erdal',        // 2 - Ömer
+        'onur_mustafa',      // 3 - Onur (Talha yerine farklı oyuncu)
+        'orhan_sariaydin',   // 4 - Orhan
+        'furkan_yilmaz',     // 5 - Furkan Yılmaz
+        'burak_kocabey',     // 6 - Burak
+        'ahmet_sadıkoglu'    // 7 - Ahmet
+    ],
+    teamB: [
+        'onur_mustafa',      // 1 - Onur (farklı takımda)
+        'furkan_demiral',    // 2 - Furkan Demiral
+        'furkan_sevimli',    // 3 - Furkan Sevimli
+        'emre_erdal',        // 4 - Emre
+        'seyfeddin_bulbul',  // 5 - Seyfeddin
+        'tayyip_erdogan_yilmaz', // 6 - Erdoğan
+        'ibrahim_erdogdu'    // 7 - İbrahim
+    ]
+};
+
+/**
+ * Her iki takımın kadrosunu aynı anda gösterir
+ */
+function displayLineup() {
+    const teamAContainer = document.getElementById('team-a-players');
+    const teamBContainer = document.getElementById('team-b-players');
+    
+    if (!teamAContainer || !teamBContainer) return;
+
+    // A Takımını göster
+    displayTeamLineup('A', teamAContainer);
+    
+    // B Takımını göster
+    displayTeamLineup('B', teamBContainer);
+}
+
+/**
+ * Belirtilen takımın dizilişini gösterir
+ * @param {string} team - Takım ('A' veya 'B')
+ * @param {HTMLElement} container - Takım container'ı
+ */
+function displayTeamLineup(team, container) {
+    container.innerHTML = '';
+    
+    // Takım oyuncularını ID'lerden player objelerine çevir
+    const teamPlayerIds = nextMatchLineup[`team${team}`];
+    const teamPlayers = teamPlayerIds.map(playerId => {
+        const player = players.find(p => p.id === playerId);
+        return player || { id: playerId, name: playerId, mevki: 'Orta Saha' };
+    });
+
+    // Otomatik diziliş oluştur
+    const groupedPlayers = groupPlayersByPosition(teamPlayers);
+    
+    // Her mevki için oyuncuları yerleştir
+    Object.keys(groupedPlayers).forEach(mevki => {
+        groupedPlayers[mevki].forEach((player, index) => {
+            const playerElement = createPlayerElement(player, team, mevki, index);
+            container.appendChild(playerElement);
+        });
+    });
+}
+
+/**
+ * Oyuncuları gerçek mevkilerine göre otomatik gruplar
+ * @param {Array} teamPlayers - Takım oyuncuları
+ * @returns {Object} - Mevkiye göre grupanmış oyuncular
+ */
+function groupPlayersByPosition(teamPlayers) {
+    const grouped = {
+        kaleci: [],
+        defans: [],
+        ortaSaha: [],
+        forvet: []
+    };
+
+    // Oyuncuları gerçek mevkilerine göre grupla
+    teamPlayers.forEach(player => {
+        const mevki = player.mevki.toLowerCase();
+        if (mevki.includes('kaleci')) {
+            grouped.kaleci.push(player);
+        } else if (mevki.includes('defans')) {
+            grouped.defans.push(player);
+        } else if (mevki.includes('orta')) {
+            grouped.ortaSaha.push(player);
+        } else if (mevki.includes('forvet')) {
+            grouped.forvet.push(player);
+        } else {
+            // Bilinmeyen mevki için orta sahaya koy
+            grouped.ortaSaha.push(player);
+        }
+    });
+
+    return grouped;
+}
+
+/**
+ * Oyuncu elementi oluşturur
+ * @param {Object} player - Oyuncu verisi
+ * @param {string} team - Takım ('A' veya 'B')
+ * @param {string} mevki - Oyuncunun sahada oynayacağı mevki
+ * @param {number} index - Mevkideki sıra numarası
+ * @returns {HTMLElement} - Oyuncu DOM elementi
+ */
+function createPlayerElement(player, team, mevki, index) {
+    const playerDiv = document.createElement('div');
+    playerDiv.className = `player ${getMevkiClass(mevki)}`;
+    
+    // Oyuncu adını kısalt - sadece ilk isim veya soyadı
+    let displayName = player.name.split(' ')[0];
+    if (displayName.length > 8) {
+        displayName = displayName.substring(0, 7) + '.';
+    }
+    
+    playerDiv.textContent = displayName;
+    playerDiv.dataset.playerId = player.id;
+    playerDiv.dataset.team = team;
+    playerDiv.title = player.name; // Tam isim tooltip olarak
+    
+    // Oyuncuyu pozisyonuna göre yerleştir - translateX ile merkezle
+    const position = calculatePlayerPosition(mevki, index, team);
+    playerDiv.style.left = position.x + '%';
+    playerDiv.style.transform = 'translateX(-50%)';
+    
+    // Event listener'ları ekle
+    addPlayerEventListeners(playerDiv, player);
+    
+    return playerDiv;
+}
+
+/**
+ * Mevki adını CSS class'ına çevirir
+ * @param {string} mevki - Oyuncu mevkisi veya pozisyon adı
+ * @returns {string} - CSS class adı
+ */
+function getMevkiClass(mevki) {
+    const mevkiMap = {
+        'Kaleci': 'kaleci',
+        'kaleci': 'kaleci',
+        'Defans': 'defans', 
+        'defans': 'defans',
+        'Orta Saha': 'orta-saha',
+        'ortaSaha': 'orta-saha',
+        'Forvet': 'forvet',
+        'forvet': 'forvet'
+    };
+    return mevkiMap[mevki] || 'orta-saha';
+}
+
+/**
+ * Oyuncunun sahada pozisyonunu hesaplar (orantılı diziliş)
+ * @param {string} mevki - Oyuncu mevkisi (kaleci, defans, ortaSaha, forvet)
+ * @param {number} index - Mevkideki sıra numarası
+ * @param {string} team - Takım ('A' veya 'B')
+ * @returns {Object} - {x} koordinatı (yüzde cinsinden)
+ */
+function calculatePlayerPosition(mevki, index, team) {
+    let positions = [];
+    
+    // Takımdaki mevki dağılımını hesapla
+    const teamPlayerIds = nextMatchLineup[`team${team}`];
+    const teamPlayers = teamPlayerIds.map(id => players.find(p => p.id === id)).filter(p => p);
+    
+    const kaleciler = teamPlayers.filter(p => p.mevki.toLowerCase().includes('kaleci'));
+    const defanslar = teamPlayers.filter(p => p.mevki.toLowerCase().includes('defans'));
+    const ortaSahalar = teamPlayers.filter(p => p.mevki.toLowerCase().includes('orta'));
+    const forvetler = teamPlayers.filter(p => p.mevki.toLowerCase().includes('forvet'));
+    
+    switch(mevki) {
+        case 'kaleci':
+            // Kaleci her zaman ortada
+            positions = [{ x: 50 }];
+            break;
+            
+        case 'defans':
+            // Defans sayısına göre orta saha noktası referanslı yerleştirme
+            const defansCount = defanslar.length;
+            if (defansCount === 1) {
+                positions = [{ x: 50 }];
+            } else if (defansCount === 2) {
+                positions = [{ x: 30 }, { x: 70 }];
+            } else if (defansCount === 3) {
+                positions = [{ x: 20 }, { x: 50 }, { x: 80 }];
+            } else if (defansCount === 4) {
+                positions = [{ x: 15 }, { x: 38 }, { x: 62 }, { x: 85 }];
+            } else if (defansCount >= 5) {
+                positions = [{ x: 10 }, { x: 30 }, { x: 50 }, { x: 70 }, { x: 90 }];
+            }
+            break;
+            
+        case 'ortaSaha':
+            // Orta saha sayısına göre orta saha noktası referanslı yerleştirme
+            const ortaSahaCount = ortaSahalar.length;
+            if (ortaSahaCount === 1) {
+                positions = [{ x: 50 }];
+            } else if (ortaSahaCount === 2) {
+                positions = [{ x: 35 }, { x: 65 }];
+            } else if (ortaSahaCount === 3) {
+                positions = [{ x: 25 }, { x: 50 }, { x: 75 }];
+            } else if (ortaSahaCount === 4) {
+                positions = [{ x: 20 }, { x: 40 }, { x: 60 }, { x: 80 }];
+            } else if (ortaSahaCount >= 5) {
+                positions = [{ x: 15 }, { x: 32 }, { x: 50 }, { x: 68 }, { x: 85 }];
+            }
+            break;
+            
+        case 'forvet':
+            // Forvet sayısına göre orta saha noktası referanslı yerleştirme
+            const forvetCount = forvetler.length;
+            if (forvetCount === 1) {
+                positions = [{ x: 50 }];
+            } else if (forvetCount === 2) {
+                positions = [{ x: 35 }, { x: 65 }];
+            } else if (forvetCount === 3) {
+                positions = [{ x: 25 }, { x: 50 }, { x: 75 }];
+            } else if (forvetCount >= 4) {
+                positions = [{ x: 20 }, { x: 40 }, { x: 60 }, { x: 80 }];
+            }
+            break;
+            
+        default:
+            positions = [{ x: 50 }];
+    }
+    
+    // Index'e göre pozisyon seç, fazla oyuncu varsa yayıl
+    const positionIndex = index % positions.length;
+    let xPosition = positions[positionIndex].x;
+    
+    // Eğer aynı mevkide çok fazla oyuncu varsa hafif kaydır
+    if (index >= positions.length) {
+        const extraOffset = Math.floor(index / positions.length) * 6;
+        xPosition = Math.max(5, Math.min(95, xPosition + (extraOffset * (index % 2 === 0 ? 1 : -1))));
+    }
+    
+    return { x: xPosition };
+}
+
+/**
+ * Oyuncu elementine event listener'ları ekler
+ * @param {HTMLElement} playerElement - Oyuncu DOM elementi
+ * @param {Object} player - Oyuncu verisi
+ */
+function addPlayerEventListeners(playerElement, player) {
+    const tooltip = document.getElementById('player-tooltip');
+    
+    // Mouse enter - tooltip göster
+    playerElement.addEventListener('mouseenter', (e) => {
+        showPlayerTooltip(e, player);
+    });
+    
+    // Mouse leave - tooltip gizle
+    playerElement.addEventListener('mouseleave', () => {
+        hidePlayerTooltip();
+    });
+    
+    // Click - oyuncu profiline git
+    playerElement.addEventListener('click', () => {
+        window.location.href = `oyuncu-profili.html?id=${player.id}`;
+    });
+}
+
+/**
+ * Oyuncu tooltip'ini gösterir
+ * @param {Event} e - Mouse event
+ * @param {Object} player - Oyuncu verisi
+ */
+function showPlayerTooltip(e, player) {
+    const tooltip = document.getElementById('player-tooltip');
+    if (!tooltip) return;
+    
+    // Oyuncu istatistiklerini hesapla
+    const stats = calculatePlayerStatsForTooltip(player.id);
+    
+    // Tooltip içeriğini doldur
+    document.getElementById('tooltip-name').textContent = player.name;
+    document.getElementById('tooltip-position').textContent = `🏃‍♂️ ${player.mevki}`;
+    document.getElementById('tooltip-stats').innerHTML = `
+        <div>⚽ Goller: ${stats.goals}</div>
+        <div>🎯 Maçlar: ${stats.matches}</div>
+        <div>🏆 Kazanma: %${stats.winRate}</div>
+    `;
+    
+    // Tooltip pozisyonunu ayarla - hangi sahada olduğunu bul
+    const rect = e.target.getBoundingClientRect();
+    const fieldRect = e.target.closest('.football-field').getBoundingClientRect();
+    
+    tooltip.style.left = (rect.left - fieldRect.left + rect.width / 2) + 'px';
+    tooltip.style.top = (rect.top - fieldRect.top - 10) + 'px';
+    tooltip.classList.add('show');
+}
+
+/**
+ * Oyuncu tooltip'ini gizler
+ */
+function hidePlayerTooltip() {
+    const tooltip = document.getElementById('player-tooltip');
+    if (tooltip) {
+        tooltip.classList.remove('show');
+    }
+}
+
+/**
+ * Tooltip için oyuncu istatistiklerini hesaplar
+ * @param {string} playerId - Oyuncu ID'si
+ * @returns {Object} - İstatistik verisi
+ */
+function calculatePlayerStatsForTooltip(playerId) {
+    // Eğer matches varsa gerçek stats hesapla
+    if (typeof matches !== 'undefined' && matches.length > 0) {
+        let goals = 0;
+        let matchCount = 0;
+        let wins = 0;
+
+        matches.forEach(match => {
+            const performance = match.performances.find(p => p.playerId === playerId);
+            if (performance) {
+                goals += performance.goals || 0;
+                matchCount++;
+                
+                // Kazanma durumunu kontrol et
+                const isWinner = (performance.team === 'A' && match.teamAGoals > match.teamBGoals) ||
+                                 (performance.team === 'B' && match.teamBGoals > match.teamAGoals);
+                if (isWinner) wins++;
+            }
+        });
+
+        return {
+            goals: goals,
+            matches: matchCount,
+            winRate: matchCount > 0 ? Math.round((wins / matchCount) * 100) : 0
+        };
+    } else {
+        // Demo veriler
+        return {
+            goals: Math.floor(Math.random() * 5),
+            matches: Math.floor(Math.random() * 3) + 1,
+            winRate: Math.floor(Math.random() * 61) + 20
+        };
+    }
+}

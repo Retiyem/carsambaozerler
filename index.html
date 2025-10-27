@@ -58,6 +58,64 @@
             </div>
         </section>
 
+        <section class="lineup-section glassmorphism-card animate-fade-in">
+            <h3 class="section-title">Sıradaki Maç Kadrosu <span class="icon">⚽</span></h3>
+            
+            <div class="lineup-container">
+                <!-- Çift Futbol Sahası -->
+                <div class="dual-field-container">
+                    <!-- A Takımı Sahası -->
+                    <div class="field-wrapper">
+                        <h4 class="team-title team-a-title">A Takımı</h4>
+                        <div id="football-field-a" class="football-field team-a-field">
+                            <!-- Saha çizgileri CSS ile oluşturulacak -->
+                            <div class="field-background">
+                                <div class="center-circle"></div>
+                                <div class="center-line"></div>
+                                <div class="penalty-area penalty-area-top"></div>
+                                <div class="penalty-area penalty-area-bottom"></div>
+                                <div class="goal-area goal-area-top"></div>
+                                <div class="goal-area goal-area-bottom"></div>
+                            </div>
+                            
+                            <div id="team-a-players" class="team-players">
+                                <!-- JavaScript ile A takımı oyuncuları buraya eklenecek -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- B Takımı Sahası -->
+                    <div class="field-wrapper">
+                        <h4 class="team-title team-b-title">B Takımı</h4>
+                        <div id="football-field-b" class="football-field team-b-field">
+                            <!-- Saha çizgileri CSS ile oluşturulacak -->
+                            <div class="field-background">
+                                <div class="center-circle"></div>
+                                <div class="center-line"></div>
+                                <div class="penalty-area penalty-area-top"></div>
+                                <div class="penalty-area penalty-area-bottom"></div>
+                                <div class="goal-area goal-area-top"></div>
+                                <div class="goal-area goal-area-bottom"></div>
+                            </div>
+                            
+                            <div id="team-b-players" class="team-players">
+                                <!-- JavaScript ile B takımı oyuncuları buraya eklenecek -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Oyuncu bilgi balonu (tooltip) -->
+                <div id="player-tooltip" class="player-tooltip">
+                    <div class="tooltip-content">
+                        <h4 id="tooltip-name"></h4>
+                        <p id="tooltip-position"></p>
+                        <div id="tooltip-stats"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="latest-results glassmorphism-card animate-fade-in">
             <h3 class="section-title">Son Maç Özeti <span class="icon">⚽</span></h3>
             <div id="latest-match-summary" class="summary-box">
