@@ -174,11 +174,16 @@ function renderMatchResults() {
 
 // Ana sayfadaki özet bilgileri gösterir
 function renderHomePageSummary() {
+    console.log('renderHomePageSummary çağrıldı');
+    console.log('matches verisi:', matches);
+    
     const latestMatchSummaryDiv = document.getElementById('latest-match-summary');
+    console.log('latest-match-summary elementi:', latestMatchSummaryDiv);
 
     if (latestMatchSummaryDiv) {
         // En yüksek ID'li maçı bul (en son maç)
         if (!matches || matches.length === 0) {
+            console.log('Maç verisi bulunamadı');
             latestMatchSummaryDiv.innerHTML = '<p>Henüz maç oynanmadı.</p>';
             return;
         }
@@ -506,6 +511,9 @@ function displayWeeklyDonkey() {
 
 // Hamburger Menü Fonksiyonları
 document.addEventListener('DOMContentLoaded', function() {
+    // Ana sayfa özet bilgilerini göster
+    renderHomePageSummary();
+    
     const hamburgerMenu = document.getElementById('hamburger-menu');
     const navMenu = document.getElementById('nav-menu');
     
