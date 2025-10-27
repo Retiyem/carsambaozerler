@@ -898,3 +898,50 @@ function calculatePlayerStatsForTooltip(playerId) {
         };
     }
 }
+
+// ==================== VIDEO BACKGROUND FONKSİYONLARI ====================
+
+/**
+ * Video arka plan kontrollerini başlatır
+ */
+function initVideoBackground() {
+    const video = document.getElementById('bgVideo');
+    const muteButton = document.getElementById('muteButton');
+    const soundIcon = muteButton?.querySelector('.sound-icon');
+    
+    if (!video || !muteButton) return;
+    
+    // Video'yu başlat ve ses seviyesini ayarla
+    video.volume = 0.3; // Kısık ses (%30)
+    video.muted = false; // Başlangıçta sesli
+    
+    // Ses kontrol butonu event listener
+    muteButton.addEventListener('click', function() {
+        if (video.muted) {
+            video.muted = false;
+            muteButton.classList.remove('muted');
+            soundIcon.textContent = '🔊';
+        } else {
+            video.muted = true;
+            muteButton.classList.add('muted');
+            soundIcon.textContent = '🔇';
+        }
+    });
+    
+    // Video yüklenince otomatik başlat
+    video.addEventListener('loadeddata', function() {
+        video.play().catch(function(error) {
+            console.log('Video otomatik oynatılamadı:', error);
+            // Tarayıcı politikası nedeniyle sessiz başlat
+            video.muted = true;
+            muteButton.classList.add('muted');
+            soundIcon.textContent = '🔇';
+            video.play();
+        });
+    });
+}
+
+// Sayfa yüklendiğinde video background'ı başlat
+document.addEventListener('DOMContentLoaded', function() {
+    initVideoBackground();
+});

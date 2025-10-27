@@ -14,9 +14,25 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video id="bgVideo" autoplay muted loop>
+            <source src="img/video/Arkaplan.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
     <header>
         <div class="container">
-            <h1 class="logo glow-text"><a href="index.html">Halısaha Ligi</a></h1>
+            <div class="header-left">
+                <h1 class="logo glow-text"><a href="index.html">Halısaha Ligi</a></h1>
+                
+                <!-- Ses Kontrol Butonu - Header içinde -->
+                <button id="muteButton" class="mute-button">
+                    <span class="sound-icon">🔊</span>
+                </button>
+            </div>
             
             <button class="hamburger-menu" id="hamburger-menu">
                 <span></span>
