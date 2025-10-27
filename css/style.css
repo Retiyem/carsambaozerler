@@ -46,40 +46,7 @@
     z-index: -1;
 }
 
-/* Ses Kontrol Butonu - Header içinde */
-.mute-button {
-    position: relative;
-    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    width: 45px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    font-size: 16px;
-    margin-left: 15px;
-    box-shadow: 0 2px 15px rgba(138, 43, 226, 0.3);
-}
-
-.mute-button:hover {
-    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(138, 43, 226, 0.5);
-}
-
-.mute-button.muted {
-    background: linear-gradient(135deg, var(--bg-secondary-dark), var(--bg-primary-dark));
-    opacity: 0.7;
-}
-
-.mute-button.muted .sound-icon {
-    opacity: 0.6;
-}
+/* Ses Kontrol Butonu - KALDIRILDI */
 
 /* Mobil Stabilizasyon */
 html {
@@ -160,14 +127,6 @@ header .container {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 15px;
-}
-
-/* Header sol taraf - Logo ve ses butonu */
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 15px;
 }
 
 .logo {
@@ -647,17 +606,6 @@ footer {
         object-position: center center;
         /* Mobilde video kontrolleri gizle */
         pointer-events: none;
-    }
-    
-    .mute-button {
-        width: 40px;
-        height: 30px;
-        font-size: 14px;
-        margin-left: 10px;
-    }
-    
-    .header-left {
-        gap: 10px;
     }
     
     /* Header mobilde daha kompakt */
