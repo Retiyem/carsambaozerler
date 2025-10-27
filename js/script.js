@@ -913,21 +913,23 @@ function initVideoBackground() {
     
     // İlk durumu ayarla
     video.volume = 0.3; // Kısık ses (%30)
-    video.muted = true; // Mobilde otomatik oynatma için başlangıçta muted
-    let isMuted = true;
+    video.muted = false; // Başlangıçta ses açık
+    let isMuted = false;
     
-    // Buton başlangıç durumu
-    muteButton.classList.add('muted');
-    soundIcon.textContent = '🔇';
+    // Buton başlangıç durumu - ses açık
+    muteButton.classList.remove('muted');
+    soundIcon.textContent = '�';
     
     // Video otomatik başlatma fonksiyonu
     function startVideo() {
         video.play().catch(function(error) {
-            console.log('Video oynatma hatası:', error);
-            // Hata durumunda muted olarak dene
+            console.log('Sesli oynatma başarısız, sessiz deneniyor:', error);
+            // Eğer sesli oynatma başarısızsa muted olarak dene
             video.muted = true;
             isMuted = true;
-            video.play();
+            muteButton.classList.add('muted');
+            soundIcon.textContent = '🔇';
+            return video.play();
         });
     }
     
@@ -965,19 +967,24 @@ function initVideoBackground() {
         startVideo();
     }
     
-    // Kullanıcı etkileşimi sonrası video başlatma (mobil için)
-    function enableAutoplay() {
+    // Kullanıcı etkileşimi sonrası ses açık video başlatma (mobil için)
+    function enableAutoplayWithSound() {
+        video.muted = false;
+        isMuted = false;
+        muteButton.classList.remove('muted');
+        soundIcon.textContent = '🔊';
+        
         if (video.paused) {
             startVideo();
         }
         // Event listener'ı kaldır (bir kez yeterli)
-        document.removeEventListener('touchstart', enableAutoplay);
-        document.removeEventListener('click', enableAutoplay);
+        document.removeEventListener('touchstart', enableAutoplayWithSound);
+        document.removeEventListener('click', enableAutoplayWithSound);
     }
     
-    // Mobil cihazlarda ilk dokunuş/tıklama sonrası video başlat
-    document.addEventListener('touchstart', enableAutoplay, { once: true });
-    document.addEventListener('click', enableAutoplay, { once: true });
+    // Mobil cihazlarda ilk dokunuş/tıklama sonrası ses açık video başlat
+    document.addEventListener('touchstart', enableAutoplayWithSound, { once: true });
+    document.addEventListener('click', enableAutoplayWithSound, { once: true });
 }
 
 // Sayfa yüklendiğinde video background'ı başlat
