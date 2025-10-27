@@ -22,6 +22,18 @@
     height: auto;
     transform: translate(-50%, -50%);
     object-fit: cover;
+    /* Mobil optimizasyonları */
+    -webkit-transform: translate(-50%, -50%);
+    -webkit-object-fit: cover;
+}
+
+/* Video mobilde arka planda kalması için */
+.video-background video::-webkit-media-controls {
+    display: none !important;
+}
+
+.video-background video::-webkit-media-controls-enclosure {
+    display: none !important;
 }
 
 .video-overlay {
@@ -627,6 +639,16 @@ footer {
     }
     
     /* Video Background Mobile */
+    .video-background video {
+        /* iOS Safari için özel ayarlar */
+        -webkit-playsinline: true;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        object-position: center center;
+        /* Mobilde video kontrolleri gizle */
+        pointer-events: none;
+    }
+    
     .mute-button {
         width: 40px;
         height: 30px;

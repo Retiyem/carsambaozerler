@@ -911,18 +911,45 @@ function initVideoBackground() {
     
     if (!video || !muteButton) return;
     
-    // Video'yu başlat ve ses seviyesini ayarla
+    // İlk durumu ayarla
     video.volume = 0.3; // Kısık ses (%30)
-    video.muted = false; // Başlangıçta sesli
+    video.muted = true; // Mobilde otomatik oynatma için başlangıçta muted
+    let isMuted = true;
+    
+    // Buton başlangıç durumu
+    muteButton.classList.add('muted');
+    soundIcon.textContent = '🔇';
+    
+    // Video otomatik başlatma fonksiyonu
+    function startVideo() {
+        video.play().catch(function(error) {
+            console.log('Video oynatma hatası:', error);
+            // Hata durumunda muted olarak dene
+            video.muted = true;
+            isMuted = true;
+            video.play();
+        });
+    }
     
     // Ses kontrol butonu event listener
-    muteButton.addEventListener('click', function() {
-        if (video.muted) {
+    muteButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        if (isMuted) {
+            // Sesi aç
             video.muted = false;
+            isMuted = false;
             muteButton.classList.remove('muted');
             soundIcon.textContent = '🔊';
+            
+            // Video durmuşsa başlat
+            if (video.paused) {
+                startVideo();
+            }
         } else {
+            // Sesi kapat
             video.muted = true;
+            isMuted = true;
             muteButton.classList.add('muted');
             soundIcon.textContent = '🔇';
         }
@@ -930,15 +957,27 @@ function initVideoBackground() {
     
     // Video yüklenince otomatik başlat
     video.addEventListener('loadeddata', function() {
-        video.play().catch(function(error) {
-            console.log('Video otomatik oynatılamadı:', error);
-            // Tarayıcı politikası nedeniyle sessiz başlat
-            video.muted = true;
-            muteButton.classList.add('muted');
-            soundIcon.textContent = '🔇';
-            video.play();
-        });
+        startVideo();
     });
+    
+    // Video zaten yüklenmişse hemen başlat
+    if (video.readyState >= 3) {
+        startVideo();
+    }
+    
+    // Kullanıcı etkileşimi sonrası video başlatma (mobil için)
+    function enableAutoplay() {
+        if (video.paused) {
+            startVideo();
+        }
+        // Event listener'ı kaldır (bir kez yeterli)
+        document.removeEventListener('touchstart', enableAutoplay);
+        document.removeEventListener('click', enableAutoplay);
+    }
+    
+    // Mobil cihazlarda ilk dokunuş/tıklama sonrası video başlat
+    document.addEventListener('touchstart', enableAutoplay, { once: true });
+    document.addEventListener('click', enableAutoplay, { once: true });
 }
 
 // Sayfa yüklendiğinde video background'ı başlat
