@@ -433,6 +433,11 @@ function displayWeeklyHero() {
     // Maç başına ortalama gol hesapla
     const averageGoals = totalMatches > 0 ? (totalGoals / totalMatches).toFixed(1) : 0;
 
+    // weeklyHeroes verisinden bu hafta için not al
+    const currentWeek = matches.length; // Hafta numarası
+    const weeklyHeroData = weeklyHeroes.find(hero => hero.week === currentWeek);
+    const heroNote = weeklyHeroData ? weeklyHeroData.note : '';
+
     // Debug: fotoğraf yolunu konsola yazdır
     console.log('Fotoğraf yolu:', `img/oyuncular/${latestMatch.macin_adami}.jpg`);
 
@@ -449,6 +454,7 @@ function displayWeeklyHero() {
                     <p class="hero-stat-item">📈 <strong>${mvpPlayer.name}</strong> Bu Hafta <strong>${mvpGoals}</strong> Gol Attı!</p>
                     <p class="hero-stat-item">⚽ Maç başına ortalama <strong>${averageGoals}</strong> kadar golü var!</p>
                     <p class="hero-stat-item">🏆 <strong>${weeklyMVPCount}</strong> kere Haftanın adamı seçildi!</p>
+                    ${heroNote ? `<p class="hero-note">💬 ${heroNote}</p>` : ''}
                 </div>
             </div>
         </div>
