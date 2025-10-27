@@ -126,7 +126,7 @@ const matches = [
         id: 2, // İkinci maç
         date: '27.10.2025', // Maç tarihi
         teamAGoals: 11, // A Takımının attığı gol
-        teamBGoals: 8, // B Takımının attığı gol
+        teamBGoals: 11, // B Takımının attığı gol
         macin_adami: 'talha_bulbul', // Talha çok iyi kaleci performansı gösterdi
         esek_adam: 'ensar_bulbul', // Belirlenecek
         performances: [
@@ -144,9 +144,9 @@ const matches = [
             { playerId: 'furkan_demiral', team: 'B', goals: 1, weeklyMVP: false },
             { playerId: 'furkan_sevimli', team: 'B', goals: 1, weeklyMVP: false },
             { playerId: 'emre_erdal', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'seyfeddin_bulbul', team: 'B', goals: 2, weeklyMVP: false },
+            { playerId: 'seyfeddin_bulbul', team: 'B', goals: 3, weeklyMVP: false },
             { playerId: 'tayyip_erdogan_yilmaz', team: 'B', goals: 2, weeklyMVP: false },
-            { playerId: 'ibrahim_erdogdu', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'ibrahim_erdogdu', team: 'B', goals: 2, weeklyMVP: false },
             // Maça katılmayan oyuncuları bu listeye eklemeyin.
             // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
 
