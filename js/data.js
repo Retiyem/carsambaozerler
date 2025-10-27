@@ -16,6 +16,7 @@ const players = [
     { id: 'orhan_sariaydin', name: 'Orhan SARIAYDIN', mevki: 'Orta Saha' },
     { id: 'ozan_necipoglu', name: 'Ozan NECİPOĞLU', mevki: 'Orta Saha' },
     { id: 'ridvan_gumus', name: 'Rıdvan GÜMÜŞ', mevki: 'Forvet' },
+    { id: 'fatih_atalay', name: 'Fatih ATALAY', mevki: 'Forvet' },
     { id: 'seyfeddin_bulbul', name: 'Seyfeddin BÜLBÜL', mevki: 'Orta Saha' },
     { id: 'talha_bulbul', name: 'Talha BÜLBÜL', mevki: 'Kaleci' },
     { id: 'tayyip_erdogan_yilmaz', name: 'Tayyip Erdoğan YILMAZ', mevki: 'Orta Saha' },
