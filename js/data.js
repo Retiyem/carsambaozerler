@@ -11,7 +11,7 @@ const players = [
     { id: 'furkan_sevimli', name: 'Furkan SEVİMLİ', mevki: 'Orta Saha' },
     { id: 'furkan_yilmaz', name: 'Furkan YILMAZ', mevki: 'Forvet' },
     { id: 'ibrahim_erdogdu', name: 'İbrahim ERDOĞDU', mevki: 'Kaleci' },
-    { id: 'tayyip_berkin_ceran', name: 'Tayyip Berkin CERAN', mevki: 'Defans' },
+    { id: 'berkin_tayyip_ceran', name: 'Berkin Tayyip CERAN', mevki: 'Defans' },
     { id: 'muratcan_solmaz', name: 'Muratcan SOLMAZ', mevki: 'Defans' },
     { id: 'orhan_sariaydin', name: 'Orhan SARIAYDIN', mevki: 'Orta Saha' },
     { id: 'ozan_necipoglu', name: 'Ozan NECİPOĞLU', mevki: 'Orta Saha' },
@@ -115,7 +115,7 @@ const matches = [
             { playerId: 'seyfeddin_bulbul', team: 'B', goals: 3, weeklyMVP: false },
             { playerId: 'ibrahim_erdogdu', team: 'B', goals: 0, weeklyMVP: false },
             { playerId: 'alper_basdag', team: 'B', goals: 3, weeklyMVP: false },
-            { playerId: 'tayyip_berkin_ceran', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'berkin_tayyip_ceran', team: 'B', goals: 0, weeklyMVP: false },
             { playerId: 'ozan_necipoglu', team: 'B', goals: 1, weeklyMVP: false },
             // Maça katılmayan oyuncuları bu listeye eklemeyin.
             // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
