@@ -958,6 +958,20 @@ footer {
     font-family: 'Montserrat', sans-serif;
 }
 
+.hero-position {
+    font-size: 0.9rem;
+    color: #98D8C8; /* Açık yeşil/turkuaz */
+    margin: 0 0 15px 0;
+    font-weight: 600;
+    text-align: center;
+    opacity: 0.9;
+    background: rgba(152, 216, 200, 0.15);
+    padding: 5px 12px;
+    border-radius: 15px;
+    border: 1px solid rgba(152, 216, 200, 0.3);
+    display: inline-block;
+}
+
 .hero-stats {
     display: flex;
     gap: 20px;

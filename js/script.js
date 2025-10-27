@@ -450,6 +450,7 @@ function displayWeeklyHero() {
             </div>
             <div class="hero-info">
                 <h4>${mvpPlayer.name}</h4>
+                <p class="hero-position">🏃‍♂️ ${mvpPlayer.mevki}</p>
                 <div class="hero-stats-list">
                     <p class="hero-stat-item">📈 <strong>${mvpPlayer.name}</strong> Bu Hafta <strong>${mvpGoals}</strong> Gol Attı!</p>
                     <p class="hero-stat-item">⚽ Maç başına ortalama <strong>${averageGoals}</strong> kadar golü var!</p>

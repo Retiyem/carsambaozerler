@@ -64,8 +64,8 @@ function loadPlayerData() {
     // Temel bilgileri doldur
     populateBasicInfo({
         name: player.name,
+        position: player.mevki, // Data.js'deki mevki bilgisini kullan
         rating: enhancedPlayer ? enhancedPlayer.rating : Math.floor(Math.random() * 20) + 70,
-        position: enhancedPlayer ? enhancedPlayer.position : getRandomPosition(),
         favNumber: enhancedPlayer ? enhancedPlayer.favNumber : Math.floor(Math.random() * 99) + 1,
         profileImage: `img/oyuncular/${player.id}.jpg`,
         socialMedia: enhancedPlayer ? enhancedPlayer.socialMedia : null

@@ -99,12 +99,17 @@
 }
 
 .player-position {
-    background: var(--primary-accent);
+    background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
     color: var(--text-light);
-    padding: 5px 12px;
-    border-radius: 15px;
-    font-size: 0.9rem;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 1rem;
     font-weight: 600;
+    text-align: center;
+    margin: 10px 0 20px 0;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(15, 76, 117, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .player-number {
@@ -776,4 +781,13 @@
     .stats-table-container {
         padding: 0 5px; /* Yanlardan boşluk */
     }
+}
+
+/* Oyuncu pozisyon stiline */
+.player-position {
+    font-size: 16px;
+    color: #ffffff;
+    margin-top: 5px;
+    font-weight: 600;
+    opacity: 0.9;
 }
