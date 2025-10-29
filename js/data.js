@@ -153,6 +153,36 @@ const matches = [
 
         ]
     },
+    {
+        id: 3, // Üçüncü maç
+        date: '29.10.2025', // Maç tarihi
+        teamAGoals: 3, // A Takımının attığı gol
+        teamBGoals: 2, // B Takımının attığı gol
+        macin_adami: 'ensar_bulbul', // Talha çok iyi kaleci performansı gösterdi
+        esek_adam: 'ahmet_sadıkoglu', // Belirlenecek
+        performances: [
+            // A Takımı oyuncuları (7 kişi)
+            { playerId: 'onur_mustafa', team: 'A', goals: 2, weeklyMVP: false },
+            { playerId: 'ahmet_sadıkoglu', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'ensar_bulbul', team: 'A', goals: 0, weeklyMVP: true },
+            { playerId: 'furkan_sevimli', team: 'A', goals: 0, weeklyMVP: false },
+            { playerId: 'fatih_atalay', team: 'A', goals: 0, weeklyMVP: false },
+            { playerId: 'ozan_necipoglu', team: 'A', goals: 0, weeklyMVP: false },
+            { playerId: 'ibrahim_erdogdu', team: 'A', goals: 0, weeklyMVP: false },
+
+            // B Takımı oyuncuları (7 kişi)
+            { playerId: 'talha_bulbul', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'furkan_yilmaz', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'tayyip_erdogan_yilmaz', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'emre_erdal', team: 'B', goals: 1, weeklyMVP: false },
+            { playerId: 'seyfeddin_bulbul', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'ridvan_gumus', team: 'B', goals: 1, weeklyMVP: false },
+            // Maça katılmayan oyuncuları bu listeye eklemeyin.
+            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
+
+        ]
+    },
 ];
 
 // HAFTANIN ADAMI SİSTEMİ
@@ -184,6 +214,20 @@ const weeklyHeroes = [
             assists: 0, // O hafta yaptığı asist
             teamWins: 1, // Takımının kazandığı maç sayısı
             performance: 'Muhteşem kaleci performansı! Maçı kurtardı.'
+        }
+    },
+    {
+        week: 3, // Hafta numarası
+        date: '29.10.2025', // Hafta tarihi
+        playerId: 'ensar_bulbul', // Haftanın adamının ID'si
+        playerName: 'Ensar BULBUL', // Haftanın adamının adı
+        note: 'Bu hafta savunmada çok iyi oynadı! Rakip forvetlere geçit vermedi.', // Haftanın adamı notu
+        stats: {
+            matchesPlayed: 1, // O hafta oynadığı maç sayısı
+            goals: 0, // O hafta attığı gol
+            assists: 0, // O hafta yaptığı asist
+            teamWins: 1, // Takımının kazandığı maç sayısı
+            performance: 'Muhteşem savunma performansı! Rakip forvetlere geçit vermedi.'
         }
     }
 ];

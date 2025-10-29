@@ -21,7 +21,8 @@ function calculatePlayerStats() {
             GA: 0, // Yediği Gol
             GD: 0, // Gol Farkı
             PTS: 0, // Puan
-            MVP: 0 // MVP Sayısı (isteğe bağlı)
+            MVP: 0, // MVP Sayısı
+            DONKEY: 0 // Haftanın Eşşeği Sayısı
         };
     });
 
@@ -41,9 +42,19 @@ function calculatePlayerStats() {
             // stats.Assists += performance.assists; // Asist istatistiği eklemek istersen
 
             // MVP sayısını güncelle
-            if (performance.mvp) {
+            if (performance.weeklyMVP) {
                 stats.MVP++;
             }
+        });
+
+        // Haftanın Eşşeği sayısını güncelle (macin_adami ve esek_adam data.js'deki matches array'inde)
+        if (match.esek_adam && playerStats[match.esek_adam]) {
+            playerStats[match.esek_adam].DONKEY++;
+        }
+
+        match.performances.forEach(performance => {
+            const stats = playerStats[performance.playerId];
+            if (!stats) return; // Oyuncu bulunamazsa devam et
 
             // Maç sonucuna göre galibiyet, beraberlik, mağlubiyet ve yediği golleri güncelle
             if (performance.team === 'A') {
@@ -113,7 +124,10 @@ function renderScoreboard() {
                 <td>${player.D}</td>
                 <td>${player.L}</td>
                 <td>${player.GF}</td>
-                <td>${player.PTS}</td>
+                <td class="avg-goals-cell">${player.M > 0 ? (player.GF / player.M).toFixed(1) : '0.0'}</td>
+                <td class="mvp-cell">${player.MVP}</td>
+                <td class="donkey-cell">${player.DONKEY}</td>
+                <td class="points-cell"><strong>${player.PTS}</strong></td>
             </tr>
         `;
         scoreboardBody.insertAdjacentHTML('beforeend', row);
@@ -143,17 +157,13 @@ function renderMatchResults() {
         if (teamAResult === 'W') winnerText = 'Takım A';
         else if (teamBResult === 'W') winnerText = 'Takım B';
 
-        // MVP bilgisini de ekleyelim (isteğe bağlı)
-        const mvpPlayer = match.performances.find(p => p.mvp);
-        const mvpText = mvpPlayer ? `(${getPlayerNameById(mvpPlayer.playerId)} MVP)` : '';
-
         const row = `
             <tr data-match-id="${match.id}">
                 <td>${match.date}</td>
                 <td>${match.teamAGoals}</td>
                 <td>${match.teamBGoals}</td>
                 <td>${match.teamAGoals} - ${match.teamBGoals}</td>
-                <td>${winnerText} ${mvpText}</td>
+                <td>${winnerText}</td>
                 <td>
                     <button class="match-detail-btn" onclick="toggleMatchDetail(${match.id})" data-match-id="${match.id}">
                         📋 Detay
@@ -293,9 +303,10 @@ function populateMatchDetail(matchId) {
         const goals = perf.goals || 0;
         const goalText = goals > 0 ? ` (${goals})` : '';
         const mvpBadge = perf.weeklyMVP ? ' <span class="mvp-mini-badge">MVP</span>' : '';
+        const donkeyBadge = match.esek_adam === perf.playerId ? ' <span class="donkey-mini-badge">🫏</span>' : '';
         
         teamAHtml += `
-            <li>${playerName}${goalText}${mvpBadge}</li>
+            <li>${playerName}${goalText}${mvpBadge}${donkeyBadge}</li>
         `;
     });
     
@@ -316,9 +327,10 @@ function populateMatchDetail(matchId) {
         const goals = perf.goals || 0;
         const goalText = goals > 0 ? ` (${goals})` : '';
         const mvpBadge = perf.weeklyMVP ? ' <span class="mvp-mini-badge">MVP</span>' : '';
+        const donkeyBadge = match.esek_adam === perf.playerId ? ' <span class="donkey-mini-badge">🫏</span>' : '';
         
         teamBHtml += `
-            <li>${playerName}${goalText}${mvpBadge}</li>
+            <li>${playerName}${goalText}${mvpBadge}${donkeyBadge}</li>
         `;
     });
     
@@ -502,7 +514,7 @@ function displayWeeklyDonkey() {
             </div>
             <div class="donkey-info">
                 <h4>${donkeyPlayer.name}</h4>
-                <p class="donkey-comment">🤦‍♂️ Eşşek gibi eli cebinde hakemlik yaptı. Verdiği hiç bir karar doğru değgildi!</p>
+                <p class="donkey-comment">🫏 Orhan eşşeğinin yokluğunu aratmadı! kritik anlarda ağlayarak herkesin oyun hevesine sıçtı... 🫏</p>
             </div>
         </div>
     `;

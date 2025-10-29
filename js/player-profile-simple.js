@@ -72,7 +72,30 @@ function loadPlayerData() {
     });
     
     // Oyuncu istatistiklerini hesapla
-    const stats = calculatePlayerStatsForProfile(player.name);
+    let stats;
+    
+    // Önce script.js'deki calculatePlayerStats fonksiyonunu kullanmayı dene
+    if (typeof calculatePlayerStats === 'function') {
+        const allStats = calculatePlayerStats();
+        const playerStats = allStats.find(s => s.id === currentPlayerId);
+        if (playerStats) {
+            stats = {
+                goals: playerStats.GF || 0,
+                assists: 0, // Henüz asist verisi yok
+                matches: playerStats.M || 0,
+                wins: playerStats.W || 0,
+                mvps: playerStats.MVP || 0,
+                donkeys: playerStats.DONKEY || 0,
+                winRate: playerStats.M > 0 ? Math.round((playerStats.W / playerStats.M) * 100) : 0,
+                goalsPerMatch: playerStats.M > 0 ? (playerStats.GF / playerStats.M).toFixed(2) : '0.00'
+            };
+        }
+    }
+    
+    // Fallback: kendi hesaplama fonksiyonunu kullan
+    if (!stats) {
+        stats = calculatePlayerStatsForProfile(player.name);
+    }
     
     // İstatistikleri doldur
     populateStats(stats);
@@ -117,6 +140,13 @@ function populateStats(stats) {
     const totalMvpsElement = document.getElementById('total-mvps');
     if (totalMvpsElement) totalMvpsElement.textContent = stats.mvps || 0;
     
+    // Haftanın Eşşeği sayısı
+    const totalDonkeysElement = document.getElementById('total-donkeys');
+    if (totalDonkeysElement) {
+        totalDonkeysElement.textContent = stats.donkeys || 0;
+        totalDonkeysElement.className = 'stat-value donkey-cell';
+    }
+    
     // Oynanan maç sayısı
     const totalMatchesElement = document.getElementById('total-matches');
     if (totalMatchesElement) totalMatchesElement.textContent = stats.matches || 0;
@@ -152,6 +182,7 @@ function calculatePlayerStatsForProfile(playerName) {
         let matchCount = 0;
         let wins = 0;
         let mvps = 0;
+        let donkeys = 0;
 
         // Oyuncunun ID'sini bul
         const player = players.find(p => p.name === playerName);
@@ -170,6 +201,11 @@ function calculatePlayerStatsForProfile(playerName) {
                     mvps++;
                 }
 
+                // Haftanın Eşşeği kontrolü
+                if (match.esek_adam === playerId) {
+                    donkeys++;
+                }
+
                 // Kazanma durumunu kontrol et
                 const isWinner = (performance.team === 'A' && match.teamAGoals > match.teamBGoals) ||
                                  (performance.team === 'B' && match.teamBGoals > match.teamAGoals);
@@ -183,6 +219,7 @@ function calculatePlayerStatsForProfile(playerName) {
             matches: matchCount,
             wins: wins,
             mvps: mvps,
+            donkeys: donkeys,
             winRate: matchCount > 0 ? Math.round((wins / matchCount) * 100) : 0,
             goalsPerMatch: matchCount > 0 ? (goals / matchCount).toFixed(2) : '0.00'
         };

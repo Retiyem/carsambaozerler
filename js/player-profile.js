@@ -150,6 +150,10 @@ function populateStats(seasonStats, careerStats) {
     const totalMvpsElement = document.getElementById('total-mvps');
     if (totalMvpsElement) totalMvpsElement.textContent = seasonStats.MVP || 0;
     
+    // Haftanın Eşşeği sayısı
+    const totalDonkeysElement = document.getElementById('total-donkeys');
+    if (totalDonkeysElement) totalDonkeysElement.textContent = seasonStats.DONKEY || 0;
+    
     // Maç başına gol
     const goalsPerMatchElement = document.getElementById('goals-per-match');
     if (goalsPerMatchElement) {
@@ -413,8 +417,16 @@ function loadBasicPlayerData() {
         socialMedia: enhancedPlayer ? enhancedPlayer.socialMedia : null
     });
     
-    // Oyuncu istatistiklerini hesapla
-    const stats = calculatePlayerStatsForProfile(player.name);
+    // Oyuncu istatistiklerini hesapla - Script.js'deki fonksiyonu kullan
+    let stats = { GF: 0, M: 0, MVP: 0, DONKEY: 0 }; // Default değerler
+    
+    if (typeof calculatePlayerStats === 'function') {
+        const allStats = calculatePlayerStats();
+        const playerStats = allStats.find(s => s.id === currentPlayerId);
+        if (playerStats) {
+            stats = playerStats;
+        }
+    }
     
     // İstatistikleri doldur
     populateStats(stats, stats);
