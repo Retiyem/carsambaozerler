@@ -253,7 +253,14 @@ function startCountdowns() {
 }
 
 // Maç detay modalını aç
+// MODAL FONKSİYONLARI - DEVRE DIŞI BIRAKILDI
+
 function openMatchDetailModal(matchId) {
+    // Modal özelliği kaldırıldı
+    console.log('Modal özelliği devre dışı bırakıldı');
+    return;
+    
+    /*
     const match = matches.find(m => m.id == matchId);
     if (!match) return;
     
@@ -274,6 +281,7 @@ function openMatchDetailModal(matchId) {
     setTimeout(() => {
         modal.classList.add('active');
     }, 10);
+    */
 }
 
 // Maç detay modalını doldur
@@ -353,23 +361,6 @@ function populatePlayerPerformances(team, performances) {
     
     container.appendChild(playersList);
 }
-            <div class="player-stats">
-                <div class="stat-item">
-                    <span class="stat-icon">⚽</span>
-                    <span class="stat-value">${perf.goals}</span>
-                    <span class="stat-label">Gol</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-icon">🅰️</span>
-                    <span class="stat-value">${perf.assists || 0}</span>
-                    <span class="stat-label">Asist</span>
-                </div>
-            </div>
-        `;
-        
-        container.appendChild(playerCard);
-    });
-}
 
 // Performans tab'ını değiştir
 function switchPerformanceTab(team) {
@@ -384,6 +375,11 @@ function switchPerformanceTab(team) {
 
 // Maç detay modalını kapat
 function closeMatchDetailModal() {
+    // Modal özelliği kaldırıldı
+    console.log('Modal kapatma özelliği devre dışı bırakıldı');
+    return;
+    
+    /*
     const modal = document.getElementById('match-detail-modal');
     if (!modal) return;
     
@@ -392,6 +388,7 @@ function closeMatchDetailModal() {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
     }, 300);
+    */
 }
 
 // Tarih formatla
@@ -420,8 +417,13 @@ function openMatchPreview(matchId) {
     alert(`Maç Önizleme:\nTarih: ${formatDate(match.date)}\nSaha: ${match.venue}\nTakım A Güç: ${calculateTeamStrength(match.teamA)}\nTakım B Güç: ${calculateTeamStrength(match.teamB)}`);
 }
 
-// Maç sonuçları tablosunda click event'i ekle
+// Maç sonuçları tablosunda click event'i ekle - DEVRE DIŞI BIRAKILDI
 function addMatchClickEvents() {
+    // Modal özelliği kaldırıldı - maçlara tıklama devre dışı
+    console.log('Maç detay modal özelliği devre dışı bırakıldı');
+    return;
+    
+    /*
     const matchTable = document.getElementById('match-results-table');
     console.log('addMatchClickEvents çalıştı, tablo:', matchTable);
     if (!matchTable) return;
@@ -438,6 +440,7 @@ function addMatchClickEvents() {
         console.log('Modal açılıyor, matchId:', row.dataset.matchId);
         openMatchDetailModal(row.dataset.matchId);
     });
+    */
 }
 
 // Export fonksiyonları

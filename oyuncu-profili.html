@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="css/ui-enhancements.css">
     <link rel="stylesheet" href="css/data-management.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
@@ -63,7 +61,31 @@
                 <div class="stat-icon">⚽</div>
                 <div class="stat-content">
                     <span class="stat-value" id="total-goals">0</span>
-                    <span class="stat-label">Toplam Gol</span>
+                    <span class="stat-label">Attığı Gol</span>
+                </div>
+            </div>
+
+            <div class="stat-card glassmorphism-card animate-fade-in">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-content">
+                    <span class="stat-value" id="team-goals-for">0</span>
+                    <span class="stat-label">Takımının Attığı Gol</span>
+                </div>
+            </div>
+
+            <div class="stat-card glassmorphism-card animate-fade-in">
+                <div class="stat-icon">🛡️</div>
+                <div class="stat-content">
+                    <span class="stat-value" id="team-goals-against">0</span>
+                    <span class="stat-label">Takımının Yediği Gol</span>
+                </div>
+            </div>
+
+            <div class="stat-card glassmorphism-card animate-fade-in">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <span class="stat-value" id="goal-difference">0</span>
+                    <span class="stat-label">Gol Farkı</span>
                 </div>
             </div>
 
@@ -106,6 +128,51 @@
                 </table>
             </div>
         </section>
+
+        <!-- Performans Trendleri -->
+        <section class="performance-trends glassmorphism-card animate-fade-in" id="performance-section">
+            <div class="section-header">
+                <h3 class="section-title">📈 Performans Trendleri</h3>
+                <p class="section-description">Son maçlardaki gol ve MVP performansı</p>
+            </div>
+
+            <!-- Performans Grafiği -->
+            <div class="chart-container" id="performance-chart-container">
+                <div id="no-performance-data" class="no-data-message">
+                    <div class="no-data-icon">📊</div>
+                    <h4>Henüz performans verisi yok</h4>
+                    <p>Bu oyuncu henüz maça çıkmamış veya veriler yükleniyor.</p>
+                </div>
+                <canvas id="player-performance-chart" style="display: none;"></canvas>
+            </div>
+
+            <!-- Performans Radarı -->
+            <div class="radar-container" id="performance-radar-container" style="display: none;">
+                <h4 class="radar-title">🎯 Performans Radarı</h4>
+                <canvas id="player-radar-chart"></canvas>
+            </div>
+
+            <!-- Son Maçlar Tablosu -->
+            <div class="recent-matches" id="recent-matches-section" style="display: none;">
+                <h4 class="matches-title">📋 Son Maçlar</h4>
+                <div class="matches-table-container">
+                    <table class="recent-matches-table">
+                        <thead>
+                            <tr>
+                                <th>Tarih</th>
+                                <th>Takım</th>
+                                <th>Skor</th>
+                                <th>Gol</th>
+                                <th>MVP</th>
+                                <th>Sonuç</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-matches-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -119,15 +186,22 @@
         </div>
     </footer>
 
+    <!-- Chart.js CDN - Uyumlu versiyon -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    
+    <!-- Veri dosyaları -->
     <script src="js/data.js"></script>
-    <script src="js/enhanced-data.js"></script>
+    <script src="js/enhanced-data-simple.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/player-profile-simple.js"></script>
+    
+    <!-- Profil ve performans -->
+    <script src="js/player-profile.js"></script>
+    <script src="js/player-performance.js"></script>
     <script src="js/match-management.js"></script>
     <script src="js/user-interaction.js"></script>
     <script src="js/ui-enhancements.js"></script>
     <script src="js/data-management.js"></script>
     <!-- Font Awesome ikonları için CDN -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </body>
 </html>

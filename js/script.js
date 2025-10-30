@@ -164,18 +164,6 @@ function renderMatchResults() {
                 <td>${match.teamBGoals}</td>
                 <td>${match.teamAGoals} - ${match.teamBGoals}</td>
                 <td>${winnerText}</td>
-                <td>
-                    <button class="match-detail-btn" onclick="toggleMatchDetail(${match.id})" data-match-id="${match.id}">
-                        📋 Detay
-                    </button>
-                </td>
-            </tr>
-            <tr id="detail-${match.id}" class="match-detail-row" style="display: none;">
-                <td colspan="6">
-                    <div class="match-detail-panel">
-                        <!-- Buraya maç detayları gelecek -->
-                    </div>
-                </td>
             </tr>
         `;
         matchTableBody.insertAdjacentHTML('beforeend', row);
@@ -238,39 +226,23 @@ function renderHomePageSummary() {
     }
 }
 
-// Global fonksiyonları window objesine ekle
-window.toggleMatchDetail = toggleMatchDetail;
+// Global fonksiyonları window objesine ekle - MODAL ÖZELLİĞİ KALDIRILDI
+// window.toggleMatchDetail = toggleMatchDetail;
 
 // Maç detayını aç/kapat
+// MATCH DETAIL FONKSİYONLARI KALDIRILDI - MODAL ÖZELLİĞİ DEVREDİŞI
+
+/*
 function toggleMatchDetail(matchId) {
-    const detailRow = document.getElementById(`detail-${matchId}`);
-    const button = document.querySelector(`[data-match-id="${matchId}"].match-detail-btn`);
-    
-    if (!detailRow) return;
-    
-    if (detailRow.style.display === 'none') {
-        // Önce diğer tüm detay panellerini kapat
-        document.querySelectorAll('.match-detail-row').forEach(row => {
-            row.style.display = 'none';
-        });
-        document.querySelectorAll('.match-detail-btn').forEach(btn => {
-            btn.textContent = '📋 Detay';
-        });
-        
-        // Bu detay panelini aç
-        detailRow.style.display = 'table-row';
-        button.textContent = '📤 Kapat';
-        
-        // Detay içeriğini doldur
-        populateMatchDetail(matchId);
-    } else {
-        // Bu detay panelini kapat
-        detailRow.style.display = 'none';
-        button.textContent = '📋 Detay';
-    }
+    // Bu fonksiyon artık kullanılmıyor - modal özelliği kaldırıldı
 }
 
-// Maç detayını doldur
+function populateMatchDetail(matchId) {
+    // Bu fonksiyon artık kullanılmıyor - modal özelliği kaldırıldı
+}
+*/
+
+// Ana sayfadaki özet bilgileri gösterir
 function populateMatchDetail(matchId) {
     const match = matches.find(m => m.id == matchId);
     if (!match) return;
@@ -355,12 +327,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (path.includes('puan-durumu.html')) {
         renderScoreboard();
-        // Maç click eventleri için
-        addMatchClickEvents();
+        // Maç click eventleri için - MODAL ÖZELLİĞİ KALDIRILDI
+        // addMatchClickEvents();
     } else if (path.includes('maclar.html')) {
         renderMatchResults();
-        // Maç click eventleri için
-        addMatchClickEvents();
+        // Maç click eventleri için - MODAL ÖZELLİĞİ KALDIRILDI
+        // addMatchClickEvents();
     } else if (path.includes('index.html') || path === '/') { // Ana sayfa veya kök dizin
         renderHomePageSummary();
         // Gelecek maçları render et

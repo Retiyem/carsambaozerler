@@ -511,6 +511,24 @@ function getNotificationIcon(type) {
     return icons[type] || icons.info;
 }
 
+// Tema değiştirme fonksiyonu
+function toggleTheme() {
+    const body = document.body;
+    const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    if (newTheme === 'dark') {
+        body.classList.add('dark-theme');
+    } else {
+        body.classList.remove('dark-theme');
+    }
+    
+    // LocalStorage'da sakla
+    localStorage.setItem('theme', newTheme);
+    
+    showNotification('success', `${newTheme === 'dark' ? 'Karanlık' : 'Aydınlık'} tema aktif edildi`);
+}
+
 // Export fonksiyonları
 window.openPredictionModal = openPredictionModal;
 window.closePredictionModal = closePredictionModal;

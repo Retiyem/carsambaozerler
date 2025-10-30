@@ -99,6 +99,14 @@ function loadPlayerData() {
     
     // İstatistikleri doldur
     populateStats(stats);
+    
+    // Performans grafiklerini başlat
+    setTimeout(() => {
+        if (typeof initializePlayerPerformance === 'function') {
+            console.log('� Manuel performans başlatılıyor...');
+            initializePlayerPerformance(currentPlayerId);
+        }
+    }, 3000);
 }
 
 // Temel oyuncu bilgilerini doldur

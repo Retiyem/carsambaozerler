@@ -23,6 +23,7 @@ const players = [
     { id: 'firatcan_solmaz', name: 'Fıratcan SOLMAZ', mevki: 'Defans' },
     { id: 'can_atilgan', name: 'Can ATILGAN', mevki:  'Defans' },
     { id: 'alper_basdag', name: 'Alper BASDAĞ', mevki: 'Orta Saha' },
+    { id: 'yakup_sunay', name: 'Yakup SUNAY', mevki: 'Orta Saha' },
     { id: 'huseyincan_yuksekdag', name: 'Hüseyin Can YÜKSEKDAĞ', mevki: 'Kaleci' },
 ];
 

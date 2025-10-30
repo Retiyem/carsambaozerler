@@ -690,6 +690,34 @@ function toggleDataManagement() {
 // Geliştirici konsol komutu
 window.showDataManagement = toggleDataManagement;
 
+// Veri önizleme fonksiyonu
+function previewExportData() {
+    const data = {
+        players: players,
+        matches: matches,
+        exportDate: new Date().toISOString()
+    };
+    
+    console.log('📊 Dışa aktarılacak veri önizlemesi:', data);
+    alert(`Veri Önizlemesi:\n- ${data.players.length} oyuncu\n- ${data.matches.length} maç\n- Dışa aktarma tarihi: ${new Date().toLocaleDateString('tr-TR')}`);
+}
+
+// Dosya doğrulama fonksiyonu
+function validateImportFile(file) {
+    if (!file) {
+        alert('Lütfen bir dosya seçin.');
+        return false;
+    }
+    
+    if (file.type !== 'application/json') {
+        alert('Sadece JSON dosyaları desteklenir.');
+        return false;
+    }
+    
+    console.log('📄 Dosya doğrulandı:', file.name);
+    return true;
+}
+
 // Export fonksiyonları
 window.exportData = exportData;
 window.previewExportData = previewExportData;

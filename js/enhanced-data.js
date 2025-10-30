@@ -1,11 +1,5 @@
 // GENİŞLETİLMİŞ VERİ YAPISI - Mevcut data.js'nin üzerine eklenen özellikler
 
-// SEZON YÖNETİMİ
-const seasons = {
-    current: '2025-2026',
-    all: ['2024-2025', '2025-2026', '2026-2027']
-};
-
 // GENİŞLETİLMİŞ OYUNCU YAPISI
 const enhancedPlayers = [
     { 

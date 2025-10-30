@@ -215,16 +215,6 @@ function showSwipeFeedback(direction) {
     console.log('Swipe feedback engellendi:', direction);
     return false;
 }
-    
-    indicator.innerHTML = `
-        <div class="swipe-feedback-content">
-            <span class="swipe-arrow">${arrow}</span>
-            <span class="swipe-text">${text}</span>
-        </div>
-    `;
-    
-    indicator.className = `swipe-feedback swipe-${direction} active`;
-}
 
 function hideSwipeFeedback() {
     const indicator = document.getElementById('swipe-feedback');
@@ -238,6 +228,13 @@ function createSwipeIndicator() {
     // Bu fonksiyon artık devre dışı - swipe göstergesi engellendi
     return false;
 }
+
+// Navigasyon ipucu göster
+function showNavigationHint() {
+    const indicator = document.createElement('div');
+    indicator.id = 'navigation-hint';
+    indicator.className = 'navigation-hint';
+    
     indicator.innerHTML = `
         <div class="swipe-hint">
             <span class="swipe-icon">👆</span>
