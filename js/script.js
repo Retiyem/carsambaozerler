@@ -544,23 +544,23 @@ window.addEventListener('load', function() {
 const nextMatchLineup = {
     teamA: [
         'onur_mustafa',      // 1 - Onur
-        'ozan_necipoglu',    // 2 - Ozan
-        'fatih_atalay',      // 3 - Fatih
-        'ensar_bulbul',      // 4 - Ensar
+        'huseyincan_yuksekdag',    // 2 - Ozan
+        'seyfeddin_bulbul',      // 3 - Fatih
+        'tayyip_erdogan_yilmaz',      // 4 - Ensar
         'ahmet_sadıkoglu',   // 5 - Ahmet
         'ibrahim_erdogdu',   // 6 - İbrahim
         'burak_kocabey',     // 7 - Burak
-        'furkan_sevimli'     // 8 - Furkan Sevimli
+        'ömer_erdal'     // 8 - Furkan Sevimli
     ],
     teamB: [
-        'tayyip_erdogan_yilmaz', // 1 - Erdoğan
-        'huseyincan_yuksekdag',  // 2 - Hüseyin Can
+        'orhan_sariaydin', // 1 - Erdoğan
+        'furkan_sevimli',  // 2 - Hüseyin Can
         'talha_bulbul',          // 3 - Talha
-        'firatcan_solmaz',       // 4 - Fırat
+        'furkan_demiral',       // 4 - Fırat
         'furkan_yilmaz',         // 5 - Furkan Yılmaz
         'ridvan_gumus',          // 6 - Rıdvan
         'emre_erdal',            // 7 - Emre
-        'seyfeddin_bulbul'       // 8 - Seyfeddin
+        'ensar_bulbul'       // 8 - Seyfeddin
     ]
 };
 
