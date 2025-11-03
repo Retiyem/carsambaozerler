@@ -184,6 +184,38 @@ const matches = [
 
         ]
     },
+    {
+        id: 4, // Dördüncü maç
+        date: '02.11.2025', // Maç tarihi
+        teamAGoals: 11, // A Takımının attığı gol
+        teamBGoals: 11, // B Takımının attığı gol
+        macin_adami: 'huseyincan_yuksekdag', // Talha çok iyi kaleci performansı gösterdi
+        esek_adam: 'seyfeddin_bulbul', // Belirlenecek
+        performances: [
+            // A Takımı oyuncuları (7 kişi)
+            { playerId: 'furkan_sevimli', team: 'A', goals: 0, weeklyMVP: false },
+            { playerId: 'ibrahim_erdogdu', team: 'A', goals: 0, weeklyMVP: false },
+            { playerId: 'talha_bulbul', team: 'A', goals: 0, weeklyMVP: false },
+            { playerId: 'orhan_sariaydin', team: 'A', goals: 2, weeklyMVP: false },
+            { playerId: 'furkan_yilmaz', team: 'A', goals: 0, weeklyMVP: false },
+            { playerId: 'emre_erdal', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'seyfeddin_bulbul', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'ridvan_gumus', team: 'A', goals: 3, weeklyMVP: false },
+
+            // B Takımı oyuncuları (7 kişi)
+            { playerId: 'onur_mustafa', team: 'B', goals: 1, weeklyMVP: false },
+            { playerId: 'furkan_demiral', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'burak_kocabey', team: 'B', goals: 6, weeklyMVP: false },
+            { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0, weeklyMVP: true },
+            { playerId: 'ahmet_sadıkoglu', team: 'B', goals: 6, weeklyMVP: false },
+            { playerId: 'tayyip_erdogan_yilmaz', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'ömer_erdal', team: 'B', goals: 4, weeklyMVP: false },
+            { playerId: 'ensar_bulbul', team: 'B', goals: 2, weeklyMVP: false },
+            // Maça katılmayan oyuncuları bu listeye eklemeyin.
+            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
+
+        ]
+    },
 ];
 
 // HAFTANIN ADAMI SİSTEMİ
@@ -229,6 +261,20 @@ const weeklyHeroes = [
             assists: 0, // O hafta yaptığı asist
             teamWins: 1, // Takımının kazandığı maç sayısı
             performance: 'Muhteşem savunma performansı! Rakip forvetlere geçit vermedi.'
+        }
+    },
+        {
+        week: 4, // Hafta numarası
+        date: '03.11.2025', // Hafta tarihi
+        playerId: 'huseyincan_yuksekdag', // Haftanın adamının ID'si
+        playerName: 'HüseyinCAN YÜKSEKDAĞ', // Haftanın adamının adı
+        note: 'Çok iyi kalecilik yaptı! Kritik kurtarışlarıyla takımının galibiyetinde büyük pay sahibi oldu.', // Haftanın adamı notu
+        stats: {
+            matchesPlayed: 1, // O hafta oynadığı maç sayısı
+            goals: 0, // O hafta attığı gol
+            assists: 0, // O hafta yaptığı asist
+            teamWins: 1, // Takımının kazandığı maç sayısı
+            performance: 'Muhteşem kaleci performansı! Maçı kurtardı.'
         }
     }
 ];

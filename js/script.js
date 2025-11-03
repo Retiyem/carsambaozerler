@@ -486,7 +486,7 @@ function displayWeeklyDonkey() {
             </div>
             <div class="donkey-info">
                 <h4>${donkeyPlayer.name}</h4>
-                <p class="donkey-comment">🫏 Orhan eşşeğinin yokluğunu aratmadı! kritik anlarda ağlayarak herkesin oyun hevesine sıçtı... 🫏</p>
+                <p class="donkey-comment">🫏 Burun ameliyatı sonrası tüm futbol zekasının Burnunda olduğu ortaya çıktı! Burnunu tekrar eski haline getirmeye çalışıyor... 🫏</p>
             </div>
         </div>
     `;
