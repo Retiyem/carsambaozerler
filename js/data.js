@@ -187,8 +187,8 @@ const matches = [
     {
         id: 4, // Dördüncü maç
         date: '02.11.2025', // Maç tarihi
-        teamAGoals: 11, // A Takımının attığı gol
-        teamBGoals: 11, // B Takımının attığı gol
+        teamAGoals: 7, // A Takımının attığı gol
+        teamBGoals: 19, // B Takımının attığı gol
         macin_adami: 'huseyincan_yuksekdag', // Talha çok iyi kaleci performansı gösterdi
         esek_adam: 'seyfeddin_bulbul', // Belirlenecek
         performances: [
