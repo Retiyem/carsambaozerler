@@ -596,6 +596,504 @@ footer {
     transform: translateY(-3px) scale(1.1);
 }
 
+/* ============ SEZON YÖNETİM STİLLERİ ============ */
+
+/* Sezon Bilgi Banneri */
+.season-info {
+    margin: 20px 0;
+    background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.current-season-banner {
+    padding: 20px 25px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.current-season-banner h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.season-end-text {
+    margin: 0;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+/* Geçmiş Sezonlar */
+.historical-seasons {
+    margin-top: 30px;
+}
+
+.historical-seasons .section-title {
+    color: var(--secondary-accent);
+}
+
+.no-historical-data {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+    padding: 40px;
+    margin: 0;
+}
+
+.season-card {
+    background: var(--glass-card-bg);
+    border: 1px solid var(--glass-card-border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.season-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.season-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.season-card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--secondary-accent);
+    margin: 0;
+}
+
+.season-period {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.season-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.summary-item {
+    text-align: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.summary-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 5px;
+}
+
+.summary-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+/* ============ ANASAYFA PUAN DURUMU ÖN İZLEME ============ */
+
+.top-players-preview {
+    margin-top: 30px;
+}
+
+.top-players-list {
+    margin: 20px 0;
+}
+
+.top-player-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.top-player-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.top-player-item.rank-1 {
+    border-left-color: gold;
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+}
+
+.top-player-item.rank-2 {
+    border-left-color: silver;
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.15), rgba(192, 192, 192, 0.05));
+}
+
+.top-player-item.rank-3 {
+    border-left-color: #CD7F32;
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.15), rgba(205, 127, 50, 0.05));
+}
+
+.top-player-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.top-player-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-accent);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.top-player-item.rank-1 .top-player-avatar {
+    border-color: gold;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+.top-player-item.rank-2 .top-player-avatar {
+    border-color: silver;
+    box-shadow: 0 0 8px rgba(192, 192, 192, 0.4);
+}
+
+.top-player-item.rank-3 .top-player-avatar {
+    border-color: #CD7F32;
+    box-shadow: 0 0 8px rgba(205, 127, 50, 0.4);
+}
+
+.top-player-avatar:hover {
+    transform: scale(1.1);
+}
+
+.top-player-rank {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.rank-1 .top-player-rank {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #000;
+}
+
+.rank-2 .top-player-rank {
+    background: linear-gradient(135deg, #C0C0C0, #A0A0A0);
+    color: #000;
+}
+
+.rank-3 .top-player-rank {
+    background: linear-gradient(135deg, #CD7F32, #B8860B);
+    color: #000;
+}
+
+.top-player-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.top-player-name {
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 3px;
+}
+
+.player-profile-link {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.player-profile-link:hover {
+    color: var(--secondary-accent);
+    text-decoration: underline;
+    transform: translateX(2px);
+}
+
+.top-player-item.rank-1 .player-profile-link:hover {
+    color: #FFD700;
+}
+
+.top-player-item.rank-2 .player-profile-link:hover {
+    color: #C0C0C0;
+}
+
+.top-player-item.rank-3 .player-profile-link:hover {
+    color: #CD7F32;
+}
+
+.top-player-stats {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.top-player-points {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.player-points-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.player-points-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.view-all-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.cta-button-small {
+    display: inline-block;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.cta-button-small:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(15, 76, 117, 0.4);
+}
+
+/* ============ MAÇ DETAY STİLLERİ ============ */
+
+.detail-btn {
+    background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.detail-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(15, 76, 117, 0.4);
+}
+
+.match-detail-row {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.match-detail-panel {
+    padding: 20px;
+    background: var(--glass-card-bg);
+    border-radius: 8px;
+    margin: 10px;
+}
+
+.match-detail-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.teams-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.team-detail {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-accent);
+}
+
+.team-detail h4 {
+    margin: 0 0 15px 0;
+    color: var(--secondary-accent);
+    font-size: 1.1rem;
+}
+
+.players-list {
+    margin: 0;
+    padding-left: 20px;
+    list-style: decimal;
+}
+
+.players-list li {
+    margin-bottom: 8px;
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.match-awards {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-card-border);
+}
+
+.match-awards h4 {
+    margin: 0 0 15px 0;
+    color: var(--secondary-accent);
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.awards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.award-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.award-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.mvp-award {
+    border-left: 4px solid gold;
+}
+
+.donkey-award {
+    border-left: 4px solid #8B4513;
+}
+
+.award-icon {
+    font-size: 1.5rem;
+}
+
+.award-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.award-title {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2px;
+}
+
+.award-winner {
+    font-weight: 600;
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+/* Responsive - Maç Detayları */
+@media (max-width: 768px) {
+    .teams-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .awards-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .match-detail-panel {
+        padding: 15px;
+        margin: 5px;
+    }
+    
+    .detail-btn {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+    }
+}
+
+/* Responsive - Ana Sayfa Top Players */
+@media (max-width: 768px) {
+    .top-player-item {
+        padding: 12px 15px;
+    }
+    
+    .top-player-left {
+        gap: 10px;
+    }
+    
+    .top-player-rank {
+        width: 25px;
+        height: 25px;
+        font-size: 1rem;
+    }
+    
+    .top-player-name {
+        font-size: 0.95rem;
+    }
+    
+    .player-points-value {
+        font-size: 1.3rem;
+    }
+}
+
+/* Responsive - Sezon Stilleri */
+@media (max-width: 768px) {
+    .current-season-banner h3 {
+        font-size: 1.5rem;
+    }
+    
+    .season-end-text {
+        font-size: 0.9rem;
+    }
+    
+    .season-summary {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .season-card {
+        padding: 15px;
+    }
+}
+
 /* Animasyonlar */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }

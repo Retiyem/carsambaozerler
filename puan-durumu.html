@@ -38,6 +38,15 @@
     <main class="container">
         <section class="scoreboard glassmorphism-card animate-fade-in">
             <h2 class="section-title">Puan Durumu <span class="icon"></span></h2>
+            
+            <!-- Sezon Bilgileri -->
+            <div class="season-info">
+                <div class="current-season-banner">
+                    <h3 id="current-season-title">Sezon 1</h3>
+                    <p id="season-end-info" class="season-end-text">Sezon 1 Ocak 2026'da bitecektir</p>
+                </div>
+            </div>
+            
             <div class="table-container">
                 <table id="player-scoreboard">
                     <thead>
@@ -59,6 +68,15 @@
                         <!-- JavaScript buraya oyuncu verilerini dolduracak -->
                     </tbody>
                 </table>
+            </div>
+        </section>
+
+        <!-- Geçmiş Sezonlar Bölümü -->
+        <section id="historical-seasons" class="historical-seasons glassmorphism-card animate-fade-in" style="display: none;">
+            <h2 class="section-title">Geçmiş Sezonlar <span class="icon">🏆</span></h2>
+            <div id="historical-seasons-content">
+                <!-- JavaScript buraya geçmiş sezonları dolduracak -->
+                <p class="no-historical-data">Henüz tamamlanmış sezon bulunmamaktadır.</p>
             </div>
         </section>
     </main>

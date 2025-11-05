@@ -278,3 +278,39 @@ const weeklyHeroes = [
         }
     }
 ];
+
+// SEZON SİSTEMİ
+// Sezonlar 3 ayda bir sıfırlanır
+// İlk sezon 1 Ocak 2026'da sona erecek
+const seasonSettings = {
+    startDate: '01.11.2025', // İlk sezonun başlangıç tarihi
+    seasonDurationMonths: 3, // Sezon süresi (ay)
+    resetDay: 1, // Her sezonun başladığı gün (ayın kaçında)
+    // Sıfırlama ayları: Ocak, Nisan, Temmuz, Ekim
+    resetMonths: [1, 4, 7, 10]
+};
+
+// Geçmiş sezonlar ve mevcut sezon verileri
+const seasons = {
+    current: {
+        id: 1,
+        name: 'BereketMarket Sezonu',
+        startDate: '01.11.2025',
+        endDate: '31.12.2025',
+        status: 'active' // active, completed
+    },
+    history: [
+        // Gelecekteki sezonlar buraya eklenecek
+        // {
+        //     id: 1,
+        //     name: 'Sezon 1',
+        //     startDate: '01.11.2025',
+        //     endDate: '01.01.2026',
+        //     status: 'completed',
+        //     finalStandings: [...], // Sezon sonu puan durumu
+        //     champion: 'playerId', // Şampiyon oyuncu
+        //     topScorer: 'playerId', // En golcü
+        //     mvpCount: { playerId: count } // MVP sayıları
+        // }
+    ]
+};

@@ -4,97 +4,18 @@ function getPlayerNameById(playerId) {
     return player ? player.name : 'Bilinmeyen Oyuncu';
 }
 
-// Tüm oyuncuların istatistiklerini hesaplayan fonksiyon
+// Tüm oyuncuların istatistiklerini hesaplayan fonksiyon (mevcut sezon için)
 function calculatePlayerStats() {
-    const playerStats = {};
-
-    // Her oyuncu için başlangıç istatistiklerini oluştur
-    players.forEach(player => {
-        playerStats[player.id] = {
-            id: player.id,
-            name: player.name,
-            M: 0, // Maç
-            W: 0, // Galibiyet
-            D: 0, // Beraberlik
-            L: 0, // Mağlubiyet
-            GF: 0, // Attığı Gol
-            GA: 0, // Yediği Gol
-            GD: 0, // Gol Farkı
-            PTS: 0, // Puan
-            MVP: 0, // MVP Sayısı
-            DONKEY: 0 // Haftanın Eşşeği Sayısı
-        };
-    });
-
-    // Her maç için istatistikleri güncelle
-    matches.forEach(match => {
-        const teamAResult = match.teamAGoals > match.teamBGoals ? 'W' : (match.teamAGoals === match.teamBGoals ? 'D' : 'L');
-        const teamBResult = match.teamBGoals > match.teamAGoals ? 'W' : (match.teamBGoals === match.teamAGoals ? 'D' : 'L');
-
-        match.performances.forEach(performance => {
-            const stats = playerStats[performance.playerId];
-            if (!stats) return; // Oyuncu bulunamazsa devam et
-
-            stats.M++; // Oynadığı maç sayısını artır
-
-            // Attığı gol ve asistleri ekle
-            stats.GF += performance.goals;
-            // stats.Assists += performance.assists; // Asist istatistiği eklemek istersen
-
-            // MVP sayısını güncelle
-            if (performance.weeklyMVP) {
-                stats.MVP++;
-            }
-        });
-
-        // Haftanın Eşşeği sayısını güncelle (macin_adami ve esek_adam data.js'deki matches array'inde)
-        if (match.esek_adam && playerStats[match.esek_adam]) {
-            playerStats[match.esek_adam].DONKEY++;
-        }
-
-        match.performances.forEach(performance => {
-            const stats = playerStats[performance.playerId];
-            if (!stats) return; // Oyuncu bulunamazsa devam et
-
-            // Maç sonucuna göre galibiyet, beraberlik, mağlubiyet ve yediği golleri güncelle
-            if (performance.team === 'A') {
-                if (teamAResult === 'W') { stats.W++; stats.PTS += 3; }
-                else if (teamAResult === 'D') { stats.D++; stats.PTS += 1; }
-                else { stats.L++; }
-                stats.GA += match.teamBGoals; // Rakip takımın attığı goller
-            } else { // team === 'B'
-                if (teamBResult === 'W') { stats.W++; stats.PTS += 3; }
-                else if (teamBResult === 'D') { stats.D++; stats.PTS += 1; }
-                else { stats.L++; }
-                stats.GA += match.teamAGoals; // Rakip takımın attığı goller
-            }
-        });
-    });
-
-    // Gol farkını hesapla
-    Object.values(playerStats).forEach(stats => {
-        stats.GD = stats.GF - stats.GA;
-    });
-
-    // Puanlara göre sırala (önce Puan, sonra GD, sonra GF)
-    const sortedPlayers = Object.values(playerStats).sort((a, b) => {
-        if (b.PTS !== a.PTS) return b.PTS - a.PTS;
-        if (b.GD !== a.GD) return b.GD - a.GD;
-        return b.GF - a.GF;
-    });
-
-    // Sıra numarasını ekle
-    sortedPlayers.forEach((player, index) => {
-        player.P = index + 1;
-    });
-
-    return sortedPlayers;
+    return calculateCurrentSeasonPlayerStats();
 }
 
 // Puan durumu tablosunu HTML'e yerleştirir
 function renderScoreboard() {
     const scoreboardBody = document.getElementById('player-scoreboard')?.querySelector('tbody');
     if (!scoreboardBody) return;
+
+    // Sezon bilgilerini güncelle
+    updateSeasonInfo();
 
     const sortedPlayers = calculatePlayerStats();
     scoreboardBody.innerHTML = ''; // Mevcut içeriği temizle
@@ -134,6 +55,73 @@ function renderScoreboard() {
     });
 }
 
+// Sezon bilgilerini güncelleme fonksiyonu
+function updateSeasonInfo() {
+    const seasonInfo = getCurrentSeason();
+    
+    // Mevcut sezon başlığını güncelle
+    const seasonTitle = document.getElementById('current-season-title');
+    if (seasonTitle) {
+        seasonTitle.textContent = seasonInfo.currentSeason.name || 'Sezon 1';
+    }
+    
+    // Sezon bitiş bilgisini güncelle
+    const seasonEndInfo = document.getElementById('season-end-info');
+    if (seasonEndInfo) {
+        const endDateText = formatSeasonEndDate(seasonInfo.seasonEndDate);
+        seasonEndInfo.textContent = `${seasonInfo.currentSeason.name || 'Sezon 1'} ${endDateText} tarihinde bitecektir`;
+    }
+    
+    // Geçmiş sezonları göster
+    renderHistoricalSeasons();
+}
+
+// Geçmiş sezonları render etme fonksiyonu
+function renderHistoricalSeasons() {
+    const historicalSection = document.getElementById('historical-seasons');
+    const historicalContent = document.getElementById('historical-seasons-content');
+    
+    if (!historicalSection || !historicalContent) return;
+    
+    if (seasons.history && seasons.history.length > 0) {
+        historicalSection.style.display = 'block';
+        
+        let historyHTML = '';
+        seasons.history.forEach(season => {
+            historyHTML += `
+                <div class="season-card">
+                    <div class="season-card-header">
+                        <h3 class="season-card-title">${season.name}</h3>
+                        <span class="season-period">${season.startDate} - ${season.endDate}</span>
+                    </div>
+                    <div class="season-summary">
+                        <div class="summary-item">
+                            <div class="summary-label">Şampiyon</div>
+                            <div class="summary-value">${getPlayerNameById(season.champion) || 'Bilinmeyen'}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">En Golcü</div>
+                            <div class="summary-value">${getPlayerNameById(season.topScorer) || 'Bilinmeyen'}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Toplam Maç</div>
+                            <div class="summary-value">${season.totalMatches || 0}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Toplam Gol</div>
+                            <div class="summary-value">${season.totalGoals || 0}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        historicalContent.innerHTML = historyHTML;
+    } else {
+        historicalSection.style.display = 'none';
+    }
+}
+
 // Maç sonuçları tablosunu HTML'e yerleştirir
 function renderMatchResults() {
     const matchTableBody = document.getElementById('match-results-table')?.querySelector('tbody');
@@ -164,6 +152,18 @@ function renderMatchResults() {
                 <td>${match.teamBGoals}</td>
                 <td>${match.teamAGoals} - ${match.teamBGoals}</td>
                 <td>${winnerText}</td>
+                <td>
+                    <button class="detail-btn" onclick="toggleMatchDetail(${match.id})">
+                        <i class="fas fa-eye"></i> Detay
+                    </button>
+                </td>
+            </tr>
+            <tr id="detail-${match.id}" class="match-detail-row" style="display: none;">
+                <td colspan="6">
+                    <div class="match-detail-panel">
+                        <!-- JavaScript ile doldurulacak -->
+                    </div>
+                </td>
             </tr>
         `;
         matchTableBody.insertAdjacentHTML('beforeend', row);
@@ -178,53 +178,214 @@ function renderHomePageSummary() {
         // En yüksek ID'li maçı bul (en son maç)
         if (!matches || matches.length === 0) {
             latestMatchSummaryDiv.innerHTML = '<p>Henüz maç oynanmadı.</p>';
-            return;
-        }
+        } else {
+            const latestMatch = matches.reduce((prev, current) => (prev.id > current.id) ? prev : current);
 
-        const latestMatch = matches.reduce((prev, current) => (prev.id > current.id) ? prev : current);
+            let resultStatusText = 'Berabere';
+            if (latestMatch.teamAGoals > latestMatch.teamBGoals) resultStatusText = 'Takım A Kazandı';
+            else if (latestMatch.teamBGoals > latestMatch.teamAGoals) resultStatusText = 'Takım B Kazandı';
 
-        let resultStatusText = 'Berabere';
-        if (latestMatch.teamAGoals > latestMatch.teamBGoals) resultStatusText = 'Takım A Kazandı';
-        else if (latestMatch.teamBGoals > latestMatch.teamAGoals) resultStatusText = 'Takım B Kazandı';
+            // En golcü 3 oyuncuyu bul (o maçtan)
+            const playersWithGoals = latestMatch.performances
+                .filter(perf => perf.goals > 0)
+                .sort((a, b) => b.goals - a.goals)
+                .slice(0, 3);
 
-        // En golcü 3 oyuncuyu bul (o maçtan)
-        const playersWithGoals = latestMatch.performances
-            .filter(perf => perf.goals > 0)
-            .sort((a, b) => b.goals - a.goals)
-            .slice(0, 3);
-
-        let topScorersHtml = '';
-        if (playersWithGoals.length > 0) {
-            topScorersHtml = `
-                <div class="top-scorers-section">
-                    <h5 style="margin: 15px 0 10px 0; color: var(--primary-accent);">En Golcü 3 Oyuncu:</h5>
-                    <ol class="top-scorers-list">
-            `;
-            
-            playersWithGoals.forEach((perf, index) => {
-                const player = players.find(p => p.id === perf.playerId);
-                const playerName = player ? player.name : 'Bilinmeyen Oyuncu';
-                const teamName = perf.team === 'A' ? 'Takım A' : 'Takım B';
+            let topScorersHtml = '';
+            if (playersWithGoals.length > 0) {
+                topScorersHtml = `
+                    <div class="top-scorers-section">
+                        <h5 style="margin: 15px 0 10px 0; color: var(--primary-accent);">En Golcü 3 Oyuncu:</h5>
+                        <ol class="top-scorers-list">
+                `;
+                
+                playersWithGoals.forEach((perf, index) => {
+                    const player = players.find(p => p.id === perf.playerId);
+                    const playerName = player ? player.name : 'Bilinmeyen Oyuncu';
+                    const teamName = perf.team === 'A' ? 'Takım A' : 'Takım B';
+                    
+                    topScorersHtml += `
+                        <li>${playerName} <span class="team-badge">(${teamName})</span> - <strong>${perf.goals} Gol</strong></li>
+                    `;
+                });
                 
                 topScorersHtml += `
-                    <li>${playerName} <span class="team-badge">(${teamName})</span> - <strong>${perf.goals} Gol</strong></li>
+                        </ol>
+                    </div>
                 `;
-            });
-            
-            topScorersHtml += `
-                    </ol>
-                </div>
+            }
+
+            latestMatchSummaryDiv.innerHTML = `
+                <p><strong>Tarih:</strong> ${latestMatch.date}</p>
+                <p><strong>Skor:</strong> ${latestMatch.teamAGoals} - ${latestMatch.teamBGoals}</p>
+                <p><strong>Sonuç:</strong> ${resultStatusText}</p>
+                ${topScorersHtml}
             `;
         }
+    }
+    
+    // Ana sayfaya puan durumu liderlerini ekle
+    renderTopPlayersPreview();
+}
 
-        latestMatchSummaryDiv.innerHTML = `
-            <p><strong>Tarih:</strong> ${latestMatch.date}</p>
-            <p><strong>Skor:</strong> ${latestMatch.teamAGoals} - ${latestMatch.teamBGoals}</p>
-            <p><strong>Sonuç:</strong> ${resultStatusText}</p>
-            ${topScorersHtml}
+// Ana sayfa için ilk 3 oyuncuyu göster
+function renderTopPlayersPreview() {
+    const topPlayersContent = document.getElementById('top-players-content');
+    if (!topPlayersContent) return;
+    
+    const sortedPlayers = calculatePlayerStats();
+    const top3Players = sortedPlayers.slice(0, 3);
+    
+    if (top3Players.length === 0) {
+        topPlayersContent.innerHTML = '<p>Henüz puan durumu verisi bulunmamaktadır.</p>';
+        return;
+    }
+    
+    let html = '';
+    top3Players.forEach((player, index) => {
+        const playerData = players.find(p => p.name === player.name);
+        const playerId = playerData ? playerData.id : player.name.toLowerCase().replace(/\s+/g, '_');
+        
+        let rankClass = '';
+        if (index === 0) rankClass = 'rank-1';
+        else if (index === 1) rankClass = 'rank-2';
+        else if (index === 2) rankClass = 'rank-3';
+        
+        const winRate = player.M > 0 ? ((player.W / player.M) * 100).toFixed(0) : 0;
+        
+        html += `
+            <div class="top-player-item ${rankClass}">
+                <div class="top-player-left">
+                    <div class="top-player-rank">${index + 1}</div>
+                    <img src="img/oyuncular/${playerId}.jpg" alt="${player.name}" class="top-player-avatar" onerror="this.src='img/oyuncular/default.svg'">
+                    <div class="top-player-info">
+                        <div class="top-player-name">
+                            <a href="oyuncu-profili.html?id=${playerId}" class="player-profile-link">${player.name}</a>
+                        </div>
+                        <div class="top-player-stats">${player.M} maç, ${player.GF} gol, %${winRate} galibiyet</div>
+                    </div>
+                </div>
+                <div class="top-player-points">
+                    <div class="player-points-value">${player.PTS}</div>
+                    <div class="player-points-label">puan</div>
+                </div>
+            </div>
         `;
+    });
+    
+    topPlayersContent.innerHTML = html;
+}
+
+// Maç detayını aç/kapat fonksiyonu
+function toggleMatchDetail(matchId) {
+    const detailRow = document.getElementById(`detail-${matchId}`);
+    const detailBtn = document.querySelector(`tr[data-match-id="${matchId}"] .detail-btn`);
+    
+    if (!detailRow) return;
+    
+    if (detailRow.style.display === 'none' || detailRow.style.display === '') {
+        // Detayı göster
+        detailRow.style.display = 'table-row';
+        detailBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Gizle';
+        populateMatchDetail(matchId);
+    } else {
+        // Detayı gizle
+        detailRow.style.display = 'none';
+        detailBtn.innerHTML = '<i class="fas fa-eye"></i> Detay';
     }
 }
+
+// Maç detaylarını doldur
+function populateMatchDetail(matchId) {
+    const match = matches.find(m => m.id == matchId);
+    if (!match) return;
+    
+    const detailPanel = document.querySelector(`#detail-${matchId} .match-detail-panel`);
+    if (!detailPanel) return;
+    
+    // Takımları ayır ve gol sayısına göre sırala
+    const teamAPlayers = match.performances
+        .filter(p => p.team === 'A')
+        .sort((a, b) => (b.goals || 0) - (a.goals || 0)); // En çok golcüden aza doğru
+    
+    const teamBPlayers = match.performances
+        .filter(p => p.team === 'B')
+        .sort((a, b) => (b.goals || 0) - (a.goals || 0)); // En çok golcüden aza doğru
+    
+    // MVP ve Eşşek bilgilerini al
+    const mvpPlayer = match.macin_adami ? getPlayerNameById(match.macin_adami) : 'Belirtilmemiş';
+    const donkeyPlayer = match.esek_adam ? getPlayerNameById(match.esek_adam) : 'Belirtilmemiş';
+    
+    let teamAHtml = `
+        <div class="team-detail">
+            <h4>🅰️ Takım A - ${match.teamAGoals} Gol</h4>
+            <ol class="players-list">
+    `;
+    
+    teamAPlayers.forEach(perf => {
+        const player = players.find(p => p.id === perf.playerId);
+        const playerName = player ? player.name : 'Bilinmeyen Oyuncu';
+        const goals = perf.goals || 0;
+        const mvpIcon = perf.weeklyMVP ? ' ⭐' : '';
+        
+        teamAHtml += `<li>${playerName} - ${goals} Gol${mvpIcon}</li>`;
+    });
+    
+    teamAHtml += '</ol></div>';
+    
+    let teamBHtml = `
+        <div class="team-detail">
+            <h4>🅱️ Takım B - ${match.teamBGoals} Gol</h4>
+            <ol class="players-list">
+    `;
+    
+    teamBPlayers.forEach(perf => {
+        const player = players.find(p => p.id === perf.playerId);
+        const playerName = player ? player.name : 'Bilinmeyen Oyuncu';
+        const goals = perf.goals || 0;
+        const mvpIcon = perf.weeklyMVP ? ' ⭐' : '';
+        
+        teamBHtml += `<li>${playerName} - ${goals} Gol${mvpIcon}</li>`;
+    });
+    
+    teamBHtml += '</ol></div>';
+    
+    // Özel ödüller bölümü
+    const awardsHtml = `
+        <div class="match-awards">
+            <h4>🏆 Maç Ödülleri</h4>
+            <div class="awards-grid">
+                <div class="award-item mvp-award">
+                    <span class="award-icon">⭐</span>
+                    <div class="award-info">
+                        <div class="award-title">Maçın Adamı</div>
+                        <div class="award-winner">${mvpPlayer}</div>
+                    </div>
+                </div>
+                <div class="award-item donkey-award">
+                    <span class="award-icon">🫏</span>
+                    <div class="award-info">
+                        <div class="award-title">Haftanın Eşşeği</div>
+                        <div class="award-winner">${donkeyPlayer}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    detailPanel.innerHTML = `
+        <div class="match-detail-content">
+            <div class="teams-container">
+                ${teamAHtml}
+                ${teamBHtml}
+            </div>
+            ${awardsHtml}
+        </div>
+    `;
+}
+
+// Global fonksiyonları window objesine ekle
+window.toggleMatchDetail = toggleMatchDetail;
 
 // Global fonksiyonları window objesine ekle - MODAL ÖZELLİĞİ KALDIRILDI
 // window.toggleMatchDetail = toggleMatchDetail;
@@ -944,3 +1105,143 @@ function initVideoBackground() {
 document.addEventListener('DOMContentLoaded', function() {
     initVideoBackground();
 });
+
+// ============ SEZON YÖNETİM SİSTEMİ ============
+
+// Geçerli sezonu hesaplayan fonksiyon
+function getCurrentSeason() {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1; // getMonth() 0-indexed
+    
+    // Sezon 1: 1 Kasım 2025 - 31 Aralık 2025 (özel kısa sezon)
+    // Sonraki sezonlar: Her 3 ayda bir (Ocak, Nisan, Temmuz, Ekim)
+    let seasonEndDate;
+    
+    if (currentYear === 2025 && currentMonth >= 11) {
+        // İlk sezon: 31 Aralık 2025'te bitiyor
+        seasonEndDate = new Date(2025, 11, 31); // 31 Aralık 2025
+    } else if (currentMonth >= 1 && currentMonth < 4) {
+        // Ocak-Mart: 31 Mart'ta bitiyor
+        seasonEndDate = new Date(currentYear, 2, 31); // 31 Mart
+    } else if (currentMonth >= 4 && currentMonth < 7) {
+        // Nisan-Haziran: 30 Haziran'da bitiyor
+        seasonEndDate = new Date(currentYear, 5, 30); // 30 Haziran
+    } else if (currentMonth >= 7 && currentMonth < 10) {
+        // Temmuz-Eylül: 30 Eylül'de bitiyor
+        seasonEndDate = new Date(currentYear, 8, 30); // 30 Eylül
+    } else {
+        // Ekim-Aralık: 31 Aralık'ta bitiyor
+        seasonEndDate = new Date(currentYear, 11, 31); // 31 Aralık
+    }
+    
+    return {
+        currentSeason: seasons.current,
+        seasonEndDate: seasonEndDate,
+        isSeasonActive: currentDate < seasonEndDate
+    };
+}
+
+// Sezon sonu tarihini formatla
+function formatSeasonEndDate(date) {
+    const months = [
+        'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
+        'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
+    ];
+    
+    return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+// Sadece mevcut sezonun maçlarını filtreleyen fonksiyon
+function getCurrentSeasonMatches() {
+    // Şu an için basit bir yaklaşım: tüm maçlar mevcut sezonda
+    // Gelecekte sezon geçişi yapıldığında bu fonksiyon güncellenecek
+    return matches;
+}
+
+// Mevcut sezon için oyuncu istatistiklerini hesaplayan fonksiyon
+function calculateCurrentSeasonPlayerStats() {
+    const currentSeasonMatches = getCurrentSeasonMatches();
+    const playerStats = {};
+
+    // Her oyuncu için başlangıç istatistiklerini oluştur
+    players.forEach(player => {
+        playerStats[player.id] = {
+            id: player.id,
+            name: player.name,
+            M: 0, // Maç
+            W: 0, // Galibiyet
+            D: 0, // Beraberlik
+            L: 0, // Mağlubiyet
+            GF: 0, // Attığı Gol
+            GA: 0, // Yediği Gol
+            GD: 0, // Gol Farkı
+            PTS: 0, // Puan
+            MVP: 0, // MVP Sayısı
+            DONKEY: 0 // Haftanın Eşşeği Sayısı
+        };
+    });
+
+    // Her maç için istatistikleri güncelle
+    currentSeasonMatches.forEach(match => {
+        const teamAResult = match.teamAGoals > match.teamBGoals ? 'W' : (match.teamAGoals === match.teamBGoals ? 'D' : 'L');
+        const teamBResult = match.teamBGoals > match.teamAGoals ? 'W' : (match.teamBGoals === match.teamAGoals ? 'D' : 'L');
+
+        match.performances.forEach(performance => {
+            const stats = playerStats[performance.playerId];
+            if (!stats) return; // Oyuncu bulunamazsa devam et
+
+            stats.M++; // Oynadığı maç sayısını artır
+
+            // Attığı gol ve asistleri ekle
+            stats.GF += performance.goals;
+
+            // MVP sayısını güncelle
+            if (performance.weeklyMVP) {
+                stats.MVP++;
+            }
+        });
+
+        // Haftanın Eşşeği sayısını güncelle
+        if (match.esek_adam && playerStats[match.esek_adam]) {
+            playerStats[match.esek_adam].DONKEY++;
+        }
+
+        match.performances.forEach(performance => {
+            const stats = playerStats[performance.playerId];
+            if (!stats) return; // Oyuncu bulunamazsa devam et
+
+            // Maç sonucuna göre galibiyet, beraberlik, mağlubiyet ve yediği golleri güncelle
+            if (performance.team === 'A') {
+                if (teamAResult === 'W') { stats.W++; stats.PTS += 3; }
+                else if (teamAResult === 'D') { stats.D++; stats.PTS += 1; }
+                else { stats.L++; }
+                stats.GA += match.teamBGoals; // Rakip takımın attığı goller
+            } else { // team === 'B'
+                if (teamBResult === 'W') { stats.W++; stats.PTS += 3; }
+                else if (teamBResult === 'D') { stats.D++; stats.PTS += 1; }
+                else { stats.L++; }
+                stats.GA += match.teamAGoals; // Rakip takımın attığı goller
+            }
+        });
+    });
+
+    // Gol farkını hesapla
+    Object.values(playerStats).forEach(stats => {
+        stats.GD = stats.GF - stats.GA;
+    });
+
+    // Puanlara göre sırala (önce Puan, sonra GD, sonra GF)
+    const sortedPlayers = Object.values(playerStats).sort((a, b) => {
+        if (b.PTS !== a.PTS) return b.PTS - a.PTS;
+        if (b.GD !== a.GD) return b.GD - a.GD;
+        return b.GF - a.GF;
+    });
+
+    // Sıra numarasını ekle
+    sortedPlayers.forEach((player, index) => {
+        player.P = index + 1;
+    });
+
+    return sortedPlayers;
+}
