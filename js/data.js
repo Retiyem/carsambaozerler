@@ -216,6 +216,35 @@ const matches = [
 
         ]
     },
+        {
+        id: 5, // Dördüncü maç
+        date: '06.11.2025', // Maç tarihi
+        teamAGoals: 10, // A Takımının attığı gol
+        teamBGoals: 9, // B Takımının attığı gol
+        macin_adami: 'fatih_atalay', // Talha çok iyi kaleci performansı gösterdi
+        esek_adam: 'ahmet_sadıkoglu', // Belirlenecek
+        performances: [
+            // A Takımı oyuncuları (7 kişi)
+            { playerId: 'ahmet_sadıkoglu', team: 'A', goals: 4, weeklyMVP: false },
+            { playerId: 'ibrahim_erdogdu', team: 'A', goals: 2, weeklyMVP: false },
+            { playerId: 'talha_bulbul', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'ensar_bulbul', team: 'A', goals: 2, weeklyMVP: false },
+            { playerId: 'berkin_tayyip_ceran', team: 'A', goals: 0, weeklyMVP: false },
+            { playerId: 'ozan_necipoglu', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'fatih_atalay', team: 'A', goals: 0, weeklyMVP: true },
+
+            // B Takımı oyuncuları (7 kişi)
+            { playerId: 'onur_mustafa', team: 'B', goals: 6, weeklyMVP: false },
+            { playerId: 'emre_erdal', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'yakup_sunay', team: 'B', goals: 1, weeklyMVP: false },
+            { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'seyfeddin_bulbul', team: 'B', goals: 1, weeklyMVP: false },
+            { playerId: 'ömer_erdal', team: 'B', goals: 1, weeklyMVP: false },
+            // Maça katılmayan oyuncuları bu listeye eklemeyin.
+            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
+
+        ]
+    },
 ];
 
 // HAFTANIN ADAMI SİSTEMİ
@@ -276,14 +305,28 @@ const weeklyHeroes = [
             teamWins: 1, // Takımının kazandığı maç sayısı
             performance: 'Muhteşem kaleci performansı! Maçı kurtardı.'
         }
-    }
+    },
+        {
+        week: 5, // Hafta numarası
+        date: '06.11.2025', // Hafta tarihi
+        playerId: 'fatih_atalay', // Haftanın adamının ID'si
+        playerName: 'Fatih Atalay', // Haftanın adamının adı
+        note: 'Yaptığı Teknik paslar ve kurduğu oyunla takımını zafere taşıdı...', // Haftanın adamı notu
+        stats: {
+            matchesPlayed: 1, // O hafta oynadığı maç sayısı
+            goals: 0, // O hafta attığı gol
+            assists: 0, // O hafta yaptığı asist
+            teamWins: 1, // Takımının kazandığı maç sayısı
+            performance: ''
+        }
+    },
 ];
 
 // SEZON SİSTEMİ
 // Sezonlar 3 ayda bir sıfırlanır
 // İlk sezon 1 Ocak 2026'da sona erecek
 const seasonSettings = {
-    startDate: '01.11.2025', // İlk sezonun başlangıç tarihi
+    startDate: '01.10.2025', // İlk sezonun başlangıç tarihi
     seasonDurationMonths: 3, // Sezon süresi (ay)
     resetDay: 1, // Her sezonun başladığı gün (ayın kaçında)
     // Sıfırlama ayları: Ocak, Nisan, Temmuz, Ekim
