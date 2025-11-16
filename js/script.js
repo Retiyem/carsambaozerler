@@ -647,7 +647,7 @@ function displayWeeklyDonkey() {
             </div>
             <div class="donkey-info">
                 <h4>${donkeyPlayer.name}</h4>
-                <p class="donkey-comment">🫏 Bencil Herif. Tam bir Eşşek . Sadece Kendi keyif almak için oynuyor... 🫏</p>
+                <p class="donkey-comment">🫏 Ampute kaleci... Tepeyi terk eden kaleci... Umarız bir sonraki maç kolunu getirmeyi unutmaz... 🫏</p>
             </div>
         </div>
     `;
