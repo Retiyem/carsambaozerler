@@ -257,7 +257,7 @@ function startCountdowns() {
 
 function openMatchDetailModal(matchId) {
     // Modal özelliği kaldırıldı
-    console.log('Modal özelliği devre dışı bırakıldı');
+    
     return;
     
     /*
@@ -376,7 +376,7 @@ function switchPerformanceTab(team) {
 // Maç detay modalını kapat
 function closeMatchDetailModal() {
     // Modal özelliği kaldırıldı
-    console.log('Modal kapatma özelliği devre dışı bırakıldı');
+    
     return;
     
     /*
@@ -420,24 +420,24 @@ function openMatchPreview(matchId) {
 // Maç sonuçları tablosunda click event'i ekle - DEVRE DIŞI BIRAKILDI
 function addMatchClickEvents() {
     // Modal özelliği kaldırıldı - maçlara tıklama devre dışı
-    console.log('Maç detay modal özelliği devre dışı bırakıldı');
+    
     return;
     
     /*
     const matchTable = document.getElementById('match-results-table');
-    console.log('addMatchClickEvents çalıştı, tablo:', matchTable);
+    
     if (!matchTable) return;
     
     matchTable.addEventListener('click', (e) => {
-        console.log('Tablo tıklandı:', e.target);
+        
         const row = e.target.closest('tr');
-        console.log('Bulunan satır:', row);
+        
         if (!row || !row.dataset.matchId) {
-            console.log('Satır yok veya matchId yok:', row?.dataset?.matchId);
+            
             return;
         }
         
-        console.log('Modal açılıyor, matchId:', row.dataset.matchId);
+        
         openMatchDetailModal(row.dataset.matchId);
     });
     */

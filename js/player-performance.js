@@ -3,7 +3,7 @@
  */
 function calculatePlayerRanking(playerId) {
     if (typeof calculatePlayerStats !== 'function') {
-        console.log('⚠️ calculatePlayerStats fonksiyonu bulunamadı, varsayılan sıralama: 5');
+
         return 5; // Varsayılan orta sıralama
     }
     
@@ -46,36 +46,27 @@ let playerRadarChart = null;
 function initializePlayerPerformance(playerId) {
     // Verilerin hazır olup olmadığını kontrol et
     if (!playerId) {
-        console.log('❌ Player ID yok');
         return;
     }
     
     if (typeof matches === 'undefined' || !matches || matches.length === 0) {
-        console.log('❌ Maç verileri yok, 1 saniye sonra tekrar denenecek...');
         setTimeout(() => initializePlayerPerformance(playerId), 1000);
         return;
     }
     
     if (typeof players === 'undefined' || !players || players.length === 0) {
-        console.log('❌ Oyuncu verileri yok, 1 saniye sonra tekrar denenecek...');
         setTimeout(() => initializePlayerPerformance(playerId), 1000);
         return;
     }
 
-    console.log(`📊 ${playerId} için performans grafikleri yükleniyor...`);
-
     // Chart.js kontrolü
-    console.log('🔍 Chart.js kontrolü:', typeof Chart, window.Chart);
-    
     if (typeof Chart === 'undefined' && typeof window.Chart === 'undefined') {
-        console.log('❌ Chart.js bulunamadı, performans grafikleri devre dışı');
         showNoPerformanceData();
         return;
     }
 
     // Chart referansını ayarla
     const ChartJS = Chart || window.Chart;
-    console.log('✅ Chart.js mevcut:', ChartJS);
 
     // Chart.js global ayarları
     if (ChartJS && ChartJS.defaults) {
@@ -89,13 +80,13 @@ function initializePlayerPerformance(playerId) {
     const performanceData = calculatePlayerPerformanceData(playerId);
     
     if (performanceData && performanceData.matches.length > 0) {
-        console.log(`✅ ${performanceData.matches.length} maç verisi bulundu`);
+        
         showPlayerPerformance(performanceData);
         createPlayerPerformanceChart(performanceData);
         createPlayerRadarChart(performanceData);
         updateRecentMatchesTable(performanceData);
     } else {
-        console.log('❌ Performans verisi bulunamadı');
+        
         hidePlayerPerformance();
     }
 }
@@ -104,38 +95,33 @@ function initializePlayerPerformance(playerId) {
  * Oyuncu performans verilerini hesapla
  */
 function calculatePlayerPerformanceData(playerId) {
-    console.log(`🔍 Performans hesaplanıyor - Player ID: ${playerId}`);
+    
     
     const player = players.find(p => p.id === playerId);
     if (!player) {
         console.error(`❌ Oyuncu bulunamadı: ${playerId}`);
-        console.log('Mevcut oyuncu ID\'leri:', players.map(p => p.id));
-        return null;
+                return null;
     }
 
-    console.log(`✅ Oyuncu bulundu: ${player.name}`);
+    
 
     const playerMatches = [];
     let totalGoals = 0;
     let totalMVPs = 0;
 
-    console.log(`📊 ${matches.length} maç kontrol ediliyor...`);
+    
 
     // Tüm maçları analiz et
     matches.forEach((match, index) => {
-        console.log(`Maç ${index + 1} (ID: ${match.id}, Tarih: ${match.date})`);
-        
-        if (!match.performances || !Array.isArray(match.performances)) {
+                if (!match.performances || !Array.isArray(match.performances)) {
             console.warn(`⚠️ Maç ${match.id} - performances dizisi yok`);
             return;
         }
         
-        console.log(`  Performanslar:`, match.performances.map(p => `${p.playerId}: ${p.goals}g`));
-        
-        const performance = match.performances.find(p => p.playerId === playerId);
+                const performance = match.performances.find(p => p.playerId === playerId);
         
         if (performance) {
-            console.log(`  ✅ ${playerId} bu maçta oynadı:`, performance);
+            
             
             const goals = performance.goals || 0;
             const mvp = performance.weeklyMVP ? 1 : 0;
@@ -164,11 +150,11 @@ function calculatePlayerPerformanceData(playerId) {
             totalGoals += goals;
             totalMVPs += mvp;
         } else {
-            console.log(`  ❌ ${playerId} bu maçta oynatılmamış`);
+            
         }
     });
 
-    console.log(`🎯 Sonuç: ${playerMatches.length} maç, ${totalGoals} gol, ${totalMVPs} MVP`);
+    
 
     // Tarihe göre sırala (eskiden yeniye)
     playerMatches.sort((a, b) => {
@@ -219,7 +205,7 @@ function createPlayerPerformanceChart(data) {
         return;
     }
 
-    console.log('📊 Chart oluşturuluyor...', data.matches.length, 'maç ile');
+    
 
     // Mevcut chart'ı temizle
     if (playerPerformanceChart) {
@@ -234,7 +220,6 @@ function createPlayerPerformanceChart(data) {
     });
 
     const goalsData = data.matches.map(match => match.goals);
-    const mvpData = data.matches.map(match => match.mvp);
 
     // Chart konfigürasyonu
     const config = {
@@ -251,20 +236,6 @@ function createPlayerPerformanceChart(data) {
                     fill: true,
                     tension: 0.4,
                     pointBackgroundColor: '#ff6b6b',
-                    pointBorderColor: '#ffffff',
-                    pointBorderWidth: 2,
-                    pointRadius: 6,
-                    pointHoverRadius: 8,
-                },
-                {
-                    label: 'MVP',
-                    data: mvpData,
-                    borderColor: '#feca57',
-                    backgroundColor: 'rgba(254, 202, 87, 0.1)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: '#feca57',
                     pointBorderColor: '#ffffff',
                     pointBorderWidth: 2,
                     pointRadius: 6,
@@ -341,7 +312,7 @@ function createPlayerPerformanceChart(data) {
     };
 
     playerPerformanceChart = new ChartJS(ctx, config);
-    console.log('📊 Oyuncu performans chart oluşturuldu');
+    
 }
 
 /**
@@ -398,15 +369,7 @@ function createPlayerRadarChart(data) {
         overallRating        // Genel Değerlendirme
     ];
 
-    console.log('🎯 Radar verileri:', {
-        goalPerformance: goalPerformance.toFixed(1) + ` (Ortalama ${avgGoalsPerMatch.toFixed(1)} gol/maç, Hedef: 5 gol/maç)`,
-        teamSuccessRate: teamSuccessRate.toFixed(1) + ` (Takım başarı oranı)`,
-        activityLevel: activityLevel.toFixed(1) + ` (${totalMatches}/${totalPlayedMatches} maça katıldı)`,
-        consistency: consistency.toFixed(1) + ` (Gol tutarlılığı)`,
-        overallRating: overallRating.toFixed(1) + ` (Puan tablosu: ${playerRanking}. sıra, ${rankingScore.toFixed(1)} puan)`
-    });
-
-    const config = {
+        const config = {
         type: 'radar',
         data: {
             labels: ['Gol Performansı', 'Takım Başarısı', 'Aktiflik', 'Tutarlılık', 'Genel Değerlendirme'],
@@ -462,7 +425,7 @@ function createPlayerRadarChart(data) {
 
     const ChartJS = Chart || window.Chart;
     playerRadarChart = new ChartJS(ctx, config);
-    console.log('🎯 Oyuncu radar chart oluşturuldu');
+    
 }
 
 /**
@@ -485,14 +448,13 @@ function updateRecentMatchesTable(data) {
             <td><span class="team-badge team-${match.team.toLowerCase()}">Takım ${match.team}</span></td>
             <td style="text-align: center; font-weight: 600; color: #4ecdc4;">${match.teamScore || 0}-${match.opponentScore || 0}</td>
             <td style="text-align: center; font-weight: 600; color: ${match.goals > 0 ? '#ff6b6b' : '#888'};">${match.goals}</td>
-            <td style="text-align: center;">${match.mvp ? '<span class="mvp-badge">MVP</span>' : '-'}</td>
             <td><span class="match-result result-${match.result.toLowerCase().replace('ğ', 'g').replace('ı', 'i')}">${match.result}</span></td>
         `;
 
         tableBody.appendChild(row);
     });
 
-    console.log(`📋 ${lastMatches.length} son maç tabloya eklendi`);
+    
 }
 
 /**
@@ -514,7 +476,7 @@ function showPlayerPerformance(data) {
  * Performans verisi olmadığında mesaj göster
  */
 function showNoPerformanceData() {
-    console.log('📍 Performans verisi yok mesajı gösteriliyor');
+    
     const noDataMessage = document.getElementById('no-performance-data');
     const chartCanvas = document.getElementById('player-performance-chart');
     const radarContainer = document.getElementById('performance-radar-container');
@@ -554,4 +516,5 @@ function hidePlayerPerformance() {
 // Export fonksiyonu
 window.initializePlayerPerformance = initializePlayerPerformance;
 
-console.log('✅ Oyuncu Profil Performans modülü yüklendi');
+
+

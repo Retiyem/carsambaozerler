@@ -6,12 +6,12 @@ const enhancedPlayers = [
         id: 'onur_mustafa', 
         name: 'Onur Mustafa KÖSE',
         rating: 85, 
-        position: 'Forvet', 
+        position: 'Defans', 
         profileImage: 'img/oyuncular/onur_mustafa.jpg', 
         birthDate: '1995-05-15', 
         joinDate: '2024-09-01', 
         favNumber: 10, 
-        bio: 'Sağ ayak tercihi olan hızlı forvet. Takımın gol kralı.',
+        bio: 'Savunmada güvenilir, hızlı müdahaleleri ile dikkat çeken defans oyuncusu.',
         socialMedia: {
             instagram: '@onurkose',
             twitter: '@onurkose'

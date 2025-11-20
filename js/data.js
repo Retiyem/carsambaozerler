@@ -260,7 +260,7 @@ const matches = [
             { playerId: 'talha_bulbul', team: 'A', goals: 0, weeklyMVP: false },
             { playerId: 'furkan_demiral', team: 'A', goals: 0, weeklyMVP: false },
             { playerId: 'seyfeddin_bulbul', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'fatih_atalay', team: 'A', goals: 1, weeklyMVP: true },
+            { playerId: 'fatih_atalay', team: 'A', goals: 1, weeklyMVP: false },
             // B Takımı oyuncuları (7 kişi)
             { playerId: 'ridvan_gumus', team: 'B', goals: 9, weeklyMVP: false },
             { playerId: 'ibrahim_erdogdu', team: 'B', goals: 1, weeklyMVP: false },
@@ -268,6 +268,36 @@ const matches = [
             { playerId: 'yakup_sunay', team: 'B', goals: 1, weeklyMVP: false },
             { playerId: 'ömer_erdal', team: 'B', goals: 8, weeklyMVP: false },
             { playerId: 'orhan_sariaydin', team: 'B', goals: 6, weeklyMVP: true },
+            // Maça katılmayan oyuncuları bu listeye eklemeyin.
+            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
+
+        ]
+    },
+
+                {
+        id: 7, // Yedinci maç
+        date: '19.11.2025', // Maç tarihi
+        teamAGoals: 12, // A Takımının attığı gol
+        teamBGoals: 15, // B Takımının attığı gol
+        macin_adami: 'onur_mustafa', // Onur çok iyi kaleci performansı gösterdi
+        esek_adam: 'ibrahim_erdogdu', // Belirlenecek
+        performances: [
+            // A Takımı oyuncuları (7 kişi)
+            { playerId: 'tayyip_erdogan', team: 'A', goals: 4, weeklyMVP: false },
+            { playerId: 'ensar_bulbul', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'ridvan_gumus', team: 'A', goals: 3, weeklyMVP: false },
+            { playerId: 'emre_erdal', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'yakup_sunay', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'seyfeddin_bulbul', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'ibrahim_erdogdu', team: 'A', goals: 1, weeklyMVP: false },
+            // B Takımı oyuncuları (7 kişi)
+            { playerId: 'ahmet_sadıkoglu', team: 'B', goals: 6, weeklyMVP: false },
+            { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'furkan_sevimli', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'burak_kocabey', team: 'B', goals: 2, weeklyMVP: false },
+            { playerId: 'ömer_erdal', team: 'B', goals: 3, weeklyMVP: false },
+            { playerId: 'onur_mustafa', team: 'B', goals: 4, weeklyMVP: true },
+            { playerId: 'talha_bulbul', team: 'B', goals: 0, weeklyMVP: false },
             // Maça katılmayan oyuncuları bu listeye eklemeyin.
             // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
 
@@ -361,6 +391,14 @@ const weeklyHeroes = [
             teamWins: 1, // Takımının kazandığı maç sayısı
             performance: ''
         }
+    },
+
+                {
+        week: 7, // Hafta numarası
+        date: '19.11.2025', // Hafta tarihi
+        playerId: 'onur_mustafa', // Haftanın adamının ID'si
+        playerName: 'Onur Mustafa KÖSE', // Haftanın adamının adı
+        note: 'Öyle bir oynadı ki, rakipler maç bitince ‘biz niye geldik ?’ dedi...', // Haftanın adamı notu
     },
 ];
 

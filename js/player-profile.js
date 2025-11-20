@@ -30,25 +30,25 @@ function setupEventListeners() {
 
 // Oyuncu verilerini yükle
 function loadPlayerData() {
-    console.log('🔍 Oyuncu verileri yükleniyor, ID:', currentPlayerId);
+    
     
     // Enhanced data'dan oyuncu bilgilerini al
     const playerData = getPlayerProfileData ? getPlayerProfileData(currentPlayerId) : null;
     
     if (!playerData) {
-        console.log('📊 Enhanced data bulunamadı, basic data kullanılıyor');
+        
         // Fallback - mevcut sistemden veri al
         loadBasicPlayerData();
         return;
     }
     
-    console.log('✅ Enhanced data bulundu:', playerData);
+    
     
     // Temel bilgileri yükle
     populateBasicInfo(playerData.basic);
     
     // İstatistikleri yükle
-    console.log('📊 İstatistikler yükleniyor:', playerData.season);
+    
     populateStats(playerData.season, playerData.career);
     
     // Başarıları yükle
@@ -114,9 +114,16 @@ function populateBasicInfo(playerInfo) {
 
 // İstatistikleri doldur
 function populateStats(seasonStats, careerStats) {
+    // calculatePlayerStats'tan güncel veriyi al
+    let playerStats = null;
+    if (typeof calculatePlayerStats === 'function') {
+        const allStats = calculatePlayerStats();
+        playerStats = allStats.find(s => s.id === currentPlayerId);
+    }
+    
     // Oyuncunun attığı gol
     const totalGoalsElement = document.getElementById('total-goals');
-    if (totalGoalsElement) totalGoalsElement.textContent = seasonStats.goals || 0;
+    if (totalGoalsElement) totalGoalsElement.textContent = playerStats ? playerStats.GF : (seasonStats.goals || 0);
     
     // Takımının attığı gol
     const teamGoalsForElement = document.getElementById('team-goals-for');
@@ -140,17 +147,22 @@ function populateStats(seasonStats, careerStats) {
     
     // MVP sayısı
     const totalMvpsElement = document.getElementById('total-mvps');
-    if (totalMvpsElement) totalMvpsElement.textContent = seasonStats.mvps || 0;
+    if (totalMvpsElement) totalMvpsElement.textContent = playerStats ? playerStats.MVP : (seasonStats.mvps || 0);
     
-    // Haftanın Eşşeği sayısı (script.js'deki donkey hesaplamasından)
+    // Haftanın Eşşeği sayısı
     const totalDonkeysElement = document.getElementById('total-donkeys');
-    if (totalDonkeysElement) {
-        if (typeof calculatePlayerStats === 'function') {
-            const allStats = calculatePlayerStats();
-            const playerStats = allStats.find(s => s.id === currentPlayerId);
-            totalDonkeysElement.textContent = playerStats?.DONKEY || 0;
+    if (totalDonkeysElement) totalDonkeysElement.textContent = playerStats ? playerStats.DONKEY : 0;
+    
+    // Maç başına gol hesaplama
+    const goalsPerMatchElement = document.getElementById('goals-per-match');
+    if (goalsPerMatchElement) {
+        if (playerStats) {
+            const matches = playerStats.M || 0;
+            const goals = playerStats.GF || 0;
+            const goalsPerMatch = matches > 0 ? (goals / matches).toFixed(1) : '0.0';
+            goalsPerMatchElement.textContent = goalsPerMatch;
         } else {
-            totalDonkeysElement.textContent = 0;
+            goalsPerMatchElement.textContent = '0.0';
         }
     }
 }
@@ -271,14 +283,14 @@ function drawCharts(chartData) {
     
     // Yeni performans grafik sistemi kullan
     if (typeof initializePlayerPerformance === 'function') {
-        console.log('🎯 Player performance fonksiyonu çağrılıyor...');
+        
         initializePlayerPerformance(currentPlayerId);
     } else {
-        console.log('❌ initializePlayerPerformance fonksiyonu bulunamadı');
+        
         // 1 saniye sonra tekrar dene
         setTimeout(() => {
             if (typeof initializePlayerPerformance === 'function') {
-                console.log('🎯 Player performance fonksiyonu gecikmeli çağrılıyor...');
+                
                 initializePlayerPerformance(currentPlayerId);
             }
         }, 1000);
@@ -392,29 +404,29 @@ function drawPerformanceChart(data) {
 
 // Temel veri yükleme (fallback)
 function loadBasicPlayerData() {
-    console.log('🔧 Basic data yükleniyor, ID:', currentPlayerId);
-    console.log('📋 Mevcut players:', typeof players !== 'undefined' ? players.length : 'tanımsız');
+    
+    
     
     // data.js'den oyuncuyu bul
     const player = (typeof players !== 'undefined') ? players.find(p => p.id === currentPlayerId) : null;
     
-    console.log('🎯 Bulunan oyuncu:', player);
+    
     
     if (!player) {
-        console.log('❌ Oyuncu bulunamadı');
+        
         // Oyuncu bulunamadı
         const nameElement = document.getElementById('player-name');
         if (nameElement) nameElement.textContent = 'Oyuncu Bulunamadı';
         return;
     }
     
-    console.log('✅ Oyuncu bulundu:', player.name);
+    
     
     // Enhanced data'dan ek bilgileri al (varsa)
     const enhancedPlayer = (typeof enhancedPlayers !== 'undefined') ? 
         enhancedPlayers.find(p => p.id === currentPlayerId) : null;
     
-    console.log('📊 Enhanced player:', enhancedPlayer);
+    
     
     // Temel bilgileri doldur
     const basicInfo = {
@@ -429,7 +441,7 @@ function loadBasicPlayerData() {
         socialMedia: enhancedPlayer ? enhancedPlayer.socialMedia : null
     };
     
-    console.log('🎨 Basic info hazırlandı:', basicInfo);
+    
     populateBasicInfo(basicInfo);
     
     // Oyuncu istatistiklerini hesapla - Script.js'deki fonksiyonu kullan

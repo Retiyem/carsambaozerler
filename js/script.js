@@ -387,21 +387,7 @@ function populateMatchDetail(matchId) {
 // Global fonksiyonları window objesine ekle
 window.toggleMatchDetail = toggleMatchDetail;
 
-// Global fonksiyonları window objesine ekle - MODAL ÖZELLİĞİ KALDIRILDI
-// window.toggleMatchDetail = toggleMatchDetail;
 
-// Maç detayını aç/kapat
-// MATCH DETAIL FONKSİYONLARI KALDIRILDI - MODAL ÖZELLİĞİ DEVREDİŞI
-
-/*
-function toggleMatchDetail(matchId) {
-    // Bu fonksiyon artık kullanılmıyor - modal özelliği kaldırıldı
-}
-
-function populateMatchDetail(matchId) {
-    // Bu fonksiyon artık kullanılmıyor - modal özelliği kaldırıldı
-}
-*/
 
 // Ana sayfadaki özet bilgileri gösterir
 function populateMatchDetail(matchId) {
@@ -587,7 +573,7 @@ function displayWeeklyHero() {
     const heroNote = weeklyHeroData ? weeklyHeroData.note : '';
 
     // Debug: fotoğraf yolunu konsola yazdır
-    console.log('Fotoğraf yolu:', `img/oyuncular/${latestMatch.macin_adami}.jpg`);
+
 
     weeklyHeroContainer.innerHTML = `
         <div class="hero-profile" onclick="window.location.href='oyuncu-profili.html?id=${latestMatch.macin_adami}'" style="cursor: pointer;">
@@ -1063,11 +1049,11 @@ function initVideoBackground() {
     // Video otomatik başlatma fonksiyonu
     function startVideo() {
         video.play().catch(function(error) {
-            console.log('Sesli oynatma başarısız, sessiz deneniyor:', error);
+            
             // Eğer sesli oynatma başarısızsa sessiz dene
             video.muted = true;
             return video.play().catch(function(muteError) {
-                console.log('Video oynatma tamamen başarısız:', muteError);
+                
             });
         });
     }

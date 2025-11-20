@@ -122,7 +122,7 @@ function hidePageLoader() {
 // MOBİL SWIPE NAVİGASYON - DEVRE DIŞI BIRAKILD
 function initializeSwipeNavigation() {
     // Bu fonksiyon artık devre dışı - swipe navigation engellendi
-    console.log('Swipe navigation devre dışı bırakıldı');
+    
     return false;
 }
 
@@ -212,7 +212,7 @@ function navigateToPage(page) {
 // Swipe feedback göster - TAMAMEN DEVRE DIŞI
 function showSwipeFeedback(direction) {
     // Bu fonksiyon artık devre dışı - "Sonraki Sayfa" / "Önceki Sayfa" engellendi
-    console.log('Swipe feedback engellendi:', direction);
+    
     return false;
 }
 

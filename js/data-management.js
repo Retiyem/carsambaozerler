@@ -698,7 +698,7 @@ function previewExportData() {
         exportDate: new Date().toISOString()
     };
     
-    console.log('📊 Dışa aktarılacak veri önizlemesi:', data);
+    
     alert(`Veri Önizlemesi:\n- ${data.players.length} oyuncu\n- ${data.matches.length} maç\n- Dışa aktarma tarihi: ${new Date().toLocaleDateString('tr-TR')}`);
 }
 
@@ -714,7 +714,7 @@ function validateImportFile(file) {
         return false;
     }
     
-    console.log('📄 Dosya doğrulandı:', file.name);
+    
     return true;
 }
 
