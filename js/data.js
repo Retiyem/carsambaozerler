@@ -254,7 +254,7 @@ const matches = [
         esek_adam: 'talha_bulbul', // Belirlenecek
         performances: [
             // A Takımı oyuncuları (7 kişi)
-            { playerId: 'tayyip_erdogan', team: 'A', goals: 2, weeklyMVP: false },
+            { playerId: 'tayyip_erdogan_yilmaz', team: 'A', goals: 2, weeklyMVP: false },
             { playerId: 'ensar_bulbul', team: 'A', goals: 2, weeklyMVP: false },
             { playerId: 'ozan_necipoglu', team: 'A', goals: 1, weeklyMVP: false },
             { playerId: 'talha_bulbul', team: 'A', goals: 0, weeklyMVP: false },
@@ -283,7 +283,7 @@ const matches = [
         esek_adam: 'ibrahim_erdogdu', // Belirlenecek
         performances: [
             // A Takımı oyuncuları (7 kişi)
-            { playerId: 'tayyip_erdogan', team: 'A', goals: 4, weeklyMVP: false },
+            { playerId: 'tayyip_erdogan_yilmaz', team: 'A', goals: 4, weeklyMVP: false },
             { playerId: 'ensar_bulbul', team: 'A', goals: 1, weeklyMVP: false },
             { playerId: 'ridvan_gumus', team: 'A', goals: 3, weeklyMVP: false },
             { playerId: 'emre_erdal', team: 'A', goals: 1, weeklyMVP: false },
@@ -314,13 +314,7 @@ const weeklyHeroes = [
         playerId: 'ridvan_gumus', // Haftanın adamının ID'si
         playerName: 'Rıdvan GÜMÜŞ', // Haftanın adamının adı
         note: 'Bu hafta sahada adeta kasırga gibiydi! 8 gol atarak takımını zafere taşıdı.', // Haftanın adamı notu
-        stats: {
-            matchesPlayed: 1, // O hafta oynadığı maç sayısı
-            goals: 8, // O hafta attığı gol
-            assists: 0, // O hafta yaptığı asist
-            teamWins: 1, // Takımının kazandığı maç sayısı
-            performance: 'Haftanın en golcüsü! 8 golle muhteşem performans.'
-        }
+
     },
     {
         week: 2, // Hafta numarası
@@ -328,13 +322,7 @@ const weeklyHeroes = [
         playerId: 'talha_bulbul', // Haftanın adamının ID'si
         playerName: 'Talha BÜLBÜL', // Haftanın adamının adı
         note: 'Çok iyi kalecilik yaptı! Kritik kurtarışlarıyla takımının galibiyetinde büyük pay sahibi oldu.', // Haftanın adamı notu
-        stats: {
-            matchesPlayed: 1, // O hafta oynadığı maç sayısı
-            goals: 0, // O hafta attığı gol
-            assists: 0, // O hafta yaptığı asist
-            teamWins: 1, // Takımının kazandığı maç sayısı
-            performance: 'Muhteşem kaleci performansı! Maçı kurtardı.'
-        }
+
     },
     {
         week: 3, // Hafta numarası
@@ -342,13 +330,7 @@ const weeklyHeroes = [
         playerId: 'ensar_bulbul', // Haftanın adamının ID'si
         playerName: 'Ensar BULBUL', // Haftanın adamının adı
         note: 'Bu hafta savunmada çok iyi oynadı! Rakip forvetlere geçit vermedi.', // Haftanın adamı notu
-        stats: {
-            matchesPlayed: 1, // O hafta oynadığı maç sayısı
-            goals: 0, // O hafta attığı gol
-            assists: 0, // O hafta yaptığı asist
-            teamWins: 1, // Takımının kazandığı maç sayısı
-            performance: 'Muhteşem savunma performansı! Rakip forvetlere geçit vermedi.'
-        }
+
     },
         {
         week: 4, // Hafta numarası
@@ -356,13 +338,7 @@ const weeklyHeroes = [
         playerId: 'huseyincan_yuksekdag', // Haftanın adamının ID'si
         playerName: 'HüseyinCAN YÜKSEKDAĞ', // Haftanın adamının adı
         note: 'Çok iyi kalecilik yaptı! Kritik kurtarışlarıyla takımının galibiyetinde büyük pay sahibi oldu.', // Haftanın adamı notu
-        stats: {
-            matchesPlayed: 1, // O hafta oynadığı maç sayısı
-            goals: 0, // O hafta attığı gol
-            assists: 0, // O hafta yaptığı asist
-            teamWins: 1, // Takımının kazandığı maç sayısı
-            performance: 'Muhteşem kaleci performansı! Maçı kurtardı.'
-        }
+
     },
         {
         week: 5, // Hafta numarası
@@ -370,13 +346,7 @@ const weeklyHeroes = [
         playerId: 'fatih_atalay', // Haftanın adamının ID'si
         playerName: 'Fatih Atalay', // Haftanın adamının adı
         note: 'Yaptığı Teknik paslar ve kurduğu oyunla takımını zafere taşıdı...', // Haftanın adamı notu
-        stats: {
-            matchesPlayed: 1, // O hafta oynadığı maç sayısı
-            goals: 0, // O hafta attığı gol
-            assists: 0, // O hafta yaptığı asist
-            teamWins: 1, // Takımının kazandığı maç sayısı
-            performance: ''
-        }
+        
     },
             {
         week: 6, // Hafta numarası
@@ -384,13 +354,7 @@ const weeklyHeroes = [
         playerId: 'ridvan_gumus', // Haftanın adamının ID'si
         playerName: 'Rıdvan GÜMÜŞ', // Haftanın adamının adı
         note: 'Yaptığı Teknik paslar ve kurduğu oyunla takımını zafere taşıdı...', // Haftanın adamı notu
-        stats: {
-            matchesPlayed: 1, // O hafta oynadığı maç sayısı
-            goals: 0, // O hafta attığı gol
-            assists: 0, // O hafta yaptığı asist
-            teamWins: 1, // Takımının kazandığı maç sayısı
-            performance: ''
-        }
+
     },
 
                 {
