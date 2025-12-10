@@ -1,0 +1,15 @@
+# Büyük video dosyaları
+img/video/*.mp4
+img/video/*.mov
+img/video/*.avi
+
+# Node modules (eğer kullanılırsa)
+node_modules/
+
+# IDE ayarları
+.vscode/
+.idea/
+
+# OS dosyaları
+.DS_Store
+Thumbs.db

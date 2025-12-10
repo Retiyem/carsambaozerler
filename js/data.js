@@ -24,6 +24,7 @@ const players = [
     { id: 'can_atilgan', name: 'Can ATILGAN', mevki:  'Defans' },
     { id: 'alper_basdag', name: 'Alper BASDAĞ', mevki: 'Orta Saha' },
     { id: 'yakup_sunay', name: 'Yakup SUNAY', mevki: 'Orta Saha' },
+    { id: 'eren_yilmaz', name: 'Eren YILMAZ', mevki: 'Orta Saha' },
     { id: 'huseyincan_yuksekdag', name: 'Hüseyin Can YÜKSEKDAĞ', mevki: 'Kaleci' },
 ];
 
@@ -303,6 +304,35 @@ const matches = [
 
         ]
     },
+
+                    {
+        id: 7, // Yedinci maç
+        date: '03.12.2025', // Maç tarihi
+        teamAGoals: 9, // A Takımının attığı gol
+        teamBGoals: 11, // B Takımının attığı gol
+        macin_adami: 'huseyincan_yuksekdag', // Onur çok iyi kaleci performansı gösterdi
+        esek_adam: 'furkan_sevimli', // Belirlenecek
+        performances: [
+            // A Takımı oyuncuları (7 kişi)
+            { playerId: 'onur_mustafa', team: 'A', goals: 2, weeklyMVP: false },
+            { playerId: 'furkan_sevimli', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'furkan_demiral', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'ömer_erdal', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'ahmet_sadıkoglu', team: 'A', goals: 3, weeklyMVP: false },
+            { playerId: 'ibrahim_erdogdu', team: 'A', goals: 1, weeklyMVP: false },
+            // B Takımı oyuncuları (7 kişi)
+            { playerId: 'seyfeddin_bulbul', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0, weeklyMVP: true },
+            { playerId: 'eren_yilmaz', team: 'B', goals: 4, weeklyMVP: false },
+            { playerId: 'burak_kocabey', team: 'B', goals: 3, weeklyMVP: false },
+            { playerId: 'emre_erdal', team: 'B', goals: 2, weeklyMVP: false },
+            { playerId: 'ensar_bulbul', team: 'B', goals: 2, weeklyMVP: false },
+            { playerId: 'talha_bulbul', team: 'B', goals: 0, weeklyMVP: false },
+            // Maça katılmayan oyuncuları bu listeye eklemeyin.
+            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
+
+        ]
+    },
 ];
 
 // HAFTANIN ADAMI SİSTEMİ
@@ -363,6 +393,13 @@ const weeklyHeroes = [
         playerId: 'onur_mustafa', // Haftanın adamının ID'si
         playerName: 'Onur Mustafa KÖSE', // Haftanın adamının adı
         note: 'Öyle bir oynadı ki, rakipler maç bitince ‘biz niye geldik ?’ dedi...', // Haftanın adamı notu
+    },
+                    {
+        week: 8, // Hafta numarası
+        date: '03.12.2025', // Hafta tarihi
+        playerId: 'huseyincan_yuksekdag', // Haftanın adamının ID'si
+        playerName: 'HüseyinCAN YÜKSEKDAĞ', // Haftanın adamının adı
+        note: 'Hem kalede Hem oyunda Ahmetin kocası oldu...', // Haftanın adamı notu
     },
 ];
 

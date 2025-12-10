@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Kırpma Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: white;
+        }
+        
+        .test-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        video {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        .controls {
+            margin: 20px 0;
+        }
+        
+        .controls input, button {
+            margin: 5px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+        }
+        
+        button {
+            background: #0f4c75;
+            color: white;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #e07b39;
+        }
+        
+        #log {
+            background: #000;
+            color: #0f0;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            height: 200px;
+            overflow-y: scroll;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎬 Video Kırpma Test Sayfası</h1>
+    
+    <div class="test-container">
+        <h3>Video Player</h3>
+        <video id="testVideo" controls>
+            <source src="img/video/demo-placeholder.mp4" type="video/mp4">
+            Video yüklenemedi
+        </video>
+        
+        <div class="controls">
+            <label>Başlangıç: </label>
+            <input type="number" id="startTime" value="0" step="0.1" min="0">
+            
+            <label>Bitiş: </label>
+            <input type="number" id="endTime" value="5" step="0.1" min="0">
+            
+            <br><br>
+            
+            <button onclick="setCurrentAsStart()">📍 Başlangıç Ayarla</button>
+            <button onclick="setCurrentAsEnd()">📍 Bitiş Ayarla</button>
+            <button onclick="previewTrim()">🎬 Önizle</button>
+            <button onclick="downloadTrim()">⬇️ İndir</button>
+            <button onclick="clearLog()">🗑️ Log Temizle</button>
+        </div>
+    </div>
+    
+    <div class="test-container">
+        <h3>Debug Log</h3>
+        <div id="log"></div>
+    </div>
+
+    <script>
+        const video = document.getElementById('testVideo');
+        const startTimeInput = document.getElementById('startTime');
+        const endTimeInput = document.getElementById('endTime');
+        const logDiv = document.getElementById('log');
+        
+        let isRecording = false;
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+        
+        function clearLog() {
+            logDiv.innerHTML = '';
+        }
+        
+        function setCurrentAsStart() {
+            startTimeInput.value = video.currentTime.toFixed(1);
+            log(`Başlangıç ayarlandı: ${video.currentTime.toFixed(1)}s`);
+        }
+        
+        function setCurrentAsEnd() {
+            endTimeInput.value = video.currentTime.toFixed(1);
+            log(`Bitiş ayarlandı: ${video.currentTime.toFixed(1)}s`);
+        }
+        
+        function previewTrim() {
+            const start = parseFloat(startTimeInput.value);
+            const end = parseFloat(endTimeInput.value);
+            
+            if (end <= start) {
+                log('HATA: Bitiş zamanı başlangıçtan büyük olmalı!');
+                return;
+            }
+            
+            log(`Önizleme başlıyor: ${start}s - ${end}s`);
+            video.currentTime = start;
+            video.play();
+            
+            const checkEnd = () => {
+                if (video.currentTime >= end) {
+                    video.pause();
+                    video.currentTime = start;
+                    log('Önizleme tamamlandı');
+                    return;
+                }
+                if (!video.paused) {
+                    requestAnimationFrame(checkEnd);
+                }
+            };
+            
+            requestAnimationFrame(checkEnd);
+        }
+        
+        async function downloadTrim() {
+            if (isRecording) {
+                log('Zaten kayıt yapılıyor!');
+                return;
+            }
+            
+            const start = parseFloat(startTimeInput.value);
+            const end = parseFloat(endTimeInput.value);
+            const duration = end - start;
+            
+            if (duration <= 0) {
+                log('HATA: Geçersiz süre!');
+                return;
+            }
+            
+            if (duration > 30) {
+                log('UYARI: 30 saniyeden uzun videolar sorun çıkarabilir');
+            }
+            
+            log(`Kayıt başlıyor: ${duration.toFixed(1)} saniye`);
+            isRecording = true;
+            
+            try {
+                // MediaRecorder desteğini kontrol et
+                if (typeof MediaRecorder === 'undefined') {
+                    throw new Error('MediaRecorder desteklenmiyor');
+                }
+                
+                // Canvas oluştur
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Video boyutları
+                canvas.width = video.videoWidth || 640;
+                canvas.height = video.videoHeight || 360;
+                
+                log(`Canvas: ${canvas.width}x${canvas.height}`);
+                
+                // Stream oluştur
+                const fps = 15;
+                const stream = canvas.captureStream(fps);
+                log(`Stream oluşturuldu: ${fps} FPS`);
+                
+                // MediaRecorder oluştur - MP4 öncelikli
+                let recorder;
+                const options = {};
+                let fileExtension = 'webm';
+                
+                if (MediaRecorder.isTypeSupported('video/mp4')) {
+                    options.mimeType = 'video/mp4';
+                    fileExtension = 'mp4';
+                    log('✅ MP4 formatı kullanılacak');
+                } else if (MediaRecorder.isTypeSupported('video/webm; codecs=h264')) {
+                    options.mimeType = 'video/webm; codecs=h264';
+                    fileExtension = 'webm';
+                    log('✅ WebM H264 formatı kullanılacak');
+                } else if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) {
+                    options.mimeType = 'video/webm; codecs=vp9';
+                    fileExtension = 'webm';
+                    log('✅ WebM VP9 formatı kullanılacak');
+                } else if (MediaRecorder.isTypeSupported('video/webm')) {
+                    options.mimeType = 'video/webm';
+                    fileExtension = 'webm';
+                    log('⚠️ Varsayılan WebM formatı kullanılacak');
+                }
+                
+                recorder = new MediaRecorder(stream, options);
+                log(`📹 Seçilen format: ${recorder.mimeType || 'default'} (.${fileExtension})`);
+                
+                const chunks = [];
+                
+                recorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        chunks.push(event.data);
+                        log(`Chunk: ${(event.data.size / 1024).toFixed(1)}KB`);
+                    }
+                };
+                
+                recorder.onstop = () => {
+                    log(`Kayıt tamamlandı: ${chunks.length} chunk`);
+                    
+                    if (chunks.length === 0) {
+                        log('HATA: Kayıt verisi yok!');
+                        isRecording = false;
+                        return;
+                    }
+                    
+                    const blob = new Blob(chunks, { type: recorder.mimeType || 'video/webm' });
+                    log(`Blob boyutu: ${(blob.size / 1024 / 1024).toFixed(2)}MB`);
+                    
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `test-video-${Date.now()}.${fileExtension}`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    
+                    URL.revokeObjectURL(url);
+                    log('✅ Video başarıyla indirildi!');
+                    isRecording = false;
+                };
+                
+                recorder.onerror = (event) => {
+                    log(`❌ Recorder HATASI: ${event.error}`);
+                    isRecording = false;
+                };
+                
+                // Gelişmiş kayıt yöntemi
+                video.currentTime = start;
+                
+                const startRecording = () => {
+                    log('🎬 Kayıt başlatılıyor...');
+                    
+                    let animationId;
+                    let recordingStartTime = performance.now();
+                    const targetDurationMs = duration * 1000;
+                    
+                    const renderLoop = (currentTime) => {
+                        const elapsed = currentTime - recordingStartTime;
+                        const progress = Math.min(elapsed / targetDurationMs, 1);
+                        
+                        // Video zamanını güncelle
+                        const videoTime = start + (progress * duration);
+                        video.currentTime = videoTime;
+                        
+                        // Canvas'a çiz
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        
+                        // Progress log
+                        if (Math.floor(progress * 10) !== Math.floor((progress - 0.1) * 10)) {
+                            log(`Progress: ${(progress * 100).toFixed(0)}%`);
+                        }
+                        
+                        if (progress < 1) {
+                            animationId = requestAnimationFrame(renderLoop);
+                        } else {
+                            log('⏹️ Kayıt süresi tamamlandı');
+                            recorder.stop();
+                        }
+                    };
+                    
+                    // Kayıt başlat
+                    recorder.start(200); // Her 200ms'de chunk
+                    animationId = requestAnimationFrame(renderLoop);
+                    
+                    // Güvenlik timeout
+                    setTimeout(() => {
+                        if (recorder.state === 'recording') {
+                            log('⏰ Timeout - kayıt durduruluyor');
+                            cancelAnimationFrame(animationId);
+                            recorder.stop();
+                        }
+                    }, targetDurationMs + 3000);
+                };
+                
+                // Video hazır olduğunda başlat
+                if (video.readyState >= 2) {
+                    setTimeout(startRecording, 200);
+                } else {
+                    video.addEventListener('canplay', startRecording, { once: true });
+                }
+                
+            } catch (error) {
+                log(`HATA: ${error.message}`);
+                isRecording = false;
+            }
+        }
+        
+        // Video yüklendiğinde bilgi ver
+        video.addEventListener('loadedmetadata', () => {
+            log(`Video yüklendi: ${video.duration.toFixed(1)}s, ${video.videoWidth}x${video.videoHeight}`);
+            endTimeInput.value = Math.min(5, video.duration);
+        });
+        
+        video.addEventListener('error', (e) => {
+            log(`Video HATASI: ${e.message}`);
+        });
+        
+        // Sayfa yüklendiğinde başlat
+        document.addEventListener('DOMContentLoaded', () => {
+            log('Test sayfası hazır');
+            
+            // MediaRecorder desteğini kontrol et
+            if (typeof MediaRecorder !== 'undefined') {
+                log('✅ MediaRecorder destekleniyor');
+                
+                const formats = [
+                    'video/mp4', 
+                    'video/webm;codecs=h264',
+                    'video/webm;codecs=vp9', 
+                    'video/webm;codecs=vp8', 
+                    'video/webm'
+                ];
+                
+                let mp4Supported = false;
+                formats.forEach(format => {
+                    if (MediaRecorder.isTypeSupported(format)) {
+                        log(`✅ Desteklenen: ${format}`);
+                        if (format.includes('mp4')) mp4Supported = true;
+                    } else {
+                        log(`❌ Desteklenmeyen: ${format}`);
+                    }
+                });
+                
+                if (mp4Supported) {
+                    log('🎉 MP4 formatında video indirilebilecek!');
+                } else {
+                    log('⚠️ MP4 desteklenmiyor, WebM formatında indirilecek');
+                }
+            } else {
+                log('❌ MediaRecorder desteklenmiyor!');
+            }
+        });
+    </script>
+</body>
+</html>

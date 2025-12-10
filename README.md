@@ -1,6 +1,6 @@
-# 🏆 Halısaha Ligi - Futbol Turnuva Yönetim Sistemi
+# 🏆 BereketMarket Sezonu - Halısaha Ligi Yönetim Sistemi
 
-Bu proje, halısaha futbol turnuvalarını yönetmek ve takip etmek için geliştirilmiş modern bir web uygulamasıdır. Oyuncu istatistikleri, maç sonuçları ve puan durumunu kolayca takip edebilmenizi sağlar.
+Modern halısaha futbol turnuvalarını yönetmek için geliştirilmiş kapsamlı web uygulaması. Sezonluk takip, detaylı oyuncu profilleri, interaktif istatistikler ve advanced veri yönetimi özellikleri sunar.
 
 ## 📋 İçindekiler
 
@@ -16,30 +16,47 @@ Bu proje, halısaha futbol turnuvalarını yönetmek ve takip etmek için geliş
 
 ## 🚀 Özellikler
 
-### 📊 Puan Durumu Sistemi
+### 🏆 Sezon Yönetim Sistemi
+- **BereketMarket Sezonu**: Sponsor branding ile özelleştirilmiş sezon adı
+- **3 aylık sezon döngüleri**: Otomatik sezon geçişleri (31 Aralık 2025 bitiş tarihi)
+- **Sezonluk istatistik takibi**: Her sezon için ayrı puan durumu ve kayıtlar
+
+### 📊 Gelişmiş Puan Durumu Sistemi
 - **Otomatik puan hesaplama**: Galibiyet (3 puan), beraberlik (1 puan), mağlubiyet (0 puan)
-- **Detaylı istatistikler**: 
-  - Oynadığı maç sayısı
-  - Galibiyet/Beraberlik/Mağlubiyet sayıları
-  - Attığı/Yediği gol sayıları
-  - Gol farkı hesaplama
+- **Comprehensive istatistikler**: 
+  - Oynadığı maç sayısı, G/B/M oranları
+  - Attığı/Yediği gol sayıları ve gol farkı
+  - **Maç başına gol ortalaması** (gerçek zamanlı hesaplama)
+  - MVP ve "Haftanın Eşşeği" sayıları
 - **Akıllı sıralama**: Puan → Gol farkı → Attığı gol sıralaması
-- **Görsel vurgulama**: İlk 3 sıradaki oyuncular için özel renk kodlaması
+- **Premium görsel vurgulama**: İlk 3 sıradaki oyuncular için özel efektler
   - 🥇 1. sıra: Altın rengi (parlama efekti ile)
   - 🥈 2. sıra: Gümüş rengi  
   - 🥉 3. sıra: Bronz rengi
+- **Clickable player profiles**: Oyuncu isimlerine tıklayarak profil sayfasına geçiş
 
-### ⚽ Maç Yönetimi
-- **Maç kayıtları**: Tarih, takımlar, skorlar ve kazanan bilgisi
-- **MVP sistemi**: Her maç için MVP (en değerli oyuncu) seçimi
-- **Kronolojik listeleme**: En yeni maçlar en üstte
-- **Detaylı performans takibi**: Oyuncu bazında gol ve asist kayıtları
+### 👤 Detaylı Oyuncu Profilleri
+- **Kişisel bilgiler**: İsim, mevki, rating, profil fotoğrafı
+- **Sezonluk performans**: Maç sayısı, gol, MVP, eşşek istatistikleri  
+- **Maç başına gol hesaplaması**: Real-time calculation
+- **Performans trend grafikleri**: Chart.js ile interaktif gol grafikleri
+- **Son maç performansları**: Detaylı maç geçmişi tablosu
+- **Enhanced data integration**: Gelişmiş oyuncu veri yapıları
 
-### 🏠 Ana Sayfa Özelleri
-- **Son maç özeti**: En güncel maç sonucu ve MVP bilgisi
-- **En golcüler listesi**: İlk 3 golcünün görüntülenmesi
-- **Interaktif butonlar**: Puan durumuna hızlı erişim
-- **Modern hero section**: Etkileyici giriş bölümü
+### ⚽ Advanced Maç Yönetimi
+- **Detaylı maç kayıtları**: Tarih, takımlar, skorlar, kazanan
+- **Dual award sistemi**: MVP ve "Haftanın Eşşeği" seçimleri
+- **Performans tracking**: Oyuncu bazında gol, asist, award kayıtları
+- **Maç detay görünümü**: Takım kadroları, skorlar, özel ödüller
+- **Toggle maç detayları**: Expand/collapse maç bilgileri
+- **Kronolojik organizasyon**: En yeni maçlar öncelikli
+
+### 🏠 Enhanced Ana Sayfa
+- **Sezon bilgi banner**: Aktif sezon, bitiş tarihi, sponsor bilgisi
+- **Top 3 oyuncu preview**: Lider oyuncuların highlight'ı (profile linkler ile)
+- **Next match lineup preview**: Gelecek maç kadro bilgisi
+- **Quick navigation**: Direkt sayfa geçişleri için butonlar
+- **Modern glassmorphism hero**: Etkileyici giriş bölümü
 
 ### 📱 Responsive Tasarım
 - **Mobile-first yaklaşım**: Tüm cihazlarda mükemmel görünüm
@@ -50,24 +67,27 @@ Bu proje, halısaha futbol turnuvalarını yönetmek ve takip etmek için geliş
 ## 🛠 Teknolojiler
 
 ### Frontend
-- **HTML5**: Semantic ve erişilebilir markup
+- **HTML5**: Semantic markup, multiple pages (index, oyuncu-profili, puan-durumu, maclar)
 - **CSS3**: 
   - CSS Grid ve Flexbox layout
   - Custom Properties (CSS Variables)
-  - Glassmorphism efektleri
-  - Responsive breakpoints
-  - Keyframe animasyonları
+  - Glassmorphism efektleri ve modern UI components
+  - Responsive breakpoints ve mobile-first design
+  - Keyframe animasyonları ve smooth transitions
+  - Modular CSS architecture (style.css, player-profile.css, vb.)
 - **Vanilla JavaScript**: 
-  - ES6+ özellikleri
-  - DOM manipülasyonu
-  - Event handling
-  - Local storage desteği
+  - ES6+ özellikleri ve modern syntax
+  - DOM manipülasyonu ve event handling
+  - **Chart.js 3.9.1** entegrasyonu (performans grafikleri)
+  - Local storage desteği ve data persistence
+  - Modular JS architecture (ayrı dosyalarda özelleşmiş fonksiyonlar)
 
-### Tasarım
+### Tasarım & Visualization
 - **Google Fonts**: Montserrat ve Open Sans fontları
-- **Font Awesome**: İkon seti (CDN)
-- **Glassmorphism UI**: Modern cam efekti tasarımı
-- **Gradient backgrounds**: Çok katmanlı renk geçişleri
+- **Chart.js**: Interactive performance charts ve data visualization
+- **Glassmorphism UI**: Modern cam efekti tasarımı ve premium card components
+- **Gradient backgrounds**: Çok katmanlı renk geçişleri ve dynamic theming
+- **Enhanced CSS Components**: Player profile cards, statistical displays, interactive tables
 
 ## 📦 Kurulum
 
@@ -137,16 +157,37 @@ Bu proje, halısaha futbol turnuvalarını yönetmek ve takip etmek için geliş
 ## 📁 Dosya Yapısı
 
 ```
-HALISAHA/
-├── 📄 index.html          # Ana sayfa
-├── 📄 puan-durumu.html    # Puan durumu tablosu
-├── 📄 maclar.html         # Maç geçmişi
-├── 📄 README.md           # Dokümantasyon
+carsambaozerler/
+├── 📄 index.html               # Ana sayfa (sezon banner, top players, navigation)
+├── 📄 puan-durumu.html        # Puan durumu tablosu (clickable profiles)
+├── 📄 maclar.html             # Maç geçmişi (toggle details, awards)
+├── 📄 oyuncu-profili.html     # Detaylı oyuncu profil sayfası
+├── 📄 oyuncular.html          # Oyuncu listesi sayfası
+├── 📄 README.md               # Kapsamlı dokümantasyon
 ├── 📁 css/
-│   └── 📄 style.css       # Ana stil dosyası
-└── 📁 js/
-    ├── 📄 data.js         # Oyuncu ve maç verileri
-    └── 📄 script.js       # Ana JavaScript fonksiyonları
+│   ├── 📄 style.css           # Ana stil dosyası (glassmorphism, responsive)
+│   ├── 📄 player-profile.css  # Oyuncu profil sayfası stilleri
+│   ├── 📄 match-management.css # Maç yönetimi component stilleri
+│   ├── 📄 data-management.css  # Veri yönetimi UI stilleri
+│   ├── 📄 ui-enhancements.css # Enhanced UI component stilleri
+│   └── 📄 user-interaction.css # Interactive element stilleri
+├── 📁 js/
+│   ├── 📄 data.js             # Oyuncu ve maç verileri (sezon sistemi)
+│   ├── 📄 script.js           # Ana JavaScript (sezon yönetimi, puan hesaplama)
+│   ├── 📄 enhanced-data.js    # Gelişmiş oyuncu veri yapıları
+│   ├── 📄 enhanced-data-simple.js # Basit enhanced data (oyuncu profilleri için)
+│   ├── 📄 player-profile.js   # Oyuncu profil sayfası mantığı
+│   ├── 📄 player-performance.js # Chart.js performans grafikleri
+│   ├── 📄 players-list.js     # Oyuncu listesi functionality
+│   ├── 📄 match-management.js # Maç yönetimi ve detay toggle
+│   ├── 📄 data-management.js  # Veri import/export işlemleri
+│   ├── 📄 ui-enhancements.js  # UI geliştirmeleri ve animasyonlar
+│   └── 📄 user-interaction.js # Kullanıcı etkileşimi event handlers
+└── 📁 img/
+    └── 📁 oyuncular/          # Oyuncu profil fotoğrafları
+        ├── 📄 onur_mustafa.jpg
+        ├── 📄 default.svg     # Varsayılan avatar
+        └── 📄 ...             # Diğer oyuncu fotoğrafları
 ```
 
 ### Detaylı Dosya Açıklamaları
@@ -266,16 +307,20 @@ HALISAHA/
 - **Glow animation**: Logo ve vurgu metinleri için
 - **Scale transforms**: Hover'da büyütme efektleri
 
-## 🎯 Gelecek Özellikler
+## 🎯 Gelecek Özellikler (v3.0 Roadmap)
 
-- [ ] **Local Storage**: Verilerin tarayıcıda saklanması
-- [ ] **JSON Export/Import**: Veri yedekleme sistemi
-- [ ] **Takım oluşturma**: Otomatik balanced takım kurma
-- [ ] **İstatistik grafikleri**: Chart.js ile görselleştirme
-- [ ] **Oyuncu profilleri**: Detaylı oyuncu sayfaları
-- [ ] **Maç önizleme**: Gelecek maçlar bölümü
-- [ ] **PWA desteği**: Offline çalışma kabiliyeti
-- [ ] **Dark/Light theme toggle**: Tema değiştirme
+- [ ] **Advanced Analytics Dashboard**: Comprehensive statistical analysis
+- [ ] **Multi-season comparison**: Sezonlar arası performans karşılaştırması  
+- [ ] **Team formation optimization**: AI-powered balanced takım oluşturma
+- [ ] **Live match tracking**: Real-time maç skorları ve updates
+- [ ] **Player performance predictions**: Machine learning ile tahmin sistemi
+- [ ] **Advanced search & filters**: Oyuncu/maç filtreleme ve arama
+- [ ] **Export/Import sistem**: JSON/CSV veri backup ve migration
+- [ ] **PWA support**: Offline çalışma ve mobile app experience
+- [ ] **Dark/Light theme toggle**: Kullanıcı tercihi tema sistemi
+- [ ] **Notification system**: Maç remind'ları ve update bildirileri
+- [ ] **Social features**: Oyuncu yorumları ve rating sistemi
+- [ ] **Tournament bracket**: Turnuva ağacı ve playoff sistemi
 
 ## 🤝 Katkıda Bulunma
 
@@ -295,9 +340,22 @@ HALISAHA/
 
 ## 📝 Changelog
 
-### v1.0.0 (Mevcut)
+### v2.0.0 (Mevcut - BereketMarket Sezonu)
+- ✅ **Sezon yönetim sistemi** (3 aylık döngüler, sponsorluk desteği)
+- ✅ **Detaylı oyuncu profilleri** (kişisel bilgiler, performans grafikleri)
+- ✅ **Chart.js entegrasyonu** (interaktif performans trend grafikleri)
+- ✅ **Enhanced data yapıları** (gelişmiş oyuncu ve maç verileri)
+- ✅ **Clickable profile navigation** (ana sayfadan profil sayfalarına geçiş)
+- ✅ **Advanced maç detayları** (toggle görünüm, takım kadroları, ödüller)
+- ✅ **Real-time maç başına gol** hesaplama sistemi
+- ✅ **Modular CSS/JS architecture** (maintainable code structure)
+- ✅ **Dual award sistemi** (MVP + Haftanın Eşşeği)
+- ✅ **Responsive oyuncu profil** sayfaları
+- ✅ **Enhanced glassmorphism UI** ve premium visual effects
+
+### v1.0.0 (Legacy)
 - ✅ Temel puan durumu sistemi
-- ✅ Maç kayıt sistemi
+- ✅ Maç kayıt sistemi  
 - ✅ MVP sistemi
 - ✅ Responsive tasarım
 - ✅ Glassmorphism UI
@@ -317,9 +375,22 @@ Bu proje **Onur Mustafa Köse** tarafından geliştirilmiştir. Tüm hakları sa
 
 ## 🚀 Hızlı Başlangıç
 
+### Kurulum
 1. `index.html` dosyasını tarayıcıda açın
-2. `js/data.js` dosyasında oyuncu listesini güncelleyin
-3. İlk maçınızı `matches` dizisine ekleyin
-4. Sayfayı yenileyin ve sonuçları görün!
+2. `js/data.js` dosyasında oyuncu listesini güncelleyin (id ve mevki bilgileri ile)
+3. `js/enhanced-data-simple.js`'de oyuncu profil bilgilerini ekleyin
+4. İlk maçınızı `matches` dizisine ekleyin (doğru playerId'ler ile)
 
-**Futbol tutkunuzla halısaha liginizdeki rekabeti doruklarda yaşayın! ⚽🏆**
+### Temel Kullanım
+- **Ana Sayfa**: Sezon özeti, top oyuncular, hızlı navigasyon
+- **Puan Durumu**: Detaylı sıralama, oyuncu profile tıklama
+- **Maçlar**: Maç geçmişi, detay toggle, award sistemi  
+- **Oyuncu Profili**: Kişisel istatistikler, performans grafikleri
+
+### Pro İpuçları
+- Oyuncu profil fotoğraflarını `img/oyuncular/` klasörüne `{playerId}.jpg` formatında ekleyin
+- Chart.js grafikleri otomatik olarak oyuncu performansını gösterir
+- Sezon sistemi otomatik olarak 31 Aralık 2025'te yeni sezona geçecektir
+- Maç detaylarını toggle etmek için "Detayları Göster" butonunu kullanın
+
+**BereketMarket Sezonu ile halısaha liginizdeki rekabeti profesyonel seviyede yaşayın! ⚽🏆📊**
