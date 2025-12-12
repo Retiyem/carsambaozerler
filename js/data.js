@@ -339,7 +339,7 @@ const matches = [
         performances: [
             // A Takımı oyuncuları (7 kişi)
             { playerId: 'onur_mustafa', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'furkan_sevimli', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'furkan_sevimli', team: 'A', goals: 2, weeklyMVP: false },
             { playerId: 'furkan_demiral', team: 'A', goals: 1, weeklyMVP: false },
             { playerId: 'ömer_erdal', team: 'A', goals: 1, weeklyMVP: false },
             { playerId: 'ahmet_sadıkoglu', team: 'A', goals: 3, weeklyMVP: false },
