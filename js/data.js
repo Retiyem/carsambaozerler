@@ -100,7 +100,10 @@ const matches = [
         teamAGoals: 14, // A Takımının attığı gol
         teamBGoals: 13, // B Takımının attığı gol
         macin_adami: 'ridvan_gumus',
+        macin_adami_aciklama: 'Sahada adeta kasırga gibiydi! 8 gol atarak takımını zafere taşıdı.',
         esek_adam: 'orhan_sariaydin',
+        esek_adam_aciklama: 'Bu hafta performans beklenenden düşüktü.',
+        video_aciklama: 'İlk maçtan unutulmaz anlar...', // Son Maçın Unutulmaz Anı açıklaması
         performances: [
             // A Takımı oyuncuları (7 kişi)
             { playerId: 'ridvan_gumus', team: 'A', goals: 8, weeklyMVP: true },
@@ -131,7 +134,10 @@ const matches = [
         teamAGoals: 11, // A Takımının attığı gol
         teamBGoals: 11, // B Takımının attığı gol
         macin_adami: 'talha_bulbul', // Talha çok iyi kaleci performansı gösterdi
+        macin_adami_aciklama: 'Talha muhteşem kurtarışlarla maçı kurtardı!',
         esek_adam: 'ensar_bulbul', // Belirlenecek
+        esek_adam_aciklama: 'Bu maçta beklenen performansı gösteremedi.',
+        video_aciklama: '2. hafta heyecanlı anları...', // Son Maçın Unutulmaz Anı açıklaması
         performances: [
             // A Takımı oyuncuları (7 kişi)
             { playerId: 'can_atilgan', team: 'A', goals: 5, weeklyMVP: false },
@@ -161,7 +167,10 @@ const matches = [
         teamAGoals: 3, // A Takımının attığı gol
         teamBGoals: 2, // B Takımının attığı gol
         macin_adami: 'ensar_bulbul', // Talha çok iyi kaleci performansı gösterdi
+        macin_adami_aciklama: 'Ensar harika savunma performansı gösterdi!',
         esek_adam: 'ahmet_sadıkoglu', // Belirlenecek
+        esek_adam_aciklama: 'Bu hafta maalesef yetersiz kaldı.',
+        video_aciklama: '3. hafta sıkı mücadele...', // Son Maçın Unutulmaz Anı açıklaması
         performances: [
             // A Takımı oyuncuları (7 kişi)
             { playerId: 'onur_mustafa', team: 'A', goals: 2, weeklyMVP: false },
@@ -191,7 +200,10 @@ const matches = [
         teamAGoals: 7, // A Takımının attığı gol
         teamBGoals: 19, // B Takımının attığı gol
         macin_adami: 'huseyincan_yuksekdag', // Talha çok iyi kaleci performansı gösterdi
+        macin_adami_aciklama: 'Hüseyin Can inanılmaz bir performans sergiledi!',
         esek_adam: 'seyfeddin_bulbul', // Belirlenecek
+        esek_adam_aciklama: 'Maalesef bu hafta etkili olamadı.',
+        video_aciklama: '4. hafta gol şov!', // Son Maçın Unutulmaz Anı açıklaması
         performances: [
             // A Takımı oyuncuları (7 kişi)
             { playerId: 'furkan_sevimli', team: 'A', goals: 0, weeklyMVP: false },
@@ -223,7 +235,10 @@ const matches = [
         teamAGoals: 10, // A Takımının attığı gol
         teamBGoals: 9, // B Takımının attığı gol
         macin_adami: 'fatih_atalay', // Talha çok iyi kaleci performansı gösterdi
+        macin_adami_aciklama: 'Fatih mükemmel kaleci performansıyla maçı kazandırdı!',
         esek_adam: 'ahmet_sadıkoglu', // Belirlenecek
+        esek_adam_aciklama: 'Bu hafta istenen performansı veremedi.',
+        video_aciklama: '5. hafta kritik anlar...', // Son Maçın Unutulmaz Anı açıklaması
         performances: [
             // A Takımı oyuncuları (7 kişi)
             { playerId: 'ahmet_sadıkoglu', team: 'A', goals: 4, weeklyMVP: false },
@@ -252,7 +267,10 @@ const matches = [
         teamAGoals: 8, // A Takımının attığı gol
         teamBGoals: 25, // B Takımının attığı gol
         macin_adami: 'ridvan_gumus', // Talha çok iyi kaleci performansı gösterdi
+        macin_adami_aciklama: 'Rıdvan 9 golle sahaya damgasını vurdu!',
         esek_adam: 'talha_bulbul', // Belirlenecek
+        esek_adam_aciklama: 'Bu hafta savunmada zorlandı.',
+        video_aciklama: '6. hafta gol yağmuru!', // Son Maçın Unutulmaz Anı açıklaması
         performances: [
             // A Takımı oyuncuları (7 kişi)
             { playerId: 'tayyip_erdogan_yilmaz', team: 'A', goals: 2, weeklyMVP: false },
@@ -281,7 +299,10 @@ const matches = [
         teamAGoals: 12, // A Takımının attığı gol
         teamBGoals: 15, // B Takımının attığı gol
         macin_adami: 'onur_mustafa', // Onur çok iyi kaleci performansı gösterdi
+        macin_adami_aciklama: 'Onur 4 golle harika bir performans sergiledi!',
         esek_adam: 'ibrahim_erdogdu', // Belirlenecek
+        esek_adam_aciklama: 'Bu hafta takıma yeterli katkıyı sağlayamadı.',
+        video_aciklama: '7. hafta nefes kesen anlar...', // Son Maçın Unutulmaz Anı açıklaması
         performances: [
             // A Takımı oyuncuları (7 kişi)
             { playerId: 'tayyip_erdogan_yilmaz', team: 'A', goals: 4, weeklyMVP: false },
@@ -306,12 +327,15 @@ const matches = [
     },
 
                     {
-        id: 7, // Yedinci maç
+        id: 8, // Yedinci maç
         date: '03.12.2025', // Maç tarihi
         teamAGoals: 9, // A Takımının attığı gol
         teamBGoals: 11, // B Takımının attığı gol
         macin_adami: 'huseyincan_yuksekdag', // Onur çok iyi kaleci performansı gösterdi
+        macin_adami_aciklama: 'Muhteşem kurtarışlarla maçı kazandırdı!',
         esek_adam: 'furkan_sevimli', // Belirlenecek
+        esek_adam_aciklama: 'Bu hafta maalesef performans beklenenin altındaydı.',
+        video_aciklama: '8. hafta unutulmaz anları...', // Son Maçın Unutulmaz Anı açıklaması
         performances: [
             // A Takımı oyuncuları (7 kişi)
             { playerId: 'onur_mustafa', team: 'A', goals: 2, weeklyMVP: false },
@@ -327,6 +351,40 @@ const matches = [
             { playerId: 'burak_kocabey', team: 'B', goals: 3, weeklyMVP: false },
             { playerId: 'emre_erdal', team: 'B', goals: 2, weeklyMVP: false },
             { playerId: 'ensar_bulbul', team: 'B', goals: 2, weeklyMVP: false },
+            { playerId: 'talha_bulbul', team: 'B', goals: 0, weeklyMVP: false },
+            // Maça katılmayan oyuncuları bu listeye eklemeyin.
+            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
+
+        ]
+    },
+
+                    {
+        id: 9, // Yedinci maç
+        date: '11.12.2025', // Maç tarihi
+        teamAGoals: 12, // A Takımının attığı gol
+        teamBGoals: 9, // B Takımının attığı gol
+        macin_adami: 'huseyincan_yuksekdag', // Onur çok iyi kalecicd performansı gösterdi
+        macin_adami_aciklama: 'Kaleci oyuncu defans adeta bir duvar ama dikkat edin her an ses kaydı atabilir !',
+        esek_adam: 'onur_mustafa', // Belirlenecek
+        esek_adam_aciklama: 'Yetenek,Güç,Yakışıklılık...Takım arkadaşları onu çok kıskandığı için oylamada onu seçti..',
+        video_aciklama: 'Yetişkin bir orhan dakikada yarım saat su içebilir...', // Son Maçın Unutulmaz Anı açıklaması
+        performances: [
+            // A Takımı oyuncuları (7 kişi)
+            { playerId: 'onur_mustafa', team: 'A', goals: 5, weeklyMVP: false },
+            { playerId: 'ensar_bulbul', team: 'A', goals: 1, weeklyMVP: false },
+            { playerId: 'furkan_yilmaz', team: 'A', goals: 0, weeklyMVP: false },
+            { playerId: 'seyfeddin_bulbul', team: 'A', goals: 2, weeklyMVP: false },
+            { playerId: 'ömer_erdal', team: 'A', goals: 2, weeklyMVP: false },
+            { playerId: 'fatih_atalay', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'emre_erdal', team: 'A', goals: 3, weeklyMVP: false },
+            { playerId: 'huseyincan_yuksekdag', team: 'A', goals: 2, weeklyMVP: true },
+            // B Takımı oyuncuları (7 kişi)
+            { playerId: 'enes_altan', team: 'B', goals: 1, weeklyMVP: false },
+            { playerId: 'tayyip_erdogan_yilmaz', team: 'B', goals: 3, weeklyMVP: false },
+            { playerId: 'ahmet_sadıkoglu', team: 'B', goals: 3, weeklyMVP: false },
+            { playerId: 'furkan_demiral', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'yakup_sunay', team: 'B', goals: 0, weeklyMVP: false },
+            { playerId: 'orhan_sariaydin', team: 'B', goals: 2, weeklyMVP: false },
             { playerId: 'talha_bulbul', team: 'B', goals: 0, weeklyMVP: false },
             // Maça katılmayan oyuncuları bu listeye eklemeyin.
             // Sadece o maçta oynayan 14 oyuncuyu ekleyin.

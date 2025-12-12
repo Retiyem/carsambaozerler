@@ -501,6 +501,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Haftanın eşşeğini göster
     displayWeeklyDonkey();
     
+    // Video açıklamasını güncelle
+    displayVideoDescription();
+    
     // Sıradaki maç kadrosunu göster
     displayLineup();
     
@@ -572,6 +575,9 @@ function displayWeeklyHero() {
     const weeklyHeroData = weeklyHeroes.find(hero => hero.week === currentWeek);
     const heroNote = weeklyHeroData ? weeklyHeroData.note : '';
 
+    // Maçtan açıklama al (eğer varsa)
+    const heroDescription = latestMatch.macin_adami_aciklama || heroNote || '';
+
     // Debug: fotoğraf yolunu konsola yazdır
 
 
@@ -589,7 +595,7 @@ function displayWeeklyHero() {
                     <p class="hero-stat-item">📈 <strong>${mvpPlayer.name}</strong> Bu Hafta <strong>${mvpGoals}</strong> Gol Attı!</p>
                     <p class="hero-stat-item">⚽ Maç başına ortalama <strong>${averageGoals}</strong> kadar golü var!</p>
                     <p class="hero-stat-item">🏆 <strong>${weeklyMVPCount}</strong> kere Haftanın adamı seçildi!</p>
-                    ${heroNote ? `<p class="hero-note">💬 ${heroNote}</p>` : ''}
+                    ${heroDescription ? `<p class="hero-note">💬 ${heroDescription}</p>` : ''}
                 </div>
             </div>
         </div>
@@ -623,6 +629,9 @@ function displayWeeklyDonkey() {
         return;
     }
 
+    // Eşek adam açıklamasını al (eğer varsa)
+    const donkeyDescription = latestMatch.esek_adam_aciklama || 'Bu hafta maalesef performans beklenenin altındaydı.';
+
     // Haftanın eşşeğini göster (sadece fotoğraf ve isim)
     weeklyDonkeyContainer.innerHTML = `
         <div class="donkey-profile" onclick="window.location.href='oyuncu-profili.html?id=${latestMatch.esek_adam}'" style="cursor: pointer;">
@@ -633,10 +642,30 @@ function displayWeeklyDonkey() {
             </div>
             <div class="donkey-info">
                 <h4>${donkeyPlayer.name}</h4>
-                <p class="donkey-comment">🫏 Ampute kaleci... Tepeyi terk eden kaleci... Umarız bir sonraki maç kolunu getirmeyi unutmaz... 🫏</p>
+                <p class="donkey-comment">🫏 ${donkeyDescription} 🫏</p>
             </div>
         </div>
     `;
+}
+
+// Video açıklamasını göster
+function displayVideoDescription() {
+    const videoDescriptionElement = document.getElementById('video-description');
+    if (!videoDescriptionElement) return;
+
+    // Maç olup olmadığını kontrol et
+    if (!matches || matches.length === 0) {
+        videoDescriptionElement.textContent = 'Henüz maç videosu yok.';
+        return;
+    }
+
+    // En son maçı al
+    const latestMatch = matches[matches.length - 1];
+
+    // video_aciklama alanını kullan (yoksa varsayılan mesaj)
+    const videoDescription = latestMatch.video_aciklama || 'Son maçtan unutulmaz bir an...';
+    
+    videoDescriptionElement.textContent = videoDescription;
 }
 
 // Hamburger Menü Fonksiyonları

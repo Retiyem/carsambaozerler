@@ -1,5 +1,6 @@
-# Büyük video dosyaları
+# Büyük video dosyaları (Macin-Ozeti.mp4 hariç)
 img/video/*.mp4
+!img/video/Macin-Ozeti.mp4
 img/video/*.mov
 img/video/*.avi
 
