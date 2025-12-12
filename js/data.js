@@ -206,7 +206,7 @@ const matches = [
         video_aciklama: '4. hafta gol şov!', // Son Maçın Unutulmaz Anı açıklaması
         performances: [
             // A Takımı oyuncuları (7 kişi)
-            { playerId: 'furkan_sevimli', team: 'A', goals: 0, weeklyMVP: false },
+            { playerId: 'furkan_sevimli', team: 'A', goals: 2, weeklyMVP: false },
             { playerId: 'ibrahim_erdogdu', team: 'A', goals: 0, weeklyMVP: false },
             { playerId: 'talha_bulbul', team: 'A', goals: 0, weeklyMVP: false },
             { playerId: 'orhan_sariaydin', team: 'A', goals: 2, weeklyMVP: false },
