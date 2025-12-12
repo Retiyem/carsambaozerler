@@ -75,6 +75,12 @@ function populateBasicInfo(playerInfo) {
         imageElement.onerror = () => {
             imageElement.src = 'img/oyuncular/default.jpg';
         };
+        
+        // Fotoğrafa tıklandığında büyütme özelliği
+        imageElement.style.cursor = 'pointer';
+        imageElement.addEventListener('click', () => {
+            enlargeProfilePhoto(imageElement.src, playerInfo.name);
+        });
     }
     
     // Rating
@@ -175,7 +181,7 @@ function populateAchievements(achievements) {
     achievementsList.innerHTML = '';
     
     if (achievements.length === 0) {
-        achievementsList.innerHTML = '<p style="color: var(--text-light); opacity: 0.7;">Henüz başarı kazanılmamış.</p>';
+        // Başarı yoksa boş bırak
         return;
     }
     
@@ -208,6 +214,56 @@ function getAchievementIcon(type) {
         'target': '🎯'
     };
     return icons[type] || '🏆';
+}
+
+// Profil fotoğrafını büyüt
+function enlargeProfilePhoto(imageSrc, playerName) {
+    // Modal oluştur
+    const modal = document.createElement('div');
+    modal.className = 'photo-modal';
+    modal.innerHTML = `
+        <div class="photo-modal-content">
+            <span class="photo-modal-close">&times;</span>
+            <img src="${imageSrc}" alt="${playerName}" class="photo-modal-image">
+            <p class="photo-modal-caption">${playerName}</p>
+        </div>
+    `;
+    
+    // Modal'ı sayfaya ekle
+    document.body.appendChild(modal);
+    
+    // Modal'ı göster
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10);
+    
+    // Kapatma fonksiyonu
+    const closeModal = () => {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            document.body.removeChild(modal);
+        }, 300);
+    };
+    
+    // Kapatma butonuna tıklama
+    const closeBtn = modal.querySelector('.photo-modal-close');
+    closeBtn.addEventListener('click', closeModal);
+    
+    // Modal dışına tıklama
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // ESC tuşu ile kapatma
+    const handleEsc = (e) => {
+        if (e.key === 'Escape') {
+            closeModal();
+            document.removeEventListener('keydown', handleEsc);
+        }
+    };
+    document.addEventListener('keydown', handleEsc);
 }
 
 // Karşılaştırmaları doldur

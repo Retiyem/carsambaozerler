@@ -376,8 +376,8 @@ const matches = [
             { playerId: 'seyfeddin_bulbul', team: 'A', goals: 2, weeklyMVP: false },
             { playerId: 'ömer_erdal', team: 'A', goals: 2, weeklyMVP: false },
             { playerId: 'fatih_atalay', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'emre_erdal', team: 'A', goals: 3, weeklyMVP: false },
-            { playerId: 'huseyincan_yuksekdag', team: 'A', goals: 2, weeklyMVP: true },
+            { playerId: 'emre_erdal', team: 'A', goals: 2, weeklyMVP: false },
+            { playerId: 'huseyincan_yuksekdag', team: 'A', goals: 0, weeklyMVP: true },
             // B Takımı oyuncuları (7 kişi)
             { playerId: 'enes_altan', team: 'B', goals: 1, weeklyMVP: false },
             { playerId: 'tayyip_erdogan_yilmaz', team: 'B', goals: 3, weeklyMVP: false },
