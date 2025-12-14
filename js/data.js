@@ -11,7 +11,7 @@ const players = [
     { id: 'furkan_sevimli', name: 'Furkan SEVİMLİ', mevki: 'Orta Saha' },
     { id: 'furkan_yilmaz', name: 'Furkan YILMAZ', mevki: 'Forvet' },
     { id: 'süleyman_yildirim', name: 'Süleyman YILDIRIM', mevki: 'Orta Saha' },
-    { id: 'ibrahim_erdogdu', name: 'İbrahim ERDOĞDU', mevki: 'Defans' },
+    { id: 'ibrahim_erdogdu', name: 'İbrahim ERDOĞDU', mevki: 'Kaleci' },
     { id: 'berkin_tayyip_ceran', name: 'Berkin Tayyip CERAN', mevki: 'Defans' },
     { id: 'muratcan_solmaz', name: 'Muratcan SOLMAZ', mevki: 'Defans' },
     { id: 'orhan_sariaydin', name: 'Orhan SARIAYDIN', mevki: 'Orta Saha' },
