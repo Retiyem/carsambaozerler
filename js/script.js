@@ -226,6 +226,30 @@ function renderHomePageSummary() {
     
     // Ana sayfaya puan durumu liderlerini ekle
     renderTopPlayersPreview();
+    
+    // Video açıklamasını ekle
+    renderVideoDescription();
+}
+
+// Video açıklamasını render et
+function renderVideoDescription() {
+    const videoDescriptionElement = document.getElementById('video-description');
+    
+    if (videoDescriptionElement) {
+        // En yüksek ID'li maçı bul (en son maç)
+        if (!matches || matches.length === 0) {
+            videoDescriptionElement.innerHTML = '';
+        } else {
+            const latestMatch = matches.reduce((prev, current) => (prev.id > current.id) ? prev : current);
+            
+            // video_aciklama varsa göster
+            if (latestMatch.video_aciklama) {
+                videoDescriptionElement.innerHTML = `<em>${latestMatch.video_aciklama}</em>`;
+            } else {
+                videoDescriptionElement.innerHTML = '';
+            }
+        }
+    }
 }
 
 // Ana sayfa için ilk 3 oyuncuyu göster

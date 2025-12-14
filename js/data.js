@@ -10,6 +10,7 @@ const players = [
     { id: 'ömer_erdal', name: 'Ömer ERDAL', mevki: 'Orta Saha' },
     { id: 'furkan_sevimli', name: 'Furkan SEVİMLİ', mevki: 'Orta Saha' },
     { id: 'furkan_yilmaz', name: 'Furkan YILMAZ', mevki: 'Forvet' },
+    { id: 'süleyman_yildirim', name: 'Süleyman YILDIRIM', mevki: 'Orta Saha' },
     { id: 'ibrahim_erdogdu', name: 'İbrahim ERDOĞDU', mevki: 'Defans' },
     { id: 'berkin_tayyip_ceran', name: 'Berkin Tayyip CERAN', mevki: 'Defans' },
     { id: 'muratcan_solmaz', name: 'Muratcan SOLMAZ', mevki: 'Defans' },

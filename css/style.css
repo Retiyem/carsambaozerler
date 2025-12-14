@@ -2515,6 +2515,16 @@ footer {
     backdrop-filter: blur(10px);
 }
 
+.video-description {
+    text-align: center;
+    color: var(--text-light);
+    opacity: 0.85;
+    font-size: 1rem;
+    margin: 10px 0 20px 0;
+    font-style: italic;
+    padding: 0 20px;
+}
+
 .video-player {
     width: 100%;
     height: auto;
