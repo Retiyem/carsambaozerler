@@ -9,13 +9,13 @@ const newsData = [
     {
         title: "Kıskançlık Zirvede: Ligin En İyisi 'Haftanın Eşşeği' Seçildi!",
         description: "Akılalmaz bir oylama sonucu sahanın tartışmasız en yetenekli, en yakışıklı ve en güçlü oyuncusu, takım arkadaşlarının kıskançlık kurbanı oldu.Son maçta en çok gol(5) atanmasına rağmen 'Bu kadar da olmaz' dedirten oylamada, yıldız oyuncu 'Haftanın Eşşeği' seçilerek tarihe geçti.",
-        image: "img/Haber/Haber_1.jpg",
+        images: ["img/Haber/Haber_1.jpg", "img/Haber/Haber_1.1.jpg"], 
         date: "15.12.2025"
     },
     {
         title: "Orhan'dan Şaşırtan Performans: 1 Saat Boyunca Su İçerek Rekor Kırdı!",
-        description: "Takım arkadaşları sahada kan ter içinde mücadele ederken, Orhan kenarda su içme molasını biraz abarttı. Tam 1 saat boyunca su içerek 'en uzun mola' rekorunu kıran oyuncu, 'Sıvı alımı önemli' diyerek kendini savundu.",
-        image: "img/Haber/Haber_2.jpg",
+        description: "Takım arkadaşları sahada kan ter içinde mücadele ederken, Orhan kenarda su içme molasını biraz abarttı. Tam 1 saat boyunca su içerek 'en uzun mola' rekorunu kıran oyuncu, 'Sıvı alımı önemli' diyerek kendini savundu. Su içmeye başladığında hava hala aydınlıktı.",
+        images: ["img/Haber/Haber_2.jpg", "img/Haber/Haber_2.1.jpg"], 
         date: "15.12.2025"
     },
     {
@@ -24,6 +24,13 @@ const newsData = [
         image: "img/Haber/Haber_3.jpg",
         date: "15.12.2025"
     },
+
+    {
+        title: "Sıradaki maça Ozan da geliyor!",
+        description: " Uzun zamandır takımda olmayan Ozan'ın, önümüzdeki hafta oynanacak kritik maçta sahaya dönmeye hazırlandığı öğrenildi. Takım arkadaşları ve teknik ekip, Ozan'ın geri dönüşüyle moral bulurken, taraftarlar da heyecanla bu haberi karşıladı. Ozan'ın son maç performansları göz önüne alındığında, takımın hücum hattında önemli bir güç artışı bekleniyor.",
+        image: "img/Haber/Haber_5.jpg",
+        date: "15.12.2025"
+    }, 
     {
         title: "Uğursuzluğu Kırıldı! Tayyip'in Omzu Yerinde Kaldı, Melekler Devrede!",
         description: "Yıllardır halısaha maçlarının korkulu rüyası haline gelen Tayyip'in omzu çıktı sendromu, dün akşam oynanan kritik maçta son buldu. Maç öncesi herkesin aklı 'acaba bu sefer hangi dakikada ?' sorusuyla meşgulken, tüm futbolseverleri şaşkına çeviren bir mucize yaşandı. Tayyip, maç boyunca gösterdiği üstün performansın yanı sıra, sahadan omzu yerinde ayrılmayı başardı. Bu tarihi ana tanıklık edenler, olayı \"ilahi bir müdahale\" olarak yorumladı.",
