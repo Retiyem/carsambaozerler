@@ -23,6 +23,12 @@ const newsData = [
         image: "img/Haber/Haber_3.jpg",
         date: "15.12.2025"
     },
+        {
+        title: "Uğursuzluğu Kırıldı! Tayyip'in Omzu Yerinde Kaldı, Melekler Devrede!",
+        description: "Yıllardır halısaha maçlarının korkulu rüyası haline gelen Tayyip'in omzu çıktı sendromu, dün akşam oynanan kritik maçta son buldu. Maç öncesi herkesin aklı 'acaba bu sefer hangi dakikada ?' sorusuyla meşgulken, tüm futbolseverleri şaşkına çeviren bir mucize yaşandı. Tayyip, maç boyunca gösterdiği üstün performansın yanı sıra, sahadan omzu yerinde ayrılmayı başardı. Bu tarihi ana tanıklık edenler, olayı \"ilahi bir müdahale\" olarak yorumladı.",
+        image: "img/Haber/Haber_4.jpg",
+        date: "15.12.2025"
+    },
     // Yeni haberleri buraya ekleyebilirsiniz...
     /*
     {
