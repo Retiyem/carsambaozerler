@@ -49,6 +49,68 @@
     /* Sabit yükseklik yok - görsel kendi boyutunda görünecek */
 }
 
+/* Slider Container */
+.news-slider {
+    position: relative;
+}
+
+.news-slides-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.news-slide {
+    display: none;
+    width: 100%;
+    animation: fadeSlide 0.5s ease-in-out;
+}
+
+.news-slide.active {
+    display: block;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Slider Noktaları */
+.slider-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.slider-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.slider-dot:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.slider-dot.active {
+    background-color: var(--primary-accent);
+    border-color: var(--primary-accent);
+    transform: scale(1.2);
+}
+
 .news-card-image {
     width: 100%;
     height: auto; /* Görselin orijinal en-boy oranını korur */
