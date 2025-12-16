@@ -11,14 +11,14 @@ const players = [
     { id: 'mushap_karatas', name: 'Mushap KARATAŞ', mevki: 'Forvet' },
     { id: 'furkan_sevimli', name: 'Furkan SEVİMLİ', mevki: 'Orta Saha' },
     { id: 'furkan_yilmaz', name: 'Furkan YILMAZ', mevki: 'Forvet' },
-    { id: 'süleyman_yildirim', name: 'Süleyman YILDIRIM', mevki: 'Orta Saha' },
+    { id: 'süleyman_yildirim', name: 'Süleyman YILDIRIM', mevki: 'Forvet' },
     { id: 'ibrahim_erdogdu', name: 'İbrahim ERDOĞDU', mevki: 'Kaleci' },
     { id: 'berkin_tayyip_ceran', name: 'Berkin Tayyip CERAN', mevki: 'Defans' },
     { id: 'muratcan_solmaz', name: 'Muratcan SOLMAZ', mevki: 'Defans' },
     { id: 'orhan_sariaydin', name: 'Orhan SARIAYDIN', mevki: 'Orta Saha' },
-    { id: 'ozan_necipoglu', name: 'Ozan NECİPOĞLU', mevki: 'Orta Saha' },
+    { id: 'ozan_necipoglu', name: 'Ozan NECİPOĞLU', mevki: 'Defans' },
     { id: 'ridvan_gumus', name: 'Rıdvan GÜMÜŞ', mevki: 'Forvet' },
-    { id: 'fatih_atalay', name: 'Fatih ATALAY', mevki: 'Forvet' },
+    { id: 'fatih_atalay', name: 'Fatih ATALAY', mevki: 'Orta Saha' },
     { id: 'seyfeddin_bulbul', name: 'Seyfeddin BÜLBÜL', mevki: 'Orta Saha' },
     { id: 'talha_bulbul', name: 'Talha BÜLBÜL', mevki: 'Kaleci' },
     { id: 'tayyip_erdogan_yilmaz', name: 'Tayyip Erdoğan YILMAZ', mevki: 'Orta Saha' },
@@ -502,25 +502,25 @@ const seasons = {
 // Sıradaki Maç Kadrosu - Buradan düzenleyebilirsiniz
 const nextMatchLineup = {
     teamA: [
-        'ahmet_sadıkoglu',       // Ahmet Sadıkoğlu
-        'ensar_bulbul',          // Ensar Bülbül
+        'onur_mustafa',        // Onur Mustafa Köse
+        'emre_erdal',          // Emre Erdal
         'huseyincan_yuksekdag', // HüseyinCAN YÜKSEKDAĞ
-        'ibrahim_erdogdu',       // İbrahim Erdoğdu
-        'furkan_sevimli',      // Furkan Sevimli
+        'talha_bulbul',       // İbrahim Erdoğdu
+        'tayyip_erdogan_yilmaz',      // Furkan Sevimli
         'mushap_karatas',       // Muşhap Karataş
         'fatih_atalay',            // Fatih Atalay
-        'ozan_necipoglu',     // Ozan Necipoğlu
-        'fıratcan_solmaz'        // Fıratcan Solmaz
+        'süleyman_yildirim',     // Ozan Necipoğlu
+        'furkan_sevimli'        // Fıratcan Solmaz
     ],
     teamB: [
         'ömer_erdal',          // Ömer Erdal
-        'onur_mustafa',        // Onur Mustafa Köse
-        'emre_erdal',          // Emre Erdal
-        'talha_bulbul',        // Talha Bülbül
-        'seyfeddin_bulbul',    // Seyfeddin Bülbül
-        'tayyip_erdogan_yilmaz', // Tayyip Erdoğan Yılmaz
-        'murat_can_yilmaz',    // Murat Can Yılmaz
-        'sulayman_yildiz',      // Süleyman Yıldız  
-        'furkan_yilmaz'        // Furkan Yılmaz
+        'ozan_necipoglu',        // Onur Mustafa Köse
+        'ahmet_sadıkoglu',          // Emre Erdal
+        'seyfeddin_bulbul',        // Talha Bülbül
+        'furkan_yilmaz',    // Seyfeddin Bülbül
+        'muratcan_solmaz', // Tayyip Erdoğan Yılmaz
+        'ibrahim_erdogdu',    // Murat Can Yılmaz
+        'firatcan_solmaz',      // Süleyman Yıldız  
+        'ensar_bulbul'        // Ensar Bülbül
     ]
 };
