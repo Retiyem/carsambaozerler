@@ -1,0 +1,686 @@
+/* KADRO KUR SAYFASI STİLLERİ */
+
+/* Sayfa Başlığı */
+.kadro-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.kadro-header .section-title {
+    font-size: 2.5rem;
+    color: var(--text-light);
+    text-shadow: 0 0 15px var(--primary-accent);
+    margin-bottom: 10px;
+}
+
+.kadro-header .section-description {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    opacity: 0.8;
+}
+
+/* Ana Grid Layout */
+.kadro-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+/* Panel Stilleri */
+.player-selection-panel,
+.selected-players-panel {
+    padding: 25px;
+    min-height: 500px;
+}
+
+.panel-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4rem;
+    color: var(--text-light);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-accent);
+}
+
+/* Arama Kutusu */
+.search-box {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.search-box .search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    opacity: 0.6;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-light);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.search-box input::placeholder {
+    color: var(--text-light);
+    opacity: 0.5;
+}
+
+/* Misafir Oyuncu Bölümü */
+.guest-player-section {
+    margin-bottom: 20px;
+}
+
+.btn-guest {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-guest:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+}
+
+.guest-input-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    animation: slideDown 0.3s ease;
+}
+
+.guest-input-container.hidden {
+    display: none;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.guest-input-container input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.guest-input-container input:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+}
+
+.btn-confirm-guest {
+    padding: 10px 15px;
+    background: var(--primary-accent);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-confirm-guest:hover {
+    background: #e85a30;
+}
+
+/* Oyuncu Listesi */
+.list-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    opacity: 0.7;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.player-list-container {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.player-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.player-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.player-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-accent);
+}
+
+.player-item.selected {
+    background: rgba(255, 107, 53, 0.2);
+    border-color: var(--primary-accent);
+}
+
+.player-item.hidden {
+    display: none;
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.player-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: white;
+}
+
+.player-name {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.player-position {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    opacity: 0.6;
+}
+
+.player-power {
+    font-size: 0.85rem;
+    color: var(--primary-accent);
+    font-weight: 700;
+    background: rgba(255, 107, 53, 0.2);
+    padding: 4px 10px;
+    border-radius: 15px;
+}
+
+.btn-add-player {
+    padding: 6px 12px;
+    background: var(--primary-accent);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-add-player:hover {
+    background: #e85a30;
+}
+
+.btn-remove-player {
+    padding: 6px 12px;
+    background: #ef4444;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-remove-player:hover {
+    background: #dc2626;
+}
+
+/* Seçilen Oyuncular */
+.selected-players-list {
+    min-height: 280px;
+    max-height: 350px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.empty-message {
+    text-align: center;
+    color: var(--text-light);
+    opacity: 0.5;
+    padding: 40px 20px;
+    font-style: italic;
+}
+
+.selected-player-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background: rgba(255, 107, 53, 0.15);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(255, 107, 53, 0.3);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.selected-player-item .player-name {
+    flex: 1;
+}
+
+.guest-badge {
+    font-size: 0.7rem;
+    background: #6366f1;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+}
+
+/* Aksiyon Butonları */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-primary {
+    flex: 1;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, var(--primary-accent), #e85a30);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    color: var(--text-light);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--text-light);
+}
+
+/* Takım Sonuçları */
+.teams-result-section {
+    margin-top: 40px;
+    animation: fadeIn 0.5s ease;
+}
+
+.teams-result-section.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.teams-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.teams-header .section-title {
+    margin: 0;
+}
+
+.btn-regenerate {
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-regenerate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-regenerate i {
+    transition: transform 0.3s ease;
+}
+
+.btn-regenerate:hover i {
+    transform: rotate(180deg);
+}
+
+/* Takım Kartları Grid */
+.teams-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.team-card {
+    padding: 25px;
+    border-radius: 16px;
+}
+
+.team-a {
+    border-left: 4px solid #ef4444;
+}
+
+.team-b {
+    border-left: 4px solid #3b82f6;
+}
+
+.team-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.team-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    color: var(--text-light);
+    margin: 0;
+}
+
+.team-power {
+    text-align: right;
+}
+
+.power-label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    opacity: 0.7;
+    display: block;
+}
+
+.power-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-accent);
+}
+
+.team-player-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.team-player-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+}
+
+.team-player-list li:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.team-player-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.team-player-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: white;
+}
+
+.team-a .team-player-avatar {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.team-b .team-player-avatar {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.team-player-name {
+    font-size: 0.95rem;
+    color: var(--text-light);
+}
+
+.team-player-power {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    opacity: 0.7;
+}
+
+/* Denge Göstergesi */
+.balance-indicator {
+    padding: 25px;
+    text-align: center;
+}
+
+.balance-indicator h4 {
+    margin: 0 0 15px 0;
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.balance-bar-container {
+    width: 100%;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.balance-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #ef4444, #10b981);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    width: 50%;
+}
+
+.balance-text {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.balance-text.excellent {
+    color: #10b981;
+}
+
+.balance-text.good {
+    color: #f59e0b;
+}
+
+.balance-text.poor {
+    color: #ef4444;
+}
+
+/* Scrollbar Stilleri */
+.player-list-container::-webkit-scrollbar,
+.selected-players-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.player-list-container::-webkit-scrollbar-track,
+.selected-players-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.player-list-container::-webkit-scrollbar-thumb,
+.selected-players-list::-webkit-scrollbar-thumb {
+    background: var(--primary-accent);
+    border-radius: 3px;
+}
+
+/* Mobil Uyumluluk */
+@media (max-width: 992px) {
+    .kadro-main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .teams-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .player-selection-panel,
+    .selected-players-panel {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .kadro-header .section-title {
+        font-size: 2rem;
+    }
+
+    .kadro-header .section-description {
+        font-size: 1rem;
+    }
+
+    .panel-title {
+        font-size: 1.2rem;
+    }
+
+    .teams-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .team-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .team-power {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .kadro-header .section-title {
+        font-size: 1.6rem;
+    }
+
+    .player-item {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .player-item .btn-add-player {
+        width: 100%;
+    }
+}

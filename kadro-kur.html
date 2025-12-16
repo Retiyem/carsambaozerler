@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Halısaha Ligi - Otomatik Kadro Kur</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/kadro-kur.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo glow-text"><a href="index.html">Halısaha Ligi</a></h1>
+            <button class="hamburger-menu" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav id="nav-menu">
+                <ul>
+                    <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="puan-durumu.html" class="nav-link">Puan Durumu</a></li>
+                    <li><a href="maclar.html" class="nav-link">Maçlar</a></li>
+                    <li><a href="oyuncular.html" class="nav-link">Oyuncular</a></li>
+                    <li><a href="haberler.html" class="nav-link">Haberler</a></li>
+                    <li><a href="kadro-kur.html" class="nav-link active">Kadro Kur</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Sayfa Başlığı -->
+        <section class="kadro-header animate-fade-in">
+            <h2 class="section-title">⚽ Otomatik Kadro Kur</h2>
+            <p class="section-description">Oyuncuları seç, sistemi çalıştır, adil takımlar otomatik oluşsun ⚽</p>
+        </section>
+
+        <!-- Ana İçerik Grid -->
+        <div class="kadro-main-grid">
+            <!-- Sol Panel - Oyuncu Seçimi -->
+            <section class="player-selection-panel glassmorphism-card animate-fade-in">
+                <h3 class="panel-title">👥 Oyuncu Seçimi</h3>
+                
+                <!-- Arama Kutusu -->
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="player-search" placeholder="Oyuncu ara..." autocomplete="off">
+                </div>
+
+                <!-- Misafir Oyuncu Ekleme -->
+                <div class="guest-player-section">
+                    <button id="add-guest-btn" class="btn-guest">
+                        <i class="fas fa-user-plus"></i> Misafir Oyuncu Ekle
+                    </button>
+                    <div id="guest-input-container" class="guest-input-container hidden">
+                        <input type="text" id="guest-name-input" placeholder="Misafir adı yazın..." autocomplete="off">
+                        <button id="confirm-guest-btn" class="btn-confirm-guest">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Oyuncu Listesi -->
+                <div class="player-list-container">
+                    <h4 class="list-subtitle">Tüm Oyuncular</h4>
+                    <div id="all-players-list" class="player-list">
+                        <!-- Oyuncular JS ile doldurulacak -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Orta Panel - Seçilen Oyuncular -->
+            <section class="selected-players-panel glassmorphism-card animate-fade-in">
+                <h3 class="panel-title">✅ Seçilen Oyuncular <span id="selected-count">(0)</span></h3>
+                
+                <div id="selected-players-list" class="selected-players-list">
+                    <p class="empty-message">Henüz oyuncu seçilmedi</p>
+                </div>
+
+                <!-- Aksiyon Butonları -->
+                <div class="action-buttons">
+                    <button id="create-teams-btn" class="btn-primary" disabled>
+                        <i class="fas fa-magic"></i> Takımları Kur
+                    </button>
+                    <button id="clear-selection-btn" class="btn-secondary">
+                        <i class="fas fa-trash"></i> Temizle
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Takım Sonuçları -->
+        <section id="teams-result" class="teams-result-section hidden">
+            <div class="teams-header">
+                <h3 class="section-title">🏆 Oluşturulan Takımlar</h3>
+                <button id="regenerate-btn" class="btn-regenerate">
+                    <i class="fas fa-sync-alt"></i> Yeniden Kadro Kur
+                </button>
+            </div>
+
+            <div class="teams-grid">
+                <!-- Takım A -->
+                <div class="team-card glassmorphism-card team-a animate-fade-in">
+                    <div class="team-header">
+                        <h4 class="team-name">🔴 Takım A</h4>
+                        <div class="team-power">
+                            <span class="power-label">Toplam Güç:</span>
+                            <span id="team-a-power" class="power-value">0</span>
+                        </div>
+                    </div>
+                    <ul id="team-a-list" class="team-player-list">
+                        <!-- Takım A oyuncuları -->
+                    </ul>
+                </div>
+
+                <!-- Takım B -->
+                <div class="team-card glassmorphism-card team-b animate-fade-in">
+                    <div class="team-header">
+                        <h4 class="team-name">🔵 Takım B</h4>
+                        <div class="team-power">
+                            <span class="power-label">Toplam Güç:</span>
+                            <span id="team-b-power" class="power-value">0</span>
+                        </div>
+                    </div>
+                    <ul id="team-b-list" class="team-player-list">
+                        <!-- Takım B oyuncuları -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Denge Göstergesi -->
+            <div class="balance-indicator glassmorphism-card">
+                <h4>⚖️ Takım Dengesi</h4>
+                <div class="balance-bar-container">
+                    <div id="balance-bar" class="balance-bar"></div>
+                </div>
+                <p id="balance-text" class="balance-text">Takımlar dengeli!</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; Onur Mustafa Köse. Tüm Hakları Saklıdır.</p>
+        </div>
+    </footer>
+
+    <!-- Script Dosyaları -->
+    <script src="js/data.js"></script>
+    <script src="js/kadro-kur.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
