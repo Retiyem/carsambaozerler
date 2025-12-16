@@ -71,6 +71,9 @@ function setupEventListeners() {
 // OYUNCU PERFORMANS SKORU HESAPLAMA
 // =====================================================
 
+// Minimum maç sayısı eşiği (bu sayıya ulaşmayan oyuncular ceza alır)
+const MIN_MATCHES_THRESHOLD = 5;
+
 // Oyuncu performans skorunu hesapla
 function calculatePlayerPower(playerId) {
     // data.js'den maç verilerini al
@@ -81,6 +84,7 @@ function calculatePlayerPower(playerId) {
     let totalMatches = 0;
     let wins = 0;
     let draws = 0;
+    let losses = 0;
     let totalGoals = 0;
     let mvpCount = 0;
     
@@ -96,14 +100,16 @@ function calculatePlayerPower(playerId) {
                 mvpCount++;
             }
             
-            // Galibiyet/Beraberlik kontrolü
+            // Galibiyet/Beraberlik/Mağlubiyet kontrolü
             const playerTeam = performance.team;
             if (playerTeam === 'A') {
                 if (match.teamAGoals > match.teamBGoals) wins++;
                 else if (match.teamAGoals === match.teamBGoals) draws++;
+                else losses++;
             } else {
                 if (match.teamBGoals > match.teamAGoals) wins++;
                 else if (match.teamBGoals === match.teamAGoals) draws++;
+                else losses++;
             }
         }
     });
@@ -113,18 +119,59 @@ function calculatePlayerPower(playerId) {
         return 50;
     }
     
-    // Performans skoru hesaplama
-    // Formül: (Galibiyet * 3 + Beraberlik * 1) / Maç Sayısı * 20 + Gol Ortalaması * 5 + MVP * 3
-    const winRate = ((wins * 3 + draws * 1) / totalMatches) * 20;
-    const goalAverage = (totalGoals / totalMatches) * 5;
-    const mvpBonus = mvpCount * 3;
+    // === YENİ ADİL HESAPLAMA SİSTEMİ ===
     
-    let power = Math.round(winRate + goalAverage + mvpBonus + 30); // Base 30
+    // 1. Galibiyet puanı (max 30 puan)
+    // Galibiyet oranına göre: %100 galibiyet = 30 puan
+    const winRate = wins / totalMatches;
+    const winPoints = winRate * 30;
+    
+    // 2. Gol ortalaması puanı (max 25 puan)
+    // Maç başı 2+ gol = tam puan
+    const goalAverage = totalGoals / totalMatches;
+    const goalPoints = Math.min(goalAverage * 12.5, 25);
+    
+    // 3. MVP bonusu (max 15 puan)
+    // Her MVP = 5 puan, max 3 MVP sayılır
+    const mvpPoints = Math.min(mvpCount * 5, 15);
+    
+    // 4. Tecrübe faktörü (max 20 puan)
+    // Toplam oynanan maç sayısına göre
+    const maxMatches = Math.max(...players.map(p => getPlayerMatchCount(p.id)));
+    const experienceRatio = totalMatches / Math.max(maxMatches, 1);
+    const experiencePoints = experienceRatio * 20;
+    
+    // 5. Az maç cezası
+    // Minimum eşiğin altındaki oyuncular için skor düşürülür
+    let matchPenalty = 1;
+    if (totalMatches < MIN_MATCHES_THRESHOLD) {
+        // Her eksik maç için %15 ceza
+        const missingMatches = MIN_MATCHES_THRESHOLD - totalMatches;
+        matchPenalty = Math.max(0.4, 1 - (missingMatches * 0.15));
+    }
+    
+    // 6. Baz puan (herkes için 10)
+    const basePoints = 10;
+    
+    // Toplam hesaplama
+    let rawPower = basePoints + winPoints + goalPoints + mvpPoints + experiencePoints;
+    
+    // Az maç cezası uygula
+    let power = Math.round(rawPower * matchPenalty);
     
     // Skor sınırları (30-100 arası)
     power = Math.max(30, Math.min(100, power));
     
     return power;
+}
+
+// Oyuncunun toplam maç sayısını getir
+function getPlayerMatchCount(playerId) {
+    if (!matches || matches.length === 0) return 0;
+    
+    return matches.filter(match => 
+        match.performances.some(p => p.playerId === playerId)
+    ).length;
 }
 
 // Tüm oyuncuların güç skorlarını hesapla
