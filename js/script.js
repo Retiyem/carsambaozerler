@@ -4,6 +4,148 @@ function getPlayerNameById(playerId) {
     return player ? player.name : 'Bilinmeyen Oyuncu';
 }
 
+// =====================================================
+// OYUNCU GÜÇ SKORU HESAPLAMA (Kadro Kur ile aynı)
+// =====================================================
+
+const MIN_MATCHES_THRESHOLD_GLOBAL = 5;
+
+function calculatePlayerPowerGlobal(playerId) {
+    if (!matches || matches.length === 0) {
+        return 50;
+    }
+    
+    // Oyuncunun mevkisini bul
+    const player = players.find(p => p.id === playerId);
+    const position = player ? player.mevki : 'Orta Saha';
+    
+    let totalMatches = 0;
+    let wins = 0;
+    let draws = 0;
+    let losses = 0;
+    let totalGoals = 0;
+    let mvpCount = 0;
+    let donkeyCount = 0;
+    let totalGoalsConceded = 0;
+    let totalTeamGoals = 0;
+    let totalMatchGoals = 0;
+    
+    matches.forEach(match => {
+        const performance = match.performances.find(p => p.playerId === playerId);
+        if (performance) {
+            totalMatches++;
+            totalGoals += performance.goals || 0;
+            
+            if (performance.weeklyMVP) {
+                mvpCount++;
+            }
+            
+            if (match.esek_adam === playerId) {
+                donkeyCount++;
+            }
+            
+            const playerTeam = performance.team;
+            const teamGoalsFor = playerTeam === 'A' ? match.teamAGoals : match.teamBGoals;
+            const teamGoalsAgainst = playerTeam === 'A' ? match.teamBGoals : match.teamAGoals;
+            
+            totalTeamGoals += teamGoalsFor;
+            totalGoalsConceded += teamGoalsAgainst;
+            totalMatchGoals += match.teamAGoals + match.teamBGoals;
+            
+            if (playerTeam === 'A') {
+                if (match.teamAGoals > match.teamBGoals) wins++;
+                else if (match.teamAGoals === match.teamBGoals) draws++;
+                else losses++;
+            } else {
+                if (match.teamBGoals > match.teamAGoals) wins++;
+                else if (match.teamBGoals === match.teamAGoals) draws++;
+                else losses++;
+            }
+        }
+    });
+    
+    if (totalMatches === 0) {
+        return 50;
+    }
+    
+    // === MEVKİ BAZLI HESAPLAMA ===
+    const winRate = wins / totalMatches;
+    const winPoints = winRate * 35;
+    
+    const goalAverage = totalGoals / totalMatches;
+    let goalPoints = 0;
+    let positionBonus = 0;
+    
+    const avgConceded = totalGoalsConceded / totalMatches;
+    const avgTeamGoals = totalTeamGoals / totalMatches;
+    const avgMatchGoals = totalMatchGoals / totalMatches;
+    const normalizationFactor = 20 / Math.max(avgMatchGoals, 10);
+    
+    if (position === 'Kaleci') {
+        goalPoints = 0;
+        // 12 gol/maç = 0 bonus, 2 gol/maç = 18 bonus
+        const concededNormalized = avgConceded * normalizationFactor;
+        const saveBonus = Math.max(0, 18 - (concededNormalized * 1.8));
+        positionBonus = saveBonus;
+    } else if (position === 'Defans') {
+        goalPoints = goalAverage * 2.5; // ×2.5 gol çarpanı (gol atması zor)
+        // Yenilen gol performansı (max +8)
+        const concededNormalized = avgConceded * normalizationFactor;
+        const defenseBonus = Math.max(0, 8 - (concededNormalized * 0.8));
+        positionBonus = defenseBonus;
+    } else if (position === 'Orta Saha') {
+        goalPoints = goalAverage * 2; // ×2 gol çarpanı
+        const goalDiffPerMatch = (totalTeamGoals - totalGoalsConceded) / totalMatches;
+        const goalDiffNormalized = goalDiffPerMatch * normalizationFactor;
+        const midfieldBonus = Math.min(8, Math.max(-4, goalDiffNormalized * 1.5));
+        positionBonus = midfieldBonus;
+    } else if (position === 'Forvet') {
+        goalPoints = goalAverage * 1.75; // ×1.75 gol çarpanı (gol atması kolay)
+        const teamGoalNormalized = avgTeamGoals * normalizationFactor;
+        const forwardBonus = Math.min(5, teamGoalNormalized * 0.3);
+        positionBonus = forwardBonus;
+    } else {
+        goalPoints = goalAverage * 2;
+    }
+    
+    const mvpPoints = Math.min(mvpCount * 4, 12);
+    const donkeyPenalty = donkeyCount * 2;
+    
+    const maxMatches = Math.max(...players.map(p => getPlayerMatchCountGlobal(p.id)));
+    const experienceRatio = totalMatches / Math.max(maxMatches, 1);
+    let experiencePoints = experienceRatio * 30;
+    
+    // 5+ maç oynayanlara kazanma yüzdesi bonusu (max +10 puan)
+    if (totalMatches >= MIN_MATCHES_THRESHOLD_GLOBAL) {
+        const winRateBonus = winRate * 10;
+        experiencePoints += winRateBonus;
+    }
+    
+    let matchPenalty = 1;
+    if (totalMatches < MIN_MATCHES_THRESHOLD_GLOBAL) {
+        const missingMatches = MIN_MATCHES_THRESHOLD_GLOBAL - totalMatches;
+        matchPenalty = Math.max(0.4, 1 - (missingMatches * 0.15));
+    }
+    
+    const basePoints = 30;
+    
+    let rawPower = basePoints + winPoints + goalPoints + positionBonus + mvpPoints + experiencePoints - donkeyPenalty;
+    
+    let power = Math.round(rawPower * matchPenalty);
+    power = Math.max(30, Math.min(100, power));
+    
+    return power;
+}
+
+function getPlayerMatchCountGlobal(playerId) {
+    if (!matches || matches.length === 0) return 0;
+    return matches.filter(match => 
+        match.performances.some(p => p.playerId === playerId)
+    ).length;
+}
+
+// =====================================================
+
 // Tüm oyuncuların istatistiklerini hesaplayan fonksiyon (mevcut sezon için)
 function calculatePlayerStats() {
     return calculateCurrentSeasonPlayerStats();
@@ -25,6 +167,12 @@ function renderScoreboard() {
         const playerData = players.find(p => p.name === player.name);
         const playerId = playerData ? playerData.id : player.name.toLowerCase().replace(/\s+/g, '_');
         
+        // Güç skorunu hesapla
+        const playerPower = calculatePlayerPowerGlobal(playerId);
+        
+        // Güç seviyesine göre renk sınıfı belirle
+        const powerClass = getPowerClass(playerPower);
+        
         // Rank class'ını belirle
         let rankClass = '';
         if (index === 0) rankClass = 'rank-1';
@@ -40,6 +188,7 @@ function renderScoreboard() {
                         <a href="oyuncu-profili.html?id=${playerId}" class="player-link">${player.name}</a>
                     </span>
                 </td>
+                <td class="power-cell ${powerClass}"><strong>${playerPower}</strong></td>
                 <td>${player.M}</td>
                 <td>${player.W}</td>
                 <td>${player.D}</td>
@@ -53,6 +202,17 @@ function renderScoreboard() {
         `;
         scoreboardBody.insertAdjacentHTML('beforeend', row);
     });
+}
+
+// Güç seviyesine göre CSS sınıfı döndür
+function getPowerClass(power) {
+    if (power >= 95) return 'power-supreme';
+    if (power >= 90) return 'power-legendary';
+    if (power >= 80) return 'power-elite';
+    if (power >= 70) return 'power-strong';
+    if (power >= 60) return 'power-average';
+    if (power >= 50) return 'power-developing';
+    return 'power-rookie';
 }
 
 // Sezon bilgilerini güncelleme fonksiyonu

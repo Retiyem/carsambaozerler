@@ -552,6 +552,69 @@ tr.rank-1:hover, tr.rank-2:hover, tr.rank-3:hover {
     font-size: 1.1em;
 }
 
+/* Güç Skoru Hücresi */
+.power-cell {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Güç Seviyelerine Göre Renkler */
+.power-cell.power-supreme {
+    color: #FF0000 !important; /* Kırmızı - Üstün (95+) */
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.9);
+    animation: power-glow-supreme 1s ease-in-out infinite alternate;
+}
+
+.power-cell.power-legendary {
+    color: #FF4500 !important; /* Turuncu-Kırmızı - Efsanevi (90-94) */
+    text-shadow: 0 0 12px rgba(255, 69, 0, 0.8);
+    animation: power-glow-legendary 1.5s ease-in-out infinite alternate;
+}
+
+.power-cell.power-elite {
+    color: #9932CC !important; /* Mor - Elit (80-89) */
+    text-shadow: 0 0 10px rgba(153, 50, 204, 0.7);
+}
+
+.power-cell.power-strong {
+    color: #FFD700 !important; /* Altın - Güçlü (70-79) */
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+.power-cell.power-average {
+    color: #32CD32 !important; /* Yeşil - Ortalama (60-69) */
+    text-shadow: 0 0 6px rgba(50, 205, 50, 0.5);
+}
+
+.power-cell.power-developing {
+    color: #87CEEB !important; /* Açık Mavi - Gelişen (50-59) */
+    text-shadow: 0 0 5px rgba(135, 206, 235, 0.5);
+}
+
+.power-cell.power-rookie {
+    color: #A9A9A9 !important; /* Gri - Çaylak (50 altı) */
+    text-shadow: 0 0 4px rgba(169, 169, 169, 0.4);
+}
+
+@keyframes power-glow-supreme {
+    from {
+        text-shadow: 0 0 12px rgba(255, 0, 0, 0.7);
+    }
+    to {
+        text-shadow: 0 0 25px rgba(255, 0, 0, 1), 0 0 40px rgba(255, 50, 50, 0.6);
+    }
+}
+
+@keyframes power-glow-legendary {
+    from {
+        text-shadow: 0 0 10px rgba(255, 69, 0, 0.6);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(255, 69, 0, 1), 0 0 30px rgba(255, 215, 0, 0.5);
+    }
+}
+
 /* Rank vurgulu satırlarda avatar kenarlığı */
 tr.rank-1 .player-avatar {
     border-color: #FFD700;

@@ -219,6 +219,110 @@
     transform: translateY(-5px);
 }
 
+/* Güç Kartı Özel Stili */
+.stat-card.power-card {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-card.power-card .stat-icon {
+    background: linear-gradient(45deg, #FFD700, #FF8C00);
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+}
+
+/* Güç Seviyelerine Göre Kart Renkleri */
+.stat-card.power-card.power-supreme {
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.25), rgba(200, 0, 0, 0.2));
+    border-color: rgba(255, 0, 0, 0.6);
+}
+.stat-card.power-card.power-supreme .stat-value {
+    color: #FF0000;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.9);
+    animation: power-pulse-supreme 1s ease-in-out infinite alternate;
+}
+.stat-card.power-card.power-supreme .stat-icon {
+    background: linear-gradient(45deg, #FF0000, #DC143C);
+}
+
+.stat-card.power-card.power-legendary {
+    background: linear-gradient(135deg, rgba(255, 69, 0, 0.2), rgba(255, 140, 0, 0.15));
+    border-color: rgba(255, 69, 0, 0.5);
+}
+.stat-card.power-card.power-legendary .stat-value {
+    color: #FF4500;
+    text-shadow: 0 0 15px rgba(255, 69, 0, 0.8);
+    animation: power-pulse 1.5s ease-in-out infinite alternate;
+}
+.stat-card.power-card.power-legendary .stat-icon {
+    background: linear-gradient(45deg, #FF4500, #FF6347);
+}
+
+.stat-card.power-card.power-elite {
+    background: linear-gradient(135deg, rgba(153, 50, 204, 0.2), rgba(138, 43, 226, 0.15));
+    border-color: rgba(153, 50, 204, 0.5);
+}
+.stat-card.power-card.power-elite .stat-value {
+    color: #9932CC;
+    text-shadow: 0 0 12px rgba(153, 50, 204, 0.7);
+}
+.stat-card.power-card.power-elite .stat-icon {
+    background: linear-gradient(45deg, #9932CC, #8A2BE2);
+}
+
+.stat-card.power-card.power-strong {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 140, 0, 0.1));
+    border-color: rgba(255, 215, 0, 0.4);
+}
+.stat-card.power-card.power-strong .stat-value {
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+.stat-card.power-card.power-average {
+    background: linear-gradient(135deg, rgba(50, 205, 50, 0.15), rgba(34, 139, 34, 0.1));
+    border-color: rgba(50, 205, 50, 0.4);
+}
+.stat-card.power-card.power-average .stat-value {
+    color: #32CD32;
+    text-shadow: 0 0 8px rgba(50, 205, 50, 0.5);
+}
+.stat-card.power-card.power-average .stat-icon {
+    background: linear-gradient(45deg, #32CD32, #228B22);
+}
+
+.stat-card.power-card.power-developing {
+    background: linear-gradient(135deg, rgba(135, 206, 235, 0.15), rgba(70, 130, 180, 0.1));
+    border-color: rgba(135, 206, 235, 0.4);
+}
+.stat-card.power-card.power-developing .stat-value {
+    color: #87CEEB;
+    text-shadow: 0 0 6px rgba(135, 206, 235, 0.5);
+}
+.stat-card.power-card.power-developing .stat-icon {
+    background: linear-gradient(45deg, #87CEEB, #4682B4);
+}
+
+.stat-card.power-card.power-rookie {
+    background: linear-gradient(135deg, rgba(169, 169, 169, 0.15), rgba(128, 128, 128, 0.1));
+    border-color: rgba(169, 169, 169, 0.3);
+}
+.stat-card.power-card.power-rookie .stat-value {
+    color: #A9A9A9;
+    text-shadow: 0 0 4px rgba(169, 169, 169, 0.4);
+}
+.stat-card.power-card.power-rookie .stat-icon {
+    background: linear-gradient(45deg, #A9A9A9, #808080);
+}
+
+@keyframes power-pulse {
+    from { text-shadow: 0 0 10px rgba(255, 69, 0, 0.6); }
+    to { text-shadow: 0 0 25px rgba(255, 69, 0, 1), 0 0 35px rgba(255, 215, 0, 0.5); }
+}
+
+@keyframes power-pulse-supreme {
+    from { text-shadow: 0 0 15px rgba(255, 0, 0, 0.7); }
+    to { text-shadow: 0 0 30px rgba(255, 0, 0, 1), 0 0 45px rgba(255, 50, 50, 0.6); }
+}
+
 .stat-icon {
     font-size: 2.5rem;
     width: 60px;

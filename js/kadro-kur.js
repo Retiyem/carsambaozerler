@@ -81,12 +81,20 @@ function calculatePlayerPower(playerId) {
         return 50; // Varsayılan skor
     }
     
+    // Oyuncunun mevkisini bul
+    const player = players.find(p => p.id === playerId);
+    const position = player ? player.mevki : 'Orta Saha';
+    
     let totalMatches = 0;
     let wins = 0;
     let draws = 0;
     let losses = 0;
     let totalGoals = 0;
     let mvpCount = 0;
+    let donkeyCount = 0;
+    let totalGoalsConceded = 0; // Takımın yediği goller
+    let totalTeamGoals = 0; // Takımın attığı goller
+    let totalMatchGoals = 0; // Maçtaki toplam gol (normalleştirme için)
     
     // Her maçı incele
     matches.forEach(match => {
@@ -100,8 +108,21 @@ function calculatePlayerPower(playerId) {
                 mvpCount++;
             }
             
-            // Galibiyet/Beraberlik/Mağlubiyet kontrolü
+            // Eşşek kontrolü
+            if (match.esek_adam === playerId) {
+                donkeyCount++;
+            }
+            
+            // Takım gol istatistikleri
             const playerTeam = performance.team;
+            const teamGoalsFor = playerTeam === 'A' ? match.teamAGoals : match.teamBGoals;
+            const teamGoalsAgainst = playerTeam === 'A' ? match.teamBGoals : match.teamAGoals;
+            
+            totalTeamGoals += teamGoalsFor;
+            totalGoalsConceded += teamGoalsAgainst;
+            totalMatchGoals += match.teamAGoals + match.teamBGoals;
+            
+            // Galibiyet/Beraberlik/Mağlubiyet kontrolü
             if (playerTeam === 'A') {
                 if (match.teamAGoals > match.teamBGoals) wins++;
                 else if (match.teamAGoals === match.teamBGoals) draws++;
@@ -119,45 +140,100 @@ function calculatePlayerPower(playerId) {
         return 50;
     }
     
-    // === YENİ ADİL HESAPLAMA SİSTEMİ ===
+    // === MEVKİ BAZLI HESAPLAMA SİSTEMİ ===
     
-    // 1. Galibiyet puanı (max ~40 puan)
-    // Galibiyet oranına göre: %100 galibiyet = 40 puan
+    // 1. Galibiyet puanı (max ~35 puan)
     const winRate = wins / totalMatches;
-    const winPoints = winRate * 40;
+    const winPoints = winRate * 35;
     
-    // 2. Gol ortalaması puanı (limit yok)
-    // Maç başı gol × 5
+    // 2. Kişisel gol puanı (mevkiye göre değişir)
     const goalAverage = totalGoals / totalMatches;
-    const goalPoints = goalAverage * 5;
+    let goalPoints = 0;
     
-    // 3. MVP bonusu (max ~21 puan)
-    // Her MVP = 7 puan, max 3 MVP sayılır
-    const mvpPoints = Math.min(mvpCount * 7, 21);
+    // 3. Mevkiye özel puan hesaplama
+    let positionBonus = 0;
     
-    // 4. Tecrübe faktörü (max ~25 puan)
-    // Toplam oynanan maç sayısına göre
+    // Maç başı ortalama yenilen gol (normalleştirilmiş)
+    const avgConceded = totalGoalsConceded / totalMatches;
+    const avgTeamGoals = totalTeamGoals / totalMatches;
+    const avgMatchGoals = totalMatchGoals / totalMatches;
+    
+    // Normalleştirme faktörü (yüksek skorlu maçları dengeler)
+    // Ortalama maç 20 gol olsun varsayımı
+    const normalizationFactor = 20 / Math.max(avgMatchGoals, 10);
+    
+    if (position === 'Kaleci') {
+        // KALECİ: Gol atma önemsiz, yenilen gol çok önemli
+        goalPoints = 0; // Kaleciler için kişisel gol puanı yok
+        
+        // Yenilen gol performansı (az yemek = yüksek puan)
+        // Normalleştirilmiş: 12 gol/maç yemek = 0 puan, 2 gol = 18 puan
+        const concededNormalized = avgConceded * normalizationFactor;
+        const saveBonus = Math.max(0, 18 - (concededNormalized * 1.8));
+        positionBonus = saveBonus;
+        
+    } else if (position === 'Defans') {
+        // DEFANS: Gol atma az önemli, yenilen gol biraz önemli
+        goalPoints = goalAverage * 2.5; // Defans gol atması zor (×2.5)
+        
+        // Yenilen gol performansı (max +8)
+        const concededNormalized = avgConceded * normalizationFactor;
+        const defenseBonus = Math.max(0, 8 - (concededNormalized * 0.8));
+        positionBonus = defenseBonus;
+        
+    } else if (position === 'Orta Saha') {
+        // ORTA SAHA: Dengeli - hem gol hem gol farkı
+        goalPoints = goalAverage * 2; // Orta düzey gol katkısı (×2)
+        
+        // Gol farkı performansı (çok az etkili)
+        const goalDiffPerMatch = (totalTeamGoals - totalGoalsConceded) / totalMatches;
+        const goalDiffNormalized = goalDiffPerMatch * normalizationFactor;
+        const midfieldBonus = Math.min(8, Math.max(-4, goalDiffNormalized * 1.5));
+        positionBonus = midfieldBonus;
+        
+    } else if (position === 'Forvet') {
+        // FORVET: Kişisel gol çok önemli, takım golü az bonus
+        goalPoints = goalAverage * 1.75; // Forvet gol atması kolay (×1.75)
+        
+        // Takımın attığı gol bonusu (çok az etkili)
+        const teamGoalNormalized = avgTeamGoals * normalizationFactor;
+        const forwardBonus = Math.min(5, teamGoalNormalized * 0.3);
+        positionBonus = forwardBonus;
+        
+    } else {
+        // Diğer mevkiler için standart hesaplama
+        goalPoints = goalAverage * 2;
+    }
+    
+    // 4. MVP bonusu (max ~12 puan)
+    const mvpPoints = Math.min(mvpCount * 4, 12);
+    
+    // 5. Eşşek cezası (her eşşek için -2 puan)
+    const donkeyPenalty = donkeyCount * 2;
+    
+    // 6. Tecrübe faktörü (max ~30 puan) + Kazanma yüzdesi bonusu
     const maxMatches = Math.max(...players.map(p => getPlayerMatchCount(p.id)));
     const experienceRatio = totalMatches / Math.max(maxMatches, 1);
-    const experiencePoints = experienceRatio * 25;
+    let experiencePoints = experienceRatio * 30;
     
-    // 5. Az maç cezası
-    // Minimum eşiğin altındaki oyuncular için skor düşürülür
+    // 5+ maç oynayanlara kazanma yüzdesi bonusu (max +10 puan)
+    if (totalMatches >= MIN_MATCHES_THRESHOLD) {
+        const winRateBonus = winRate * 10;
+        experiencePoints += winRateBonus;
+    }
+    
+    // 7. Az maç cezası
     let matchPenalty = 1;
     if (totalMatches < MIN_MATCHES_THRESHOLD) {
-        // Her eksik maç için %15 ceza
         const missingMatches = MIN_MATCHES_THRESHOLD - totalMatches;
         matchPenalty = Math.max(0.4, 1 - (missingMatches * 0.15));
     }
     
-    // 6. Baz puan (herkes için 12)
-    const basePoints = 12;
+    // 8. Baz puan (herkes için 30)
+    const basePoints = 30;
     
     // Toplam hesaplama
-    let rawPower = basePoints + winPoints + goalPoints + mvpPoints + experiencePoints;
-    
-    // %10 bonus ekle
-    rawPower = rawPower * 1.10;
+    let rawPower = basePoints + winPoints + goalPoints + positionBonus + mvpPoints + experiencePoints - donkeyPenalty;
     
     // Az maç cezası uygula
     let power = Math.round(rawPower * matchPenalty);
