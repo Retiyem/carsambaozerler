@@ -37,6 +37,12 @@ const newsData = [
         images: ["img/Haber/Haber_4.jpg", "img/Haber/Haber_4.1.jpg"], // Çoklu fotoğraf - slider olacak
         date: "15.12.2025"
     },
+        {
+        title: "Yönetim Çıldırdı !",
+        description: " Her hafta yaşanan kadro belirlenme kaosu bu hafta da yaşandı. Yönetim kurulu başkanımız Sayın Onur M. Kose, maç kadrosunu belirlerken adeta bir satranç ustası gibi hamleler yaptı. Oyuncular arasında yapılan gizli toplantılar,yapay zeka desteği, sürpriz taktik değişiklikleri ve son dakika kararlarıyla takımların dengeleri cuk oldu. Taraftarlar ise bu kaotik durumu 'haftanın en heyecan verici dizisi' olarak nitelendirdi.",
+        images: ["img/Haber/Haber_6.png"], // Çoklu fotoğraf - slider olacak
+        date: "17.12.2025"
+    },
     // Yeni haberleri buraya ekleyebilirsiniz...
     /*
     {
