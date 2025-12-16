@@ -1103,7 +1103,7 @@ function calculateTeamPrediction(teamPlayerIds, opponentIds) {
     
     return {
         predictedGoals: Math.round(totalPredictedGoals * 10) / 10,
-        topScorers: topScorers.slice(0, 3), // En iyi 3 oyuncu
+        topScorers: topScorers, // Tüm oyuncular
         teamStrength,
         totalExperience
     };
@@ -1131,36 +1131,29 @@ function displayScorePrediction() {
     const teamAPrediction = calculateTeamPrediction(nextMatchLineup.teamA, nextMatchLineup.teamB);
     const teamBPrediction = calculateTeamPrediction(nextMatchLineup.teamB, nextMatchLineup.teamA);
     
-    // Skorları yuvarla (en az 0, en fazla mantıklı bir skor)
-    let scoreA = Math.round(teamAPrediction.predictedGoals);
-    let scoreB = Math.round(teamBPrediction.predictedGoals);
-    
-    // Minimum 0, maksimum 10 gol
-    scoreA = Math.max(0, Math.min(10, scoreA));
-    scoreB = Math.max(0, Math.min(10, scoreB));
-    
     // Güven oranı hesapla (maç sayısına göre)
     const totalMatchData = matches.length;
     const confidencePercent = Math.min(95, 30 + (totalMatchData * 5));
     
-    // Kazanan tahmini
+    // Kazanan tahmini (sonra güncellenecek)
     let winnerText = '';
-    if (scoreA > scoreB) {
-        winnerText = '🏆 A Takımı kazanır';
-    } else if (scoreB > scoreA) {
-        winnerText = '🏆 B Takımı kazanır';
-    } else {
-        winnerText = '🤝 Berabere biter';
-    }
     
-    // Top scorers HTML - Tahmini gol sayısını göster
+    // Top scorers HTML - Tahmini gol sayısını göster (sadece gol atacaklar)
     const topScorersHTML = (scorers, teamName) => {
         if (scorers.length === 0) return '';
-        return scorers.map((s, i) => {
+        
+        // Sadece en az 1 gol atacak oyuncuları filtrele
+        const scoringPlayers = scorers.filter(s => Math.round(s.prediction) >= 1);
+        
+        if (scoringPlayers.length === 0) {
+            return '<div style="font-size: 11px; color: #888;">Gol beklenen oyuncu yok</div>';
+        }
+        
+        return scoringPlayers.map((s, i) => {
             // Tahmini gol sayısını yuvarla
             let predictedGoals = Math.round(s.prediction);
-            // Minimum 0, maksimum 5 gol
-            predictedGoals = Math.max(0, Math.min(5, predictedGoals));
+            // Minimum 1, maksimum 5 gol
+            predictedGoals = Math.max(1, Math.min(5, predictedGoals));
             
             // Gol tahmini metni
             let goalText = '';
@@ -1168,10 +1161,8 @@ function displayScorePrediction() {
                 goalText = `${predictedGoals} gol atar 🔥`;
             } else if (predictedGoals >= 2) {
                 goalText = `${predictedGoals} gol atar ⚽`;
-            } else if (predictedGoals === 1) {
-                goalText = `1 gol atar`;
             } else {
-                goalText = `Gol atmaz`;
+                goalText = `1 gol atar`;
             }
             
             return `
@@ -1181,6 +1172,27 @@ function displayScorePrediction() {
             </div>
         `}).join('');
     };
+    
+    // Skor hesaplama: oyuncuların yuvarlanmış gollerinin toplamı
+    const calculateRoundedScore = (scorers) => {
+        return scorers.reduce((total, s) => {
+            const roundedGoals = Math.round(s.prediction);
+            return total + Math.max(0, Math.min(5, roundedGoals));
+        }, 0);
+    };
+    
+    // Skorları yuvarlanmış oyuncu gollerinden hesapla
+    let scoreA = calculateRoundedScore(teamAPrediction.topScorers);
+    let scoreB = calculateRoundedScore(teamBPrediction.topScorers);
+    
+    // Kazanan tahmini güncelle
+    if (scoreA > scoreB) {
+        winnerText = '🏆 A Takımı kazanır';
+    } else if (scoreB > scoreA) {
+        winnerText = '🏆 B Takımı kazanır';
+    } else {
+        winnerText = '🤝 Berabere biter';
+    }
     
     container.innerHTML = `
         <div class="prediction-team">
