@@ -453,26 +453,34 @@ function createTeams() {
     displayTeams(teamA, teamB, teamAPower, teamBPower);
 }
 
-// Yeniden kadro kur (alternatif dağılım)
+// Yeniden kadro kur (tamamen farklı dağılım)
 function regenerateTeams() {
     if (selectedPlayers.length < 4) {
         alert('En az 4 oyuncu seçmelisiniz!');
         return;
     }
     
-    // Oyuncuları güce göre sırala
-    const sortedPlayers = [...selectedPlayers].sort((a, b) => b.power - a.power);
+    // Oyuncuları karıştır (Fisher-Yates shuffle)
+    const shuffledPlayers = [...selectedPlayers];
+    for (let i = shuffledPlayers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledPlayers[i], shuffledPlayers[j]] = [shuffledPlayers[j], shuffledPlayers[i]];
+    }
+    
+    // Karıştırılmış oyuncuları güce göre sırala
+    shuffledPlayers.sort((a, b) => b.power - a.power);
     
     const teamA = [];
     const teamB = [];
     let teamAPower = 0;
     let teamBPower = 0;
     
-    // Alternatif algoritma: Rastgele başlangıç + denge
-    // Her seferinde farklı sonuç için küçük bir rastgelelik ekle
+    // Rastgele başlangıç takımı
     const startWithB = Math.random() > 0.5;
     
-    sortedPlayers.forEach((player, index) => {
+    // Her oyuncu için rastgele faktör ekleyerek dağıt
+    shuffledPlayers.forEach((player, index) => {
+        // İlk iki oyuncu için rastgele takım seçimi
         if (index === 0) {
             if (startWithB) {
                 teamB.push(player);
@@ -490,10 +498,11 @@ function regenerateTeams() {
                 teamBPower += player.power;
             }
         } else {
-            // Küçük rastgelelik faktörü
-            const randomFactor = Math.random() * 5;
+            // Diğer oyuncular için: Güç dengesine göre + rastgelelik
+            // Rastgele faktör: -10 ile +10 arası
+            const randomOffset = (Math.random() - 0.5) * 20;
             
-            if (teamAPower + randomFactor <= teamBPower + randomFactor) {
+            if (teamAPower + randomOffset <= teamBPower) {
                 teamA.push(player);
                 teamAPower += player.power;
             } else {
