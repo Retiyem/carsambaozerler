@@ -1195,14 +1195,15 @@ function displayScorePrediction() {
     }
     
     container.innerHTML = `
-        <div class="prediction-team">
-            <span class="prediction-team-name">A Takımı</span>
-            <span class="prediction-score">${scoreA}</span>
-        </div>
-        <span class="prediction-vs">VS</span>
-        <div class="prediction-team">
-            <span class="prediction-team-name">B Takımı</span>
-            <span class="prediction-score">${scoreB}</span>
+        <div class="prediction-score-row">
+            <div class="prediction-team">
+                <span class="prediction-team-name">A Takımı</span>
+                <span class="prediction-score">${scoreA}</span>
+            </div>
+            <div class="prediction-team">
+                <span class="prediction-team-name">B Takımı</span>
+                <span class="prediction-score">${scoreB}</span>
+            </div>
         </div>
         
         <div class="prediction-details">
