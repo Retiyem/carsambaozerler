@@ -8,6 +8,7 @@ const players = [
     { id: 'emre_erdal', name: 'Emre ERDAL', mevki: 'Defans' },
     { id: 'enes_altan', name: 'Enes Altan ARICI', mevki: 'Defans' },
     { id: 'ömer_erdal', name: 'Ömer ERDAL', mevki: 'Forvet' },
+    { id: 'mushap_karatas', name: 'Mushap KARATAŞ', mevki: 'Forvet' },
     { id: 'furkan_sevimli', name: 'Furkan SEVİMLİ', mevki: 'Orta Saha' },
     { id: 'furkan_yilmaz', name: 'Furkan YILMAZ', mevki: 'Forvet' },
     { id: 'süleyman_yildirim', name: 'Süleyman YILDIRIM', mevki: 'Orta Saha' },
@@ -95,7 +96,7 @@ const matches = [
     // Her yeni maç için bu objeyi kopyalayıp düzenleyin.
     // 'id' değerini bir artırmayı unutmayın!
     */
-           {
+    { // İlk maç
         id: 1, // Her maç için benzersiz bir ID ver (ilk maç için 1)
         date: '22.10.2025', // Maç tarihi (örn: '01.11.2025')
         teamAGoals: 14, // A Takımının attığı gol
@@ -129,7 +130,7 @@ const matches = [
 
         ]
     },
-    {
+    { // İkinci maç
         id: 2, // İkinci maç
         date: '27.10.2025', // Maç tarihi
         teamAGoals: 11, // A Takımının attığı gol
@@ -162,7 +163,7 @@ const matches = [
 
         ]
     },
-    {
+    { // Üçüncü maç
         id: 3, // Üçüncü maç
         date: '29.10.2025', // Maç tarihi
         teamAGoals: 3, // A Takımının attığı gol
@@ -195,7 +196,7 @@ const matches = [
 
         ]
     },
-    {
+    { // Dördüncü maç
         id: 4, // Dördüncü maç
         date: '02.11.2025', // Maç tarihi
         teamAGoals: 7, // A Takımının attığı gol
@@ -230,7 +231,7 @@ const matches = [
 
         ]
     },
-        {
+        { // Beşinci maç
         id: 5, // Dördüncü maç
         date: '06.11.2025', // Maç tarihi
         teamAGoals: 10, // A Takımının attığı gol
@@ -262,7 +263,7 @@ const matches = [
 
         ]
     },
-            {
+    {  // Altıncı maç
         id: 6, // Dördüncü maç
         date: '12.11.2025', // Maç tarihi
         teamAGoals: 8, // A Takımının attığı gol
@@ -294,7 +295,7 @@ const matches = [
         ]
     },
 
-                {
+    { // Yedinci maç
         id: 7, // Yedinci maç
         date: '19.11.2025', // Maç tarihi
         teamAGoals: 12, // A Takımının attığı gol
@@ -327,7 +328,7 @@ const matches = [
         ]
     },
 
-                    {
+    { // Sekizinci maç
         id: 8, // Yedinci maç
         date: '03.12.2025', // Maç tarihi
         teamAGoals: 9, // A Takımının attığı gol
@@ -359,7 +360,7 @@ const matches = [
         ]
     },
 
-                    {
+                    { // Dokuzuncu maç
         id: 9, // Yedinci maç
         date: '11.12.2025', // Maç tarihi
         teamAGoals: 12, // A Takımının attığı gol
@@ -501,23 +502,25 @@ const seasons = {
 // Sıradaki Maç Kadrosu - Buradan düzenleyebilirsiniz
 const nextMatchLineup = {
     teamA: [
-        'huseyincan_yuksekdag',   // Hüseyin Can Yüksekdağ
-        'onur_mustafa',          // Onur Mustafa Köse
-        'emre_erdal',            // Emre Erdal
-        'talha_bulbul',          // Talha Bülbül
-        'tayyip_erdogan_yilmaz', // Tayyip Erdoğan Yılmaz
-        'fatih_atalay',          // Fatih Atalay
-        'ozan_necipoglu',        // Ozan Necipoğlu
-        'furkan_yilmaz'          // Furkan Yılmaz
+        'ahmet_sadıkoglu',       // Ahmet Sadıkoğlu
+        'ensar_bulbul',          // Ensar Bülbül
+        'huseyincan_yuksekdag', // HüseyinCAN YÜKSEKDAĞ
+        'ibrahim_erdogdu',       // İbrahim Erdoğdu
+        'furkan_sevimli',      // Furkan Sevimli
+        'mushap_karatas',       // Muşhap Karataş
+        'fatih_atalay',            // Fatih Atalay
+        'ozan_necipoglu',     // Ozan Necipoğlu
+        'fıratcan_solmaz'        // Fıratcan Solmaz
     ],
     teamB: [
-        'ömer_erdal',            // Ömer Erdal
-        'ensar_bulbul',          // Ensar Bülbül
-        'ahmet_sadıkoglu',       // Ahmet Sadıkoğlu
-        'ibrahim_erdogdu',       // İbrahim Erdoğdu
-        'seyfeddin_bulbul',      // Seyfeddin Bülbül
-        'süleyman_yildirim',     // Süleyman Yıldırım
-        'muratcan_solmaz',       // Muratcan Solmaz
-        'firatcan_solmaz'        // Fıratcan Solmaz
+        'ömer_erdal',          // Ömer Erdal
+        'onur_mustafa',        // Onur Mustafa Köse
+        'emre_erdal',          // Emre Erdal
+        'talha_bulbul',        // Talha Bülbül
+        'seyfeddin_bulbul',    // Seyfeddin Bülbül
+        'tayyip_erdogan_yilmaz', // Tayyip Erdoğan Yılmaz
+        'murat_can_yilmaz',    // Murat Can Yılmaz
+        'sulayman_yildiz',      // Süleyman Yıldız  
+        'furkan_yilmaz'        // Furkan Yılmaz
     ]
 };
