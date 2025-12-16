@@ -497,3 +497,27 @@ const seasons = {
         // }
     ]
 };
+
+// Sıradaki Maç Kadrosu - Buradan düzenleyebilirsiniz
+const nextMatchLineup = {
+    teamA: [
+        'huseyincan_yuksekdag',   // Hüseyin Can Yüksekdağ
+        'onur_mustafa',          // Onur Mustafa Köse
+        'emre_erdal',            // Emre Erdal
+        'talha_bulbul',          // Talha Bülbül
+        'tayyip_erdogan_yilmaz', // Tayyip Erdoğan Yılmaz
+        'fatih_atalay',          // Fatih Atalay
+        'ozan_necipoglu',        // Ozan Necipoğlu
+        'furkan_yilmaz'          // Furkan Yılmaz
+    ],
+    teamB: [
+        'ömer_erdal',            // Ömer Erdal
+        'ensar_bulbul',          // Ensar Bülbül
+        'ahmet_sadıkoglu',       // Ahmet Sadıkoğlu
+        'ibrahim_erdogdu',       // İbrahim Erdoğdu
+        'seyfeddin_bulbul',      // Seyfeddin Bülbül
+        'süleyman_yildirim',     // Süleyman Yıldırım
+        'muratcan_solmaz',       // Muratcan Solmaz
+        'firatcan_solmaz'        // Fıratcan Solmaz
+    ]
+};

@@ -691,6 +691,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sıradaki maç kadrosunu göster
     displayLineup();
     
+    // Skor tahminini göster
+    displayScorePrediction();
+    
     // Gelişmiş UI özelliklerini başlat
     if (typeof initializePageTransitions === 'function') {
         // UI geliştirmeleri script'i yüklenmişse
@@ -898,31 +901,333 @@ window.addEventListener('load', function() {
     }
 });
 
+// ==================== SKOR TAHMİNİ FONKSİYONLARI ====================
+
+/**
+ * Oyuncunun gol ortalamasını hesaplar (Skor tahmini için)
+ * @param {string} playerId - Oyuncu ID'si
+ * @returns {Object} - {goalsPerMatch, totalGoals, totalMatches, mvpCount}
+ */
+function calculatePlayerGoalStats(playerId) {
+    let totalGoals = 0;
+    let totalMatches = 0;
+    let mvpCount = 0;
+    
+    matches.forEach(match => {
+        const performance = match.performances.find(p => p.playerId === playerId);
+        if (performance) {
+            totalGoals += performance.goals;
+            totalMatches++;
+        }
+        if (match.macin_adami === playerId) {
+            mvpCount++;
+        }
+    });
+    
+    const goalsPerMatch = totalMatches > 0 ? totalGoals / totalMatches : 0;
+    
+    return {
+        goalsPerMatch,
+        totalGoals,
+        totalMatches,
+        mvpCount
+    };
+}
+
+/**
+ * Oyuncunun belirli rakiplere karşı performansını hesaplar
+ * @param {string} playerId - Oyuncu ID'si
+ * @param {Array} opponentIds - Rakip oyuncu ID'leri
+ * @returns {Object} - {goalsAgainstOpponents, matchesAgainstOpponents, avgGoalsVsOpponents}
+ */
+function calculatePerformanceVsOpponents(playerId, opponentIds) {
+    let goalsAgainstOpponents = 0;
+    let matchesAgainstOpponents = 0;
+    
+    matches.forEach(match => {
+        const playerPerf = match.performances.find(p => p.playerId === playerId);
+        if (!playerPerf) return;
+        
+        const playerTeam = playerPerf.team;
+        const opponentTeam = playerTeam === 'A' ? 'B' : 'A';
+        
+        // Bu maçta rakip takımda kaç kişi var kontrol et
+        const opponentsInMatch = match.performances.filter(p => 
+            p.team === opponentTeam && opponentIds.includes(p.playerId)
+        );
+        
+        // En az 3 rakip oyuncu aynı maçta oynamışsa bu maçı say
+        if (opponentsInMatch.length >= 3) {
+            goalsAgainstOpponents += playerPerf.goals;
+            matchesAgainstOpponents++;
+        }
+    });
+    
+    const avgGoalsVsOpponents = matchesAgainstOpponents > 0 
+        ? goalsAgainstOpponents / matchesAgainstOpponents 
+        : null; // null = veri yok
+    
+    return {
+        goalsAgainstOpponents,
+        matchesAgainstOpponents,
+        avgGoalsVsOpponents
+    };
+}
+
+/**
+ * Oyuncunun belirli takım arkadaşlarıyla performansını hesaplar
+ * @param {string} playerId - Oyuncu ID'si
+ * @param {Array} teammateIds - Takım arkadaşı ID'leri
+ * @returns {Object} - {goalsWithTeammates, matchesWithTeammates, avgGoalsWithTeammates}
+ */
+function calculatePerformanceWithTeammates(playerId, teammateIds) {
+    let goalsWithTeammates = 0;
+    let matchesWithTeammates = 0;
+    
+    matches.forEach(match => {
+        const playerPerf = match.performances.find(p => p.playerId === playerId);
+        if (!playerPerf) return;
+        
+        const playerTeam = playerPerf.team;
+        
+        // Bu maçta aynı takımda kaç takım arkadaşı var kontrol et
+        const teammatesInMatch = match.performances.filter(p => 
+            p.team === playerTeam && 
+            p.playerId !== playerId && 
+            teammateIds.includes(p.playerId)
+        );
+        
+        // En az 3 takım arkadaşı aynı maçta oynamışsa bu maçı say
+        if (teammatesInMatch.length >= 3) {
+            goalsWithTeammates += playerPerf.goals;
+            matchesWithTeammates++;
+        }
+    });
+    
+    const avgGoalsWithTeammates = matchesWithTeammates > 0 
+        ? goalsWithTeammates / matchesWithTeammates 
+        : null; // null = veri yok
+    
+    return {
+        goalsWithTeammates,
+        matchesWithTeammates,
+        avgGoalsWithTeammates
+    };
+}
+
+/**
+ * Mevkiye göre gol potansiyeli çarpanı
+ * @param {string} mevki - Oyuncu mevkisi
+ * @returns {number} - Çarpan değeri
+ */
+function getPositionMultiplier(mevki) {
+    const mevkiLower = mevki.toLowerCase();
+    if (mevkiLower.includes('forvet')) return 1.3;
+    if (mevkiLower.includes('orta')) return 1.0;
+    if (mevkiLower.includes('defans')) return 0.6;
+    if (mevkiLower.includes('kaleci')) return 0.1;
+    return 0.8;
+}
+
+
+/**
+ * Takımın tahmini gol sayısını hesaplar (Rakip analizi + Takım arkadaşı uyumu dahil)
+ * @param {Array} teamPlayerIds - Takım oyuncu ID'leri
+ * @param {Array} opponentIds - Rakip takım oyuncu ID'leri
+ * @returns {Object} - {predictedGoals, topScorers, teamStrength}
+ */
+function calculateTeamPrediction(teamPlayerIds, opponentIds) {
+    let totalPredictedGoals = 0;
+    let topScorers = [];
+    let totalExperience = 0;
+    let mvpPower = 0;
+    
+    teamPlayerIds.forEach(playerId => {
+        const player = players.find(p => p.id === playerId);
+        if (!player) return;
+        
+        // Temel istatistikler
+        const stats = calculatePlayerGoalStats(playerId);
+        const positionMultiplier = getPositionMultiplier(player.mevki);
+        
+        // Rakip analizi - Bu rakiplere karşı nasıl oynadı?
+        const vsOpponents = calculatePerformanceVsOpponents(playerId, opponentIds);
+        
+        // Takım arkadaşı uyumu - Bu takım arkadaşlarıyla nasıl oynadı?
+        const withTeammates = calculatePerformanceWithTeammates(playerId, teamPlayerIds.filter(id => id !== playerId));
+        
+        // Tahmini gol hesaplama
+        let playerPrediction = stats.goalsPerMatch; // Temel: genel gol ortalaması
+        
+        // Rakip analizi etkisi (%40 ağırlık - eğer veri varsa)
+        if (vsOpponents.avgGoalsVsOpponents !== null && vsOpponents.matchesAgainstOpponents >= 2) {
+            playerPrediction = (playerPrediction * 0.6) + (vsOpponents.avgGoalsVsOpponents * 0.4);
+        }
+        
+        // Takım arkadaşı uyumu etkisi (%30 ağırlık - eğer veri varsa)
+        if (withTeammates.avgGoalsWithTeammates !== null && withTeammates.matchesWithTeammates >= 2) {
+            playerPrediction = (playerPrediction * 0.7) + (withTeammates.avgGoalsWithTeammates * 0.3);
+        }
+        
+        // Mevki çarpanı uygula
+        playerPrediction *= positionMultiplier;
+        
+        // MVP bonus (her MVP +%10 etki)
+        if (stats.mvpCount > 0) {
+            playerPrediction *= (1 + stats.mvpCount * 0.1);
+            mvpPower += stats.mvpCount;
+        }
+        
+        // Deneyim faktörü
+        totalExperience += stats.totalMatches;
+        
+        totalPredictedGoals += playerPrediction;
+        
+        topScorers.push({
+            id: playerId,
+            name: player.name,
+            prediction: playerPrediction,
+            goalsPerMatch: stats.goalsPerMatch,
+            vsOpponentsAvg: vsOpponents.avgGoalsVsOpponents,
+            vsOpponentsMatches: vsOpponents.matchesAgainstOpponents,
+            withTeammatesAvg: withTeammates.avgGoalsWithTeammates,
+            withTeammatesMatches: withTeammates.matchesWithTeammates
+        });
+    });
+    
+    // En çok gol atacak tahmini yapılanları sırala
+    topScorers.sort((a, b) => b.prediction - a.prediction);
+    
+    // Takım gücü = Tahmini gol sayısı
+    const teamStrength = totalPredictedGoals;
+    
+    return {
+        predictedGoals: Math.round(totalPredictedGoals * 10) / 10,
+        topScorers: topScorers.slice(0, 3), // En iyi 3 oyuncu
+        teamStrength,
+        totalExperience
+    };
+}
+
+/**
+ * Skor tahminini ekrana render eder
+ */
+function displayScorePrediction() {
+    const container = document.getElementById('score-prediction');
+    if (!container) return;
+    
+    // Maç verisi yoksa
+    if (!matches || matches.length === 0) {
+        container.innerHTML = `
+            <p style="color: #CCCCCC; text-align: center;">
+                Henüz yeterli maç verisi yok.<br>
+                <small>Tahmin için en az 1 maç oynanmalı.</small>
+            </p>
+        `;
+        return;
+    }
+    
+    // Takım tahminlerini hesapla
+    const teamAPrediction = calculateTeamPrediction(nextMatchLineup.teamA, nextMatchLineup.teamB);
+    const teamBPrediction = calculateTeamPrediction(nextMatchLineup.teamB, nextMatchLineup.teamA);
+    
+    // Skorları yuvarla (en az 0, en fazla mantıklı bir skor)
+    let scoreA = Math.round(teamAPrediction.predictedGoals);
+    let scoreB = Math.round(teamBPrediction.predictedGoals);
+    
+    // Minimum 0, maksimum 10 gol
+    scoreA = Math.max(0, Math.min(10, scoreA));
+    scoreB = Math.max(0, Math.min(10, scoreB));
+    
+    // Güven oranı hesapla (maç sayısına göre)
+    const totalMatchData = matches.length;
+    const confidencePercent = Math.min(95, 30 + (totalMatchData * 5));
+    
+    // Kazanan tahmini
+    let winnerText = '';
+    if (scoreA > scoreB) {
+        winnerText = '🏆 A Takımı kazanır';
+    } else if (scoreB > scoreA) {
+        winnerText = '🏆 B Takımı kazanır';
+    } else {
+        winnerText = '🤝 Berabere biter';
+    }
+    
+    // Top scorers HTML - Tahmini gol sayısını göster
+    const topScorersHTML = (scorers, teamName) => {
+        if (scorers.length === 0) return '';
+        return scorers.map((s, i) => {
+            // Tahmini gol sayısını yuvarla
+            let predictedGoals = Math.round(s.prediction);
+            // Minimum 0, maksimum 5 gol
+            predictedGoals = Math.max(0, Math.min(5, predictedGoals));
+            
+            // Gol tahmini metni
+            let goalText = '';
+            if (predictedGoals >= 3) {
+                goalText = `${predictedGoals} gol atar 🔥`;
+            } else if (predictedGoals >= 2) {
+                goalText = `${predictedGoals} gol atar ⚽`;
+            } else if (predictedGoals === 1) {
+                goalText = `1 gol atar`;
+            } else {
+                goalText = `Gol atmaz`;
+            }
+            
+            return `
+            <div class="top-scorer-item">
+                <span class="scorer-name">${i + 1}. ${s.name.split(' ')[0]}</span>
+                <span class="scorer-prediction">${goalText}</span>
+            </div>
+        `}).join('');
+    };
+    
+    container.innerHTML = `
+        <div class="prediction-team">
+            <span class="prediction-team-name">A Takımı</span>
+            <span class="prediction-score">${scoreA}</span>
+        </div>
+        <span class="prediction-vs">VS</span>
+        <div class="prediction-team">
+            <span class="prediction-team-name">B Takımı</span>
+            <span class="prediction-score">${scoreB}</span>
+        </div>
+        
+        <div class="prediction-details">
+            <div class="prediction-stats">
+                <div class="prediction-stat">
+                    <div class="prediction-stat-label">Tahmin</div>
+                    <div class="prediction-stat-value">${winnerText}</div>
+                </div>
+            </div>
+            
+            <div class="prediction-confidence">
+                <span class="confidence-text">Tahmin Güveni: %${confidencePercent} (${totalMatchData} maç verisi)</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: ${confidencePercent}%"></div>
+                </div>
+            </div>
+            
+            <div class="top-scorers-prediction">
+                <div class="top-scorers-title">⚽ Gol Atma Potansiyeli Yüksek Oyuncular</div>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 150px;">
+                        <div style="font-size: 11px; color: #999; margin-bottom: 5px;">A Takımı</div>
+                        ${topScorersHTML(teamAPrediction.topScorers, 'A')}
+                    </div>
+                    <div style="flex: 1; min-width: 150px;">
+                        <div style="font-size: 11px; color: #999; margin-bottom: 5px;">B Takımı</div>
+                        ${topScorersHTML(teamBPrediction.topScorers, 'B')}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 // ==================== SIRADAKI MAÇ KADROSU FONKSİYONLARI ====================
 
-// Kadro verisi - Kullanıcının belirttiği kadro (düzeltilmiş)
-const nextMatchLineup = {
-    teamA: [
-        'onur_mustafa',      // 1 - Onur
-        'huseyincan_yuksekdag',    // 2 - Ozan
-        'seyfeddin_bulbul',      // 3 - Fatih
-        'tayyip_erdogan_yilmaz',      // 4 - Ensar
-        'ahmet_sadıkoglu',   // 5 - Ahmet
-        'ibrahim_erdogdu',   // 6 - İbrahim
-        'burak_kocabey',     // 7 - Burak
-        'ömer_erdal'     // 8 - Furkan Sevimli
-    ],
-    teamB: [
-        'orhan_sariaydin', // 1 - Erdoğan
-        'furkan_sevimli',  // 2 - Hüseyin Can
-        'talha_bulbul',          // 3 - Talha
-        'furkan_demiral',       // 4 - Fırat
-        'furkan_yilmaz',         // 5 - Furkan Yılmaz
-        'ridvan_gumus',          // 6 - Rıdvan
-        'emre_erdal',            // 7 - Emre
-        'ensar_bulbul'       // 8 - Seyfeddin
-    ]
-};
+// Kadro verisi artık data.js dosyasından geliyor (nextMatchLineup)
 
 /**
  * Her iki takımın kadrosunu aynı anda gösterir
@@ -955,13 +1260,14 @@ function displayTeamLineup(team, container) {
         return player || { id: playerId, name: playerId, mevki: 'Orta Saha' };
     });
 
-    // Otomatik diziliş oluştur
+    // Otomatik diziliş oluştur (2 kaleci durumu da bu fonksiyonda çözülüyor)
     const groupedPlayers = groupPlayersByPosition(teamPlayers);
     
     // Her mevki için oyuncuları yerleştir
     Object.keys(groupedPlayers).forEach(mevki => {
+        const mevkiCount = groupedPlayers[mevki].length;
         groupedPlayers[mevki].forEach((player, index) => {
-            const playerElement = createPlayerElement(player, team, mevki, index);
+            const playerElement = createPlayerElement(player, team, mevki, index, mevkiCount);
             container.appendChild(playerElement);
         });
     });
@@ -969,6 +1275,7 @@ function displayTeamLineup(team, container) {
 
 /**
  * Oyuncuları gerçek mevkilerine göre otomatik gruplar
+ * Eğer takımda 2 kaleci varsa, birini defansa taşır
  * @param {Array} teamPlayers - Takım oyuncuları
  * @returns {Object} - Mevkiye göre grupanmış oyuncular
  */
@@ -997,6 +1304,12 @@ function groupPlayersByPosition(teamPlayers) {
         }
     });
 
+    // Eğer takımda 2 kaleci varsa, birini defansa taşı
+    while (grouped.kaleci.length > 1) {
+        const extraGoalkeeper = grouped.kaleci.pop();
+        grouped.defans.unshift(extraGoalkeeper); // Defansın başına ekle
+    }
+
     return grouped;
 }
 
@@ -1006,9 +1319,10 @@ function groupPlayersByPosition(teamPlayers) {
  * @param {string} team - Takım ('A' veya 'B')
  * @param {string} mevki - Oyuncunun sahada oynayacağı mevki
  * @param {number} index - Mevkideki sıra numarası
+ * @param {number} mevkiCount - Bu mevkideki toplam oyuncu sayısı
  * @returns {HTMLElement} - Oyuncu DOM elementi
  */
-function createPlayerElement(player, team, mevki, index) {
+function createPlayerElement(player, team, mevki, index, mevkiCount) {
     const playerDiv = document.createElement('div');
     playerDiv.className = `player ${getMevkiClass(mevki)}`;
     
@@ -1024,7 +1338,7 @@ function createPlayerElement(player, team, mevki, index) {
     playerDiv.title = player.name; // Tam isim tooltip olarak
     
     // Oyuncuyu pozisyonuna göre yerleştir - translateX ile merkezle
-    const position = calculatePlayerPosition(mevki, index, team);
+    const position = calculatePlayerPosition(mevki, index, mevkiCount);
     playerDiv.style.left = position.x + '%';
     playerDiv.style.transform = 'translateX(-50%)';
     
@@ -1060,17 +1374,15 @@ function getMevkiClass(mevki) {
  * @param {string} team - Takım ('A' veya 'B')
  * @returns {Object} - {x} koordinatı (yüzde cinsinden)
  */
-function calculatePlayerPosition(mevki, index, team) {
+/**
+ * Oyuncunun sahada pozisyonunu hesaplar (orantılı diziliş)
+ * @param {string} mevki - Oyuncu mevkisi (kaleci, defans, ortaSaha, forvet)
+ * @param {number} index - Mevkideki sıra numarası
+ * @param {number} mevkiCount - Bu mevkideki toplam oyuncu sayısı
+ * @returns {Object} - {x} koordinatı (yüzde cinsinden)
+ */
+function calculatePlayerPosition(mevki, index, mevkiCount) {
     let positions = [];
-    
-    // Takımdaki mevki dağılımını hesapla
-    const teamPlayerIds = nextMatchLineup[`team${team}`];
-    const teamPlayers = teamPlayerIds.map(id => players.find(p => p.id === id)).filter(p => p);
-    
-    const kaleciler = teamPlayers.filter(p => p.mevki.toLowerCase().includes('kaleci'));
-    const defanslar = teamPlayers.filter(p => p.mevki.toLowerCase().includes('defans'));
-    const ortaSahalar = teamPlayers.filter(p => p.mevki.toLowerCase().includes('orta'));
-    const forvetler = teamPlayers.filter(p => p.mevki.toLowerCase().includes('forvet'));
     
     switch(mevki) {
         case 'kaleci':
@@ -1079,47 +1391,44 @@ function calculatePlayerPosition(mevki, index, team) {
             break;
             
         case 'defans':
-            // Defans sayısına göre orta saha noktası referanslı yerleştirme
-            const defansCount = defanslar.length;
-            if (defansCount === 1) {
+            // Defans sayısına göre orantılı yerleştirme
+            if (mevkiCount === 1) {
                 positions = [{ x: 50 }];
-            } else if (defansCount === 2) {
+            } else if (mevkiCount === 2) {
                 positions = [{ x: 30 }, { x: 70 }];
-            } else if (defansCount === 3) {
+            } else if (mevkiCount === 3) {
                 positions = [{ x: 20 }, { x: 50 }, { x: 80 }];
-            } else if (defansCount === 4) {
+            } else if (mevkiCount === 4) {
                 positions = [{ x: 15 }, { x: 38 }, { x: 62 }, { x: 85 }];
-            } else if (defansCount >= 5) {
+            } else if (mevkiCount >= 5) {
                 positions = [{ x: 10 }, { x: 30 }, { x: 50 }, { x: 70 }, { x: 90 }];
             }
             break;
             
         case 'ortaSaha':
-            // Orta saha sayısına göre orta saha noktası referanslı yerleştirme
-            const ortaSahaCount = ortaSahalar.length;
-            if (ortaSahaCount === 1) {
+            // Orta saha sayısına göre orantılı yerleştirme
+            if (mevkiCount === 1) {
                 positions = [{ x: 50 }];
-            } else if (ortaSahaCount === 2) {
+            } else if (mevkiCount === 2) {
                 positions = [{ x: 35 }, { x: 65 }];
-            } else if (ortaSahaCount === 3) {
+            } else if (mevkiCount === 3) {
                 positions = [{ x: 25 }, { x: 50 }, { x: 75 }];
-            } else if (ortaSahaCount === 4) {
+            } else if (mevkiCount === 4) {
                 positions = [{ x: 20 }, { x: 40 }, { x: 60 }, { x: 80 }];
-            } else if (ortaSahaCount >= 5) {
+            } else if (mevkiCount >= 5) {
                 positions = [{ x: 15 }, { x: 32 }, { x: 50 }, { x: 68 }, { x: 85 }];
             }
             break;
             
         case 'forvet':
-            // Forvet sayısına göre orta saha noktası referanslı yerleştirme
-            const forvetCount = forvetler.length;
-            if (forvetCount === 1) {
+            // Forvet sayısına göre orantılı yerleştirme
+            if (mevkiCount === 1) {
                 positions = [{ x: 50 }];
-            } else if (forvetCount === 2) {
+            } else if (mevkiCount === 2) {
                 positions = [{ x: 35 }, { x: 65 }];
-            } else if (forvetCount === 3) {
+            } else if (mevkiCount === 3) {
                 positions = [{ x: 25 }, { x: 50 }, { x: 75 }];
-            } else if (forvetCount >= 4) {
+            } else if (mevkiCount >= 4) {
                 positions = [{ x: 20 }, { x: 40 }, { x: 60 }, { x: 80 }];
             }
             break;
@@ -1128,15 +1437,19 @@ function calculatePlayerPosition(mevki, index, team) {
             positions = [{ x: 50 }];
     }
     
-    // Index'e göre pozisyon seç, fazla oyuncu varsa yayıl
+    // Eğer pozisyon tanımlı değilse, dinamik olarak oluştur
+    if (positions.length === 0 || mevkiCount > positions.length) {
+        positions = [];
+        for (let i = 0; i < mevkiCount; i++) {
+            // Oyuncuları eşit aralıklarla dağıt (10% - 90% arası)
+            const x = 10 + (80 / (mevkiCount - 1 || 1)) * i;
+            positions.push({ x: mevkiCount === 1 ? 50 : x });
+        }
+    }
+    
+    // Index'e göre pozisyon seç
     const positionIndex = index % positions.length;
     let xPosition = positions[positionIndex].x;
-    
-    // Eğer aynı mevkide çok fazla oyuncu varsa hafif kaydır
-    if (index >= positions.length) {
-        const extraOffset = Math.floor(index / positions.length) * 6;
-        xPosition = Math.max(5, Math.min(95, xPosition + (extraOffset * (index % 2 === 0 ? 1 : -1))));
-    }
     
     return { x: xPosition };
 }
