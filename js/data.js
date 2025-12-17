@@ -505,10 +505,10 @@ const nextMatchLineup = {
         'onur_mustafa',        // Onur Mustafa Köse
         'emre_erdal',          // Emre Erdal
         'huseyincan_yuksekdag', // HüseyinCAN YÜKSEKDAĞ
-        'talha_bulbul',       // İbrahim Erdoğdu
+        'ibrahim_erdogdu',       // İbrahim Erdoğdu
         'tayyip_erdogan_yilmaz',      // Furkan Sevimli
         'mushap_karatas',       // Muşhap Karataş
-        'fatih_atalay',            // Fatih Atalay
+        'ensar_bulbul',            // Fatih Atalay
         'süleyman_yildirim',     // Ozan Necipoğlu
         'furkan_sevimli'        // Fıratcan Solmaz
     ],
@@ -519,8 +519,8 @@ const nextMatchLineup = {
         'seyfeddin_bulbul',        // Talha Bülbül
         'furkan_yilmaz',    // Seyfeddin Bülbül
         'muratcan_solmaz', // Tayyip Erdoğan Yılmaz
-        'ibrahim_erdogdu',    // Murat Can Yılmaz
+        'talha_bulbul',    // Murat Can Yılmaz
         'firatcan_solmaz',      // Süleyman Yıldız  
-        'ensar_bulbul'        // Ensar Bülbül
+        'burak_kocabey'        // Ensar Bülbül
     ]
 };
