@@ -504,8 +504,8 @@ const nextMatchLineup = {
     teamA: [
         'onur_mustafa',        // Onur Mustafa Köse
         'emre_erdal',          // Emre Erdal
-        'huseyincan_yuksekdag', // HüseyinCAN YÜKSEKDAĞ
-        'ibrahim_erdogdu',       // İbrahim Erdoğdu
+        'ibrahim_erdogdu', // HüseyinCAN YÜKSEKDAĞ
+        'huseyincan_yuksekdag',       // İbrahim Erdoğdu
         'tayyip_erdogan_yilmaz',      // Furkan Sevimli
         'mushap_karatas',       // Muşhap Karataş
         'ensar_bulbul',            // Fatih Atalay
@@ -518,8 +518,8 @@ const nextMatchLineup = {
         'ahmet_sadıkoglu',          // Emre Erdal
         'seyfeddin_bulbul',        // Talha Bülbül
         'furkan_yilmaz',    // Seyfeddin Bülbül
-        'muratcan_solmaz', // Tayyip Erdoğan Yılmaz
-        'talha_bulbul',    // Murat Can Yılmaz
+        'talha_bulbul', // Tayyip Erdoğan Yılmaz
+        'muratcan_solmaz',    // Murat Can Yılmaz
         'firatcan_solmaz',      // Süleyman Yıldız  
         'burak_kocabey'        // Ensar Bülbül
     ]
