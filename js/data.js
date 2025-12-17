@@ -14,7 +14,7 @@ const players = [
     { id: 'süleyman_yildirim', name: 'Süleyman YILDIRIM', mevki: 'Forvet' },
     { id: 'ibrahim_erdogdu', name: 'İbrahim ERDOĞDU', mevki: 'Kaleci' },
     { id: 'berkin_tayyip_ceran', name: 'Berkin Tayyip CERAN', mevki: 'Defans' },
-    { id: 'muratcan_solmaz', name: 'Muratcan SOLMAZ', mevki: 'Defans' },
+    { id: 'muratcan_solmaz', name: 'Muratcan SOLMAZ', mevki: 'Kaleci' },
     { id: 'orhan_sariaydin', name: 'Orhan SARIAYDIN', mevki: 'Orta Saha' },
     { id: 'ozan_necipoglu', name: 'Ozan NECİPOĞLU', mevki: 'Defans' },
     { id: 'ridvan_gumus', name: 'Rıdvan GÜMÜŞ', mevki: 'Forvet' },
@@ -518,8 +518,9 @@ const nextMatchLineup = {
         'ahmet_sadıkoglu',          // Emre Erdal
         'seyfeddin_bulbul',        // Talha Bülbül
         'furkan_yilmaz',    // Seyfeddin Bülbül
-        'talha_bulbul', // Tayyip Erdoğan Yılmaz
-        'muratcan_solmaz',    // Murat Can Yılmaz
+        
+        'muratcan_solmaz', // Tayyip Erdoğan Yılmaz
+        'talha_bulbul',    // Murat Can Yılmaz
         'firatcan_solmaz',      // Süleyman Yıldız  
         'burak_kocabey'        // Ensar Bülbül
     ]
