@@ -398,8 +398,8 @@ const matches = [
         date: '18.12.2025', // Maç tarihi
         teamAGoals: 12, // A Takımının attığı gol
         teamBGoals: 6, // B Takımının attığı gol
-        macin_adami: 'süleyman_yildirim', // Onur çok iyi kalecicd performansı gösterdi
-        macin_adami_aciklama: 'sözde 2 yıldır top oynamıyordu... Akıllarda tek soru Peki Ya oynuyor olsaydı ??!!?',
+        macin_adami: 'emre_erdal', // Onur çok iyi kalecicd performansı gösterdi
+        macin_adami_aciklama: ' Onu geçmeye çalışan forvetler bile ona hayrandı...',
         esek_adam: 'ensar_bulbul', // Belirlenecek
         esek_adam_aciklama: 'Bu ligde lider olmak zor iş, bazen yük ağır gelir Boş kaleye gol atamamak gibi...',
         video_aciklama: 'Ensarın Eşşek seçildiği o an...', // Son Maçın Unutulmaz Anı açıklaması
@@ -408,10 +408,10 @@ const matches = [
             { playerId: 'onur_mustafa', team: 'A', goals: 4, weeklyMVP: false },
             { playerId: 'ensar_bulbul', team: 'A', goals: 0, weeklyMVP: false },
             { playerId: 'tayyip_erdogan_yilmaz', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'süleyman_yildirim', team: 'A', goals: 5, weeklyMVP: true },
+            { playerId: 'süleyman_yildirim', team: 'A', goals: 5, weeklyMVP: false },
             { playerId: 'furkan_sevimli', team: 'A', goals: 1, weeklyMVP: false },
             { playerId: 'mushap_karatas', team: 'B', goals: 2, weeklyMVP: false },
-            { playerId: 'emre_erdal', team: 'A', goals: 0, weeklyMVP: false },
+            { playerId: 'emre_erdal', team: 'A', goals: 0, weeklyMVP: true },
             { playerId: 'huseyincan_yuksekdag', team: 'A', goals: -1, weeklyMVP: false },
             // B Takımı oyuncuları (7 kişi)
             { playerId: 'ömer_erdal', team: 'B', goals: 1, weeklyMVP: false },
