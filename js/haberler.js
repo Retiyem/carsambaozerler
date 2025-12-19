@@ -7,42 +7,24 @@
 
 const newsData = [
     {
-        title: "Kıskançlık Zirvede: Ligin En İyisi 'Haftanın Eşşeği' Seçildi!",
-        description: "Akılalmaz bir oylama sonucu sahanın tartışmasız en yetenekli, en yakışıklı ve en güçlü oyuncusu, takım arkadaşlarının kıskançlık kurbanı oldu.Son maçta en çok gol(5) atanmasına rağmen 'Bu kadar da olmaz' dedirten oylamada, yıldız oyuncu 'Haftanın Eşşeği' seçilerek tarihe geçti.",
+        title: "MVP Seçimindeki Büyük Mücadelede Kazanan Emre Erdal Oldu!",
+        description: " 12-9 biten mücadelede Maçın mvp si 'Emre mi? Süleyman mı ?' olacak sorusu uzun süre tartışıldı. Ancak sonunda Emre Erdal, Defans performansıyla rakip forvetlerin umudunu kırarak takımını zafere taşıdı. 'Onu geçmeye çalışan forvetler bile ona hayrandı...' diyerek başarısını taçlandırdı.",
         images: ["img/Haber/Haber_1.jpg", "img/Haber/Haber_1.1.jpg"], 
         date: "15.12.2025"
     },
     {
-        title: "Orhan'dan Şaşırtan Performans: 1 Saat Boyunca Su İçerek Rekor Kırdı!",
-        description: "Takım arkadaşları sahada kan ter içinde mücadele ederken, Orhan kenarda su içme molasını biraz abarttı. Tam 1 saat boyunca su içerek 'en uzun mola' rekorunu kıran oyuncu, 'Sıvı alımı önemli' diyerek kendini savundu. Su içmeye başladığında hava hala aydınlıktı.",
-        images: ["img/Haber/Haber_2.jpg", "img/Haber/Haber_2.1.jpg"], 
+        title: "LİGİN LİDERİ EŞŞEK SEÇİLDİ !",
+        description: "Ensar Bulbul, son maçta gösterdiği aldığı zaferle  ligdeki liderliğini perçinledi. Boş kaleye gol atamamak gibi zorlu bir görevi başarıyla yerine getiren Ensar, takımının galibiyetinde hiçbir katkıda bulunmadı.Tek iyi haber bel fıtığı atmaması oldu...",
+        image: "img/Haber/Haber_2.jpg",
         date: "15.12.2025"
     },
     {
-        title: "Ahmetin Büyüsü Bozuldu  7-3 Öndeyken Maçı Kaybetti, Gözyaşlarına Boğuldu!",
-        description: "Puan sıralamasında lig sonuna kadar konumunu korumaya çalışan ahmet 2 maçtır kaybediyor.Bu durum ligde çalkantılara yol açtı. Son maçta 7-3 öne geçtiği maçta son dakikalarda 12-9 yenilmesinin ardından TAKIMLARIN ADİL OLMADIĞINI  savunarak gözyaşlarını tutamadı...",
+        title: "Ahmet Liderliği kaybetti!",
+        description: " Ahmet Sadıkoğlu , son maçta aldığı mağlubiyetle ligdeki liderliğini kaybetti. Takımının performansı hayal kırıklığı yaratırken, Ahmet'in stratejileri de sorgulanmaya başlandı. 'Yapı var.' gibi açıklamalarda bulunan ahmet ligde 3. sıraya geriledi...",
         image: "img/Haber/Haber_3.jpg",
         date: "15.12.2025"
     },
 
-    {
-        title: "Sıradaki maça Ozan da geliyor!",
-        description: " Uzun zamandır takımda olmayan Ozan'ın, önümüzdeki hafta oynanacak kritik maçta sahaya dönmeye hazırlandığı öğrenildi. Takım arkadaşları ve teknik ekip, Ozan'ın geri dönüşüyle moral bulurken, taraftarlar da heyecanla bu haberi karşıladı. Ozan'ın son maç performansları göz önüne alındığında, takımın hücum hattında önemli bir güç artışı bekleniyor.",
-        image: "img/Haber/Haber_5.jpg",
-        date: "15.12.2025"
-    }, 
-    {
-        title: "Uğursuzluğu Kırıldı! Tayyip'in Omzu Yerinde Kaldı, Melekler Devrede!",
-        description: "Yıllardır halısaha maçlarının korkulu rüyası haline gelen Tayyip'in omzu çıktı sendromu, dün akşam oynanan kritik maçta son buldu. Maç öncesi herkesin aklı 'acaba bu sefer hangi dakikada ?' sorusuyla meşgulken, tüm futbolseverleri şaşkına çeviren bir mucize yaşandı. Tayyip, maç boyunca gösterdiği üstün performansın yanı sıra, sahadan omzu yerinde ayrılmayı başardı. Bu tarihi ana tanıklık edenler, olayı \"ilahi bir müdahale\" olarak yorumladı.",
-        images: ["img/Haber/Haber_4.jpg", "img/Haber/Haber_4.1.jpg"], // Çoklu fotoğraf - slider olacak
-        date: "15.12.2025"
-    },
-        {
-        title: "Yönetim kurulu Başkanımız sn. Onur M. Kose maç kadrosunu belirlerken adeta bir satranç ustası gibi hamleler yaptı!'",
-        description: " Her hafta yaşanan kadro belirlenme kaosu bu hafta da yaşandı. Yönetim kurulu başkanımız Sayın Onur M. Kose, maç kadrosunu belirlerken adeta bir satranç ustası gibi hamleler yaptı. Oyuncular arasında yapılan gizli toplantılar,yapay zeka desteği, sürpriz taktik değişiklikleri ve son dakika kararlarıyla takımların dengeleri cuk oldu. Taraftarlar ise bu kaotik durumu 'haftanın en heyecan verici dizisi' olarak nitelendirdi.",
-        image: "img/Haber/Haber_6.jpg", // Çoklu fotoğraf - slider olacak
-        date: "17.12.2025"
-    },
     // Yeni haberleri buraya ekleyebilirsiniz...
     /*
     {
