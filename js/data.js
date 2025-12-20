@@ -8,6 +8,11 @@ const players = [
     { id: 'emre_erdal', name: 'Emre ERDAL', mevki: 'Defans' },
     { id: 'enes_altan', name: 'Enes Altan ARICI', mevki: 'Defans' },
     { id: 'ömer_erdal', name: 'Ömer ERDAL', mevki: 'Forvet' },
+    { id: 'misafir_1', name: 'Misafir 1', mevki: 'Forvet' },
+    { id: 'misafir_2', name: 'Misafir 2', mevki: 'Orta Saha' },
+    { id: 'misafir_3', name: 'Misafir 3', mevki: 'Defans' },
+    { id: 'misafir_4', name: 'Misafir 4', mevki: 'Kaleci' },
+    { id: 'kadir_yoney', name: 'Kadir YÖNEY', mevki: 'Defans' },
     { id: 'mushap_karatas', name: 'Mushap KARATAŞ', mevki: 'Forvet' },
     { id: 'furkan_sevimli', name: 'Furkan SEVİMLİ', mevki: 'Orta Saha' },
     { id: 'furkan_yilmaz', name: 'Furkan YILMAZ', mevki: 'Orta Saha' },
@@ -538,23 +543,20 @@ const nextMatchLineup = {
     teamA: [
         'onur_mustafa',        // Onur Mustafa Köse
         'emre_erdal',          // Emre Erdal
-        'ibrahim_erdogdu', // HüseyinCAN YÜKSEKDAĞ
+        'furkan_yilmaz', // HüseyinCAN YÜKSEKDAĞ
         'huseyincan_yuksekdag',       // İbrahim Erdoğdu
         'tayyip_erdogan_yilmaz',      // Furkan Sevimli
-        'mushap_karatas',       // Muşhap Karataş
-        'ensar_bulbul',            // Fatih Atalay
-        'süleyman_yildirim',     // Ozan Necipoğlu
+        'ömer_erdal',            // Ozan Necipoğlu
         'furkan_sevimli'        // Fıratcan Solmaz
     ],
     teamB: [
-        'ömer_erdal',          // Ömer Erdal
-        'ozan_necipoglu',        // Onur Mustafa Köse
+        'misafir_1',          // Ömer Erdal
+        'misafir_2',        // Onur Mustafa Köse
         'ahmet_sadıkoglu',          // Emre Erdal
-        'seyfeddin_bulbul',        // Talha Bülbül
-        'furkan_yilmaz',    // Seyfeddin Bülbül
-        'muratcan_solmaz', // Tayyip Erdoğan Yılmaz
-        'talha_bulbul',    // Murat Can Yılmaz
-        'firatcan_solmaz',      // Süleyman Yıldız  
-        'burak_kocabey'        // Ensar Bülbül
+        'misafir_3',        // Talha Bülbül
+        'misafir_4',    // Seyfeddin Bülbül
+        'misafir_3', // Tayyip Erdoğan Yılmaz
+        'eren_yilmaz ',    // Murat Can Yılmaz
+        'kadir_yoney',      // Süleyman Yıldız
     ]
 };

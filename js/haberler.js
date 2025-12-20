@@ -8,13 +8,13 @@
 const newsData = [
     {
         title: "MVP Seçimindeki Büyük Mücadelede Kazanan Emre Erdal Oldu!",
-        description: " 12-9 biten mücadelede Maçın mvp si 'Emre mi? Süleyman mı ?' olacak sorusu uzun süre tartışıldı. Ancak sonunda Emre Erdal, Defans performansıyla rakip forvetlerin umudunu kırarak takımını zafere taşıdı. 'Onu geçmeye çalışan forvetler bile ona hayrandı...' diyerek başarısını taçlandırdı.",
+        description: " 12-6 biten mücadelede Maçın mvp si 'Emre mi? Süleyman mı ?' olacak sorusu uzun süre tartışıldı. Ancak sonunda Emre Erdal, Defans performansıyla rakip forvetlerin umudunu kırarak takımını zafere taşıdı. 'Onu geçmeye çalışan forvetler bile ona hayrandı...' diyerek başarısını taçlandırdı.",
         images: ["img/Haber/Haber_1.jpg", "img/Haber/Haber_1.1.jpg"], 
         date: "15.12.2025"
     },
     {
         title: "LİGİN LİDERİ EŞŞEK SEÇİLDİ !",
-        description: "Ensar Bulbul, son maçta gösterdiği aldığı zaferle  ligdeki liderliğini perçinledi. Boş kaleye gol atamamak gibi zorlu bir görevi başarıyla yerine getiren Ensar, takımının galibiyetinde hiçbir katkıda bulunmadı.Tek iyi haber bel fıtığı atmaması oldu...",
+        description: "Ensar Bulbul, son maçta  aldığı zaferle  ligdeki liderliğini perçinledi. Boş kaleye gol atamamak gibi zorlu bir görevi başarıyla yerine getiren Ensar, takımının galibiyetinde hiçbir katkıda bulunmadı.Tek iyi haber bel fıtığı atmaması oldu...",
         image: "img/Haber/Haber_2.jpg",
         date: "15.12.2025"
     },
