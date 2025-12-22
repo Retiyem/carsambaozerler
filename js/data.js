@@ -541,22 +541,25 @@ const seasons = {
 // Sıradaki Maç Kadrosu - Buradan düzenleyebilirsiniz
 const nextMatchLineup = {
     teamA: [
-        'onur_mustafa',        // Onur Mustafa Köse
-        'emre_erdal',          // Emre Erdal
-        'furkan_yilmaz', // HüseyinCAN YÜKSEKDAĞ
-        'huseyincan_yuksekdag',       // İbrahim Erdoğdu
-        'tayyip_erdogan_yilmaz',      // Furkan Sevimli
-        'ömer_erdal',            // Ozan Necipoğlu
-        'furkan_sevimli'        // Fıratcan Solmaz
+        'suleyman_yildirim', // Süleyman Yıldırım
+        'ensar_bulbul',        // Ensar Bülbül
+        'fatih_atalay',          // Fatih Atalay
+        'emre_erdal',        // Emre Erdal
+        'huseyincan_yuksekdag',    // Hüseyin Can Yüksekdağ
+        'seyfeddin_bulbul', // Seyfeddin Bülbül
+        'yakup_sunay',    // Yakup Sunay
+        'tayyip_erdogan_yilmaz',      // Tayyip Erdoğan Yılmaz
+        'ahmet_sadıkoglu',      // Ahmet Sadıkoğlu
     ],
     teamB: [
-        'misafir_1',          // Ömer Erdal
-        'misafir_2',        // Onur Mustafa Köse
-        'ahmet_sadıkoglu',          // Emre Erdal
-        'misafir_3',        // Talha Bülbül
-        'misafir_4',    // Seyfeddin Bülbül
-        'misafir_3', // Tayyip Erdoğan Yılmaz
-        'eren_yilmaz ',    // Murat Can Yılmaz
-        'kadir_yoney',      // Süleyman Yıldız
+        'onur_mustafa',        // Onur Mustafa Köse
+        'mushap_karatas',      // Mushap Karataş
+        'furkan_sevimli',      // Furkan Sevimli
+        'talha_bulbul',        // Talha Bülbül
+        'ibrahim_erdogdu',      // İbrahim Erdoğdu
+        'eren_yilmaz',        // Eren Yılmaz
+        'kadir_dogan',        // Kadir Doğan
+        'omer_erdal',        // Ömer Erdal
+        'orhan_sariaydin',      // Orhan Sarıaydın
     ]
 };
