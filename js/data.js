@@ -541,7 +541,7 @@ const seasons = {
 // Sıradaki Maç Kadrosu - Buradan düzenleyebilirsiniz
 const nextMatchLineup = {
     teamA: [
-        'suleyman_yildirim', // Süleyman Yıldırım
+        'süleyman_yildirim', // Süleyman Yıldırım
         'ensar_bulbul',        // Ensar Bülbül
         'fatih_atalay',          // Fatih Atalay
         'emre_erdal',        // Emre Erdal
@@ -554,7 +554,7 @@ const nextMatchLineup = {
     teamB: [
         'onur_mustafa',        // Onur Mustafa Köse
         'mushap_karatas',      // Mushap Karataş
-        'furkan_sevimli',      // Furkan Sevimli
+        'furkan_yilmaz',      // Furkan Sevimli
         'talha_bulbul',        // Talha Bülbül
         'ibrahim_erdogdu',      // İbrahim Erdoğdu
         'eren_yilmaz',        // Eren Yılmaz
