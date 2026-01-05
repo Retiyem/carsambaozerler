@@ -1,6 +1,6 @@
 // Oyuncular listesi
 const players = [
-    { id: 'onur_mustafa', name: 'Onur Mustafa KÖSE', mevki: 'Defans' },
+   // { id:  'onur_mustafa', name: 'Onur Mustafa KÖSE', mevki: 'Defans' },
     { id: 'ensar_bulbul', name: 'Ensar BÜLBÜL', mevki: 'Orta Saha' },
     { id: 'ahmet_sadıkoglu', name: 'Ahmet SADIKOĞLU', mevki: 'Forvet' },
     { id: 'burak_kocabey', name: 'Burak KOCABEY', mevki: 'Forvet' },
@@ -156,7 +156,7 @@ const matches = [
             { playerId: 'ahmet_sadıkoglu', team: 'A', goals: 3, weeklyMVP: false },
 
             // B Takımı oyuncuları (7 kişi)
-            { playerId: 'onur_mustafa', team: 'B', goals: 2, weeklyMVP: false },
+           // { playerId:  'onur_mustafa', team: 'B', goals: 2, weeklyMVP: false },
             { playerId: 'furkan_demiral', team: 'B', goals: 1, weeklyMVP: false },
             { playerId: 'furkan_sevimli', team: 'B', goals: 1, weeklyMVP: false },
             { playerId: 'emre_erdal', team: 'B', goals: 0, weeklyMVP: false },
@@ -180,7 +180,7 @@ const matches = [
         video_aciklama: '3. hafta sıkı mücadele...', // Son Maçın Unutulmaz Anı açıklaması
         performances: [
             // A Takımı oyuncuları (7 kişi)
-            { playerId: 'onur_mustafa', team: 'A', goals: 2, weeklyMVP: false },
+            // { playerId:  'onur_mustafa', team: 'A', goals: 2, weeklyMVP: false },
             { playerId: 'ahmet_sadıkoglu', team: 'A', goals: 1, weeklyMVP: false },
             { playerId: 'ensar_bulbul', team: 'A', goals: 0, weeklyMVP: true },
             { playerId: 'furkan_sevimli', team: 'A', goals: 0, weeklyMVP: false },
@@ -223,7 +223,7 @@ const matches = [
             { playerId: 'ridvan_gumus', team: 'A', goals: 3, weeklyMVP: false },
 
             // B Takımı oyuncuları (7 kişi)
-            { playerId: 'onur_mustafa', team: 'B', goals: 1, weeklyMVP: false },
+            // { playerId:  'onur_mustafa', team: 'B', goals: 1, weeklyMVP: false },
             { playerId: 'furkan_demiral', team: 'B', goals: 0, weeklyMVP: false },
             { playerId: 'burak_kocabey', team: 'B', goals: 6, weeklyMVP: false },
             { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0, weeklyMVP: true },
@@ -257,7 +257,7 @@ const matches = [
             { playerId: 'fatih_atalay', team: 'A', goals: 0, weeklyMVP: true },
 
             // B Takımı oyuncuları (7 kişi)
-            { playerId: 'onur_mustafa', team: 'B', goals: 6, weeklyMVP: false },
+            // { playerId:  'onur_mustafa', team: 'B', goals: 6, weeklyMVP: false },
             { playerId: 'emre_erdal', team: 'B', goals: 0, weeklyMVP: false },
             { playerId: 'yakup_sunay', team: 'B', goals: 1, weeklyMVP: false },
             { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0, weeklyMVP: false },
@@ -305,7 +305,7 @@ const matches = [
         date: '19.11.2025', // Maç tarihi
         teamAGoals: 12, // A Takımının attığı gol
         teamBGoals: 15, // B Takımının attığı gol
-        macin_adami: 'onur_mustafa', // Onur çok iyi kaleci performansı gösterdi
+      //  macin_adami: // 'onur_mustafa', // Onur çok iyi kaleci performansı gösterdi
         macin_adami_aciklama: 'Onur 4 golle harika bir performans sergiledi!',
         esek_adam: 'ibrahim_erdogdu', // Belirlenecek
         esek_adam_aciklama: 'Bu hafta takıma yeterli katkıyı sağlayamadı.',
@@ -325,7 +325,7 @@ const matches = [
             { playerId: 'furkan_sevimli', team: 'B', goals: 0, weeklyMVP: false },
             { playerId: 'burak_kocabey', team: 'B', goals: 2, weeklyMVP: false },
             { playerId: 'ömer_erdal', team: 'B', goals: 3, weeklyMVP: false },
-            { playerId: 'onur_mustafa', team: 'B', goals: 4, weeklyMVP: true },
+            // { playerId:  'onur_mustafa', team: 'B', goals: 4, weeklyMVP: true },
             { playerId: 'talha_bulbul', team: 'B', goals: 0, weeklyMVP: false },
             // Maça katılmayan oyuncuları bu listeye eklemeyin.
             // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
@@ -345,7 +345,7 @@ const matches = [
         video_aciklama: '8. hafta unutulmaz anları...', // Son Maçın Unutulmaz Anı açıklaması
         performances: [
             // A Takımı oyuncuları (7 kişi)
-            { playerId: 'onur_mustafa', team: 'A', goals: 2, weeklyMVP: false },
+            // { playerId:  'onur_mustafa', team: 'A', goals: 2, weeklyMVP: false },
             { playerId: 'furkan_sevimli', team: 'A', goals: 2, weeklyMVP: false },
             { playerId: 'furkan_demiral', team: 'A', goals: 1, weeklyMVP: false },
             { playerId: 'ömer_erdal', team: 'A', goals: 1, weeklyMVP: false },
@@ -372,12 +372,12 @@ const matches = [
         teamBGoals: 9, // B Takımının attığı gol
         macin_adami: 'huseyincan_yuksekdag', // Onur çok iyi kalecicd performansı gösterdi
         macin_adami_aciklama: 'Kaleci oyuncu defans adeta bir duvar ama dikkat edin her an ses kaydı atabilir !',
-        esek_adam: 'onur_mustafa', // Belirlenecek
+      // esek_adam: // 'onur_mustafa', // Belirlenecek
         esek_adam_aciklama: 'Yetenek,Güç,Yakışıklılık...Takım arkadaşları onu çok kıskandığı için oylamada onu seçti..',
         video_aciklama: 'Yetişkin bir orhan dakikada yarım saat su içebilir...', // Son Maçın Unutulmaz Anı açıklaması
         performances: [
             // A Takımı oyuncuları (7 kişi)
-            { playerId: 'onur_mustafa', team: 'A', goals: 5, weeklyMVP: false },
+            // { playerId:  'onur_mustafa', team: 'A', goals: 5, weeklyMVP: false },
             { playerId: 'ensar_bulbul', team: 'A', goals: 1, weeklyMVP: false },
             { playerId: 'furkan_yilmaz', team: 'A', goals: 0, weeklyMVP: false },
             { playerId: 'seyfeddin_bulbul', team: 'A', goals: 2, weeklyMVP: false },
@@ -410,7 +410,7 @@ const matches = [
         video_aciklama: 'Ensarın Eşşek seçildiği o an...', // Son Maçın Unutulmaz Anı açıklaması
         performances: [
             // A Takımı oyuncuları (7 kişi)
-            { playerId: 'onur_mustafa', team: 'A', goals: 4, weeklyMVP: false },
+            // { playerId:  'onur_mustafa', team: 'A', goals: 4, weeklyMVP: false },
             { playerId: 'ensar_bulbul', team: 'A', goals: 0, weeklyMVP: false },
             { playerId: 'tayyip_erdogan_yilmaz', team: 'A', goals: 0, weeklyMVP: false },
             { playerId: 'süleyman_yildirim', team: 'A', goals: 5, weeklyMVP: false },
@@ -486,13 +486,13 @@ const weeklyHeroes = [
 
     },
 
-                {
-        week: 7, // Hafta numarası
-        date: '19.11.2025', // Hafta tarihi
-        playerId: 'onur_mustafa', // Haftanın adamının ID'si
-        playerName: 'Onur Mustafa KÖSE', // Haftanın adamının adı
-        note: 'Öyle bir oynadı ki, rakipler maç bitince ‘biz niye geldik ?’ dedi...', // Haftanın adamı notu
-    },
+  //              {
+  //      week: 7, // Hafta numarası
+   //     date: '19.11.2025', // Hafta tarihi
+   //     playerId: // 'onur_mustafa', // Haftanın adamının ID'si
+  ////      playerName: 'Onur Mustafa KÖSE', // Haftanın adamının adı
+   //     note: 'Öyle bir oynadı ki, rakipler maç bitince ‘biz niye geldik ?’ dedi...', // Haftanın adamı notu
+ //   },
                     {
         week: 8, // Hafta numarası
         date: '03.12.2025', // Hafta tarihi
@@ -552,7 +552,7 @@ const nextMatchLineup = {
         'ahmet_sadıkoglu',      // Ahmet Sadıkoğlu
     ],
     teamB: [
-        'onur_mustafa',        // Onur Mustafa Köse
+        // 'onur_mustafa',        // Onur Mustafa Köse
         'mushap_karatas',      // Mushap Karataş
         'furkan_yilmaz',      // Furkan Sevimli
         'talha_bulbul',        // Talha Bülbül
