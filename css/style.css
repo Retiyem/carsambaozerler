@@ -695,38 +695,66 @@ footer {
 
 /* Önceki Sezon Şampiyonu */
 .previous-champion {
-    padding: 15px 25px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 15px;
+    background: linear-gradient(135deg, rgba(255, 223, 128, 0.4), rgba(255, 239, 179, 0.3));
+    border-top: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: inset 0 1px 2px rgba(255, 215, 0, 0.2);
 }
 
 .champion-text {
     margin: 0;
     text-align: center;
-    font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .champion-label {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(0, 0, 0, 0.7);
     font-weight: 600;
-    margin-right: 8px;
+    font-size: 1rem;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 
 .champion-name {
-    color: #FFD700;
+    color: #000;
     font-weight: 700;
-    font-size: 1.2rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 215, 0, 0.3);
-    animation: golden-glow 2s ease-in-out infinite alternate;
+    font-size: 1.3rem;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.9), 
+                 0 0 20px rgba(255, 215, 0, 0.6), 
+                 0 0 30px rgba(255, 215, 0, 0.4),
+                 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: golden-glow 2.5s ease-in-out infinite alternate;
 }
 
 @keyframes golden-glow {
     from {
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 215, 0, 0.3);
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.9), 
+                     0 0 20px rgba(255, 215, 0, 0.6), 
+                     0 0 30px rgba(255, 215, 0, 0.4),
+                     0 2px 4px rgba(0, 0, 0, 0.2);
     }
     to {
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4);
+        text-shadow: 0 0 15px rgba(255, 215, 0, 1), 
+                     0 0 30px rgba(255, 215, 0, 0.8), 
+                     0 0 45px rgba(255, 215, 0, 0.6),
+                     0 0 60px rgba(255, 215, 0, 0.4),
+                     0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Mobil uyumluluk */
+@media (max-width: 768px) {
+    .previous-champion {
+        padding: 15px 10px;
+    }
+    
+    .champion-label {
+        font-size: 0.9rem;
+    }
+    
+    .champion-name {
+        font-size: 1.1rem;
     }
 }
 
