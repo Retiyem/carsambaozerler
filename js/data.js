@@ -1,565 +1,79 @@
-// Oyuncular listesi
+﻿// Oyuncular listesi
 const players = [
-   // { id:  'onur_mustafa', name: 'Onur Mustafa KÖSE', mevki: 'Defans' },
-    { id: 'ensar_bulbul', name: 'Ensar BÜLBÜL', mevki: 'Orta Saha' },
-    { id: 'ahmet_sadıkoglu', name: 'Ahmet SADIKOĞLU', mevki: 'Forvet' },
-    { id: 'burak_kocabey', name: 'Burak KOCABEY', mevki: 'Forvet' },
-    { id: 'furkan_demiral', name: 'Furkan DEMİRAL', mevki: 'Defans' },
-    { id: 'emre_erdal', name: 'Emre ERDAL', mevki: 'Defans' },
-    { id: 'enes_altan', name: 'Enes Altan ARICI', mevki: 'Defans' },
-    { id: 'ömer_erdal', name: 'Ömer ERDAL', mevki: 'Forvet' },
-    { id: 'misafir_1', name: 'Misafir 1', mevki: 'Forvet' },
-    { id: 'misafir_2', name: 'Misafir 2', mevki: 'Orta Saha' },
-    { id: 'misafir_3', name: 'Misafir 3', mevki: 'Defans' },
-    { id: 'misafir_4', name: 'Misafir 4', mevki: 'Kaleci' },
-    { id: 'kadir_yoney', name: 'Kadir YÖNEY', mevki: 'Defans' },
-    { id: 'mushap_karatas', name: 'Mushap KARATAŞ', mevki: 'Forvet' },
-    { id: 'furkan_sevimli', name: 'Furkan SEVİMLİ', mevki: 'Orta Saha' },
-    { id: 'furkan_yilmaz', name: 'Furkan YILMAZ', mevki: 'Orta Saha' },
-    { id: 'süleyman_yildirim', name: 'Süleyman YILDIRIM', mevki: 'Forvet' },
-    { id: 'ibrahim_erdogdu', name: 'İbrahim ERDOĞDU', mevki: 'Kaleci' },
-    { id: 'berkin_tayyip_ceran', name: 'Berkin Tayyip CERAN', mevki: 'Defans' },
-    { id: 'muratcan_solmaz', name: 'Muratcan SOLMAZ', mevki: 'Kaleci' },
-    { id: 'orhan_sariaydin', name: 'Orhan SARIAYDIN', mevki: 'Orta Saha' },
-    { id: 'ozan_necipoglu', name: 'Ozan NECİPOĞLU', mevki: 'Defans' },
-    { id: 'ridvan_gumus', name: 'Rıdvan GÜMÜŞ', mevki: 'Forvet' },
-    { id: 'fatih_atalay', name: 'Fatih ATALAY', mevki: 'Orta Saha' },
-    { id: 'seyfeddin_bulbul', name: 'Seyfeddin BÜLBÜL', mevki: 'Orta Saha' },
-    { id: 'talha_bulbul', name: 'Talha BÜLBÜL', mevki: 'Kaleci' },
-    { id: 'tayyip_erdogan_yilmaz', name: 'Tayyip Erdoğan YILMAZ', mevki: 'Orta Saha' },
-    { id: 'firatcan_solmaz', name: 'Fıratcan SOLMAZ', mevki: 'Defans' },
-    { id: 'can_atilgan', name: 'Can ATILGAN', mevki:  'Defans' },
-    { id: 'alper_basdag', name: 'Alper BASDAĞ', mevki: 'Orta Saha' },
-    { id: 'yakup_sunay', name: 'Yakup SUNAY', mevki: 'Orta Saha' },
-    { id: 'eren_yilmaz', name: 'Eren YILMAZ', mevki: 'Orta Saha' },
-    { id: 'huseyincan_yuksekdag', name: 'Hüseyin Can YÜKSEKDAĞ', mevki: 'Kaleci' },
+    { id: 'onur_mustafa', name: 'Onur Mustafa KÖSE', mevki: 'Defans', fizik: 96, bitiricilik: 93, teknik: 95, oyunOkuma: 96, dayaniklilik: 88 },
+    { id: 'ensar_bulbul', name: 'Ensar BÜLBÜL', mevki: 'Defans', fizik: 80, bitiricilik: 72, teknik: 80, oyunOkuma: 77, dayaniklilik: 91 },
+    { id: 'ahmet_sadikoglu', name: 'Ahmet SADIKOĞLU', mevki: 'Forvet', fizik: 84, bitiricilik: 85, teknik: 82, oyunOkuma: 82, dayaniklilik: 81 },
+    { id: 'burak_kocabey', name: 'Burak KOCABEY', mevki: 'Forvet', fizik: 70, bitiricilik: 94, teknik: 96, oyunOkuma: 93, dayaniklilik: 91 },
+    { id: 'furkan_demiral', name: 'Furkan DEMİRAL', mevki: 'Defans', fizik: 73, bitiricilik: 82, teknik: 78, oyunOkuma: 80, dayaniklilik: 74 },
+    { id: 'emre_erdal', name: 'Emre ERDAL', mevki: 'Defans', fizik: 86, bitiricilik: 76, teknik: 81, oyunOkuma: 80, dayaniklilik: 80 },
+    { id: 'enes_altan', name: 'Enes Altan ARICI', mevki: 'Defans', fizik: 86, bitiricilik: 76, teknik: 76, oyunOkuma: 75, dayaniklilik: 78 },
+    { id: 'ömer_erdal', name: 'Ömer ERDAL', mevki: 'Forvet', fizik: 80, bitiricilik: 82, teknik: 84, oyunOkuma: 81, dayaniklilik: 77 },
+    { id: 'furkan_sevimli', name: 'Furkan SEVİMLİ', mevki: 'Orta Saha', fizik: 78, bitiricilik: 80, teknik: 83, oyunOkuma: 86, dayaniklilik: 83 },
+    { id: 'misafir_1', name: 'Misafir 1', mevki: 'Forvet', fizik: 50, bitiricilik: 50, teknik: 50, oyunOkuma: 50, dayaniklilik: 50 },
+    { id: 'misafir_2', name: 'Misafir 2', mevki: 'Orta Saha', fizik: 50, bitiricilik: 50, teknik: 50, oyunOkuma: 50, dayaniklilik: 50 },
+    { id: 'misafir_3', name: 'Misafir 3', mevki: 'Defans', fizik: 50, bitiricilik: 50, teknik: 50, oyunOkuma: 50, dayaniklilik: 50 },
+    { id: 'misafir_4', name: 'Misafir 4', mevki: 'Kaleci', fizik: 50, bitiricilik: 50, teknik: 50, oyunOkuma: 50, dayaniklilik: 50 },
+    { id: 'kadir_yoney', name: 'Kadir YÖNEY', mevki: 'Defans', fizik: 85, bitiricilik: 78, teknik: 80, oyunOkuma: 77, dayaniklilik: 86 },
+    { id: 'mushap_karatas', name: 'Mushap KARATAŞ', mevki: 'Forvet', fizik: 88, bitiricilik: 85, teknik: 87, oyunOkuma: 89, dayaniklilik: 81 },
+    { id: 'furkan_yilmaz', name: 'Furkan YILMAZ', mevki: 'Orta Saha', fizik: 81, bitiricilik: 75, teknik: 86, oyunOkuma: 89, dayaniklilik: 92 },
+    { id: 'suleyman_yildirim', name: 'Süleyman YILDIRIM', mevki: 'Forvet', fizik: 87, bitiricilik: 97, teknik: 91, oyunOkuma: 93, dayaniklilik: 86 },
+    { id: 'ibrahim_erdogdu', name: 'İbrahim ERDOĞDU', mevki: 'Kaleci', fizik: 86, bitiricilik: 75, teknik: 75, oyunOkuma: 75, dayaniklilik: 100 },
+    { id: 'berkin_tayyip_ceran', name: 'Berkin Tayyip CERAN', mevki: 'Defans', fizik: 70, bitiricilik: 75, teknik: 80, oyunOkuma: 78, dayaniklilik: 83 },
+    { id: 'muratcan_solmaz', name: 'Muratcan SOLMAZ', mevki: 'Kaleci', fizik: 83, bitiricilik: 86, teknik: 89, oyunOkuma: 91, dayaniklilik: 94 },
+    { id: 'orhan_sariaydin', name: 'Orhan SARIAYDIN', mevki: 'Orta Saha', fizik: 80, bitiricilik: 87, teknik: 80, oyunOkuma: 83, dayaniklilik: 81 },
+    { id: 'ozan_necipoglu', name: 'Ozan NECİPOĞLU', mevki: 'Defans', fizik: 72, bitiricilik: 84, teknik: 93, oyunOkuma: 91, dayaniklilik: 90 },
+    { id: 'ridvan_gumus', name: 'Rıdvan GÜMÜŞ', mevki: 'Forvet', fizik: 87, bitiricilik: 94, teknik: 92, oyunOkuma: 90, dayaniklilik: 90 },
+    { id: 'fatih_atalay', name: 'Fatih ATALAY', mevki: 'Orta Saha', fizik: 78, bitiricilik: 80, teknik: 81, oyunOkuma: 80, dayaniklilik: 82 },
+    { id: 'seyfeddin_bulbul', name: 'Seyfeddin BÜLBÜL', mevki: 'Orta Saha', fizik: 89, bitiricilik: 85, teknik: 80, oyunOkuma: 81, dayaniklilik: 84 },
+    { id: 'talha_bulbul', name: 'Talha BÜLBÜL', mevki: 'Kaleci', fizik: 89, bitiricilik: 70, teknik: 70, oyunOkuma: 70, dayaniklilik: 100 },
+    { id: 'tayyip_erdogan_yilmaz', name: 'Tayyip Erdoğan YILMAZ', mevki: 'Orta Saha', fizik: 82, bitiricilik: 86, teknik: 86, oyunOkuma: 86, dayaniklilik: 84 },
+    { id: 'firatcan_solmaz', name: 'Fıratcan SOLMAZ', mevki: 'Defans', fizik: 81, bitiricilik: 82, teknik: 90, oyunOkuma: 90, dayaniklilik: 90 },
+    { id: 'can_atilgan', name: 'Can ATILGAN', mevki: 'Defans', fizik: 95, bitiricilik: 93, teknik: 97, oyunOkuma: 94, dayaniklilik: 98 },
+    { id: 'yakup_sunay', name: 'Yakup SUNAY', mevki: 'Orta Saha', fizik: 80, bitiricilik: 76, teknik: 80, oyunOkuma: 87, dayaniklilik: 87 },
+    { id: 'eren_yilmaz', name: 'Eren YILMAZ', mevki: 'Orta Saha', fizik: 88, bitiricilik: 87, teknik: 84, oyunOkuma: 84, dayaniklilik: 80 },
+    { id: 'huseyincan_yuksekdag', name: 'Hüseyin Can YÜKSEKDAĞ', mevki: 'Kaleci', fizik: 85, bitiricilik: 80, teknik: 90, oyunOkuma: 94, dayaniklilik: 99 },
 ];
 
-// Maçlar ve oyuncu performansları
-// Henüz hiç maç oynanmadığı için bu dizi başlangıçta boş.
-// Her obje bir maçı temsil eder. İçindeki 'performances' dizisi o maçtaki her oyuncunun performansını tutar.
+// Maclar ve oyuncu performanslari
+// 2. Sezon basladi - Tum veriler sifirlandi
 const matches = [
-    // İlk maçınızı buraya eklemek için aşağıdaki formatı kullanın:
+    // Yeni mac eklemek icin asagidaki formati kullanin:
     /*
     {
-        id: 1, // Her maç için benzersiz bir ID ver (ilk maç için 1)
-        date: 'GG.AA.YYYY', // Maç tarihi (örn: '01.11.2025')
-        teamAGoals: 0, // A Takımının attığı gol
-        teamBGoals: 0, // B Takımının attığı gol
-        performances: [
-            // A Takımı oyuncuları (7 kişi)
-            { playerId: 'onur', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'ensarb', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'ahmets', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'burakk', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'emree', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'enes', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'omere', team: 'A', goals: 0, weeklyMVP: false },
-
-            // B Takımı oyuncuları (7 kişi)
-            { playerId: 'furkans', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'furkany', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'ibrahim', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'tayyipb', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'muhammetc', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'muratcan', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'orhan', team: 'B', goals: 0, weeklyMVP: false },
-            // Maça katılmayan oyuncuları bu listeye eklemeyin.
-            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
-
-        ]
-    },
-        /*
-        {
-        id: 1, // Her maç için benzersiz bir ID ver (ilk maç için 1)
-        date: 'GG.AA.YYYY', // Maç tarihi (örn: '01.11.2025')
-        teamAGoals: 0, // A Takımının attığı gol
-        teamBGoals: 0, // B Takımının attığı gol
-        performances: [
-            // A Takımı oyuncuları (7 kişi)
-            { playerId: 'onur', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'ensarb', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'ahmets', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'burakk', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'emree', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'enes', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'omere', team: 'A', goals: 0, weeklyMVP: false },
-
-            // B Takımı oyuncuları (7 kişi)
-            { playerId: 'furkans', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'furkany', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'ibrahim', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'tayyipb', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'muhammetc', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'muratcan', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'orhan', team: 'B', goals: 0, weeklyMVP: false },
-            // Maça katılmayan oyuncuları bu listeye eklemeyin.
-            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
-
-        ]
-    },
-    // Her yeni maç için bu objeyi kopyalayıp düzenleyin.
-    // 'id' değerini bir artırmayı unutmayın!
-    */
-    { // İlk maç
-        id: 1, // Her maç için benzersiz bir ID ver (ilk maç için 1)
-        date: '22.10.2025', // Maç tarihi (örn: '01.11.2025')
-        teamAGoals: 14, // A Takımının attığı gol
-        teamBGoals: 13, // B Takımının attığı gol
-        macin_adami: 'ridvan_gumus',
-        macin_adami_aciklama: 'Sahada adeta kasırga gibiydi! 8 gol atarak takımını zafere taşıdı.',
-        esek_adam: 'orhan_sariaydin',
-        esek_adam_aciklama: 'Bu hafta performans beklenenden düşüktü.',
-        video_aciklama: 'İlk maçtan unutulmaz anlar...', // Son Maçın Unutulmaz Anı açıklaması
-        performances: [
-            // A Takımı oyuncuları (7 kişi)
-            { playerId: 'ridvan_gumus', team: 'A', goals: 8, weeklyMVP: true },
-            { playerId: 'ömer_erdal', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'ahmet_sadıkoglu', team: 'A', goals: 3, weeklyMVP: false },
-            { playerId: 'emre_erdal', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'orhan_sariaydin', team: 'A', goals: 3, weeklyMVP: false },
-            { playerId: 'talha_bulbul', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'furkan_demiral', team: 'A', goals: 0, weeklyMVP: false },
-
-            // B Takımı oyuncuları (7 kişi)
-            { playerId: 'burak_kocabey', team: 'B', goals: 3, weeklyMVP: false },
-            { playerId: 'furkan_sevimli', team: 'B', goals: 1, weeklyMVP: false },
-            { playerId: 'ensar_bulbul', team: 'B', goals: 2, weeklyMVP: false },
-            { playerId: 'seyfeddin_bulbul', team: 'B', goals: 3, weeklyMVP: false },
-            { playerId: 'ibrahim_erdogdu', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'alper_basdag', team: 'B', goals: 3, weeklyMVP: false },
-            { playerId: 'berkin_tayyip_ceran', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'ozan_necipoglu', team: 'B', goals: 1, weeklyMVP: false },
-            // Maça katılmayan oyuncuları bu listeye eklemeyin.
-            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
-
-        ]
-    },
-    { // İkinci maç
-        id: 2, // İkinci maç
-        date: '27.10.2025', // Maç tarihi
-        teamAGoals: 11, // A Takımının attığı gol
-        teamBGoals: 11, // B Takımının attığı gol
-        macin_adami: 'talha_bulbul', // Talha çok iyi kaleci performansı gösterdi
-        macin_adami_aciklama: 'Talha muhteşem kurtarışlarla maçı kurtardı!',
-        esek_adam: 'ensar_bulbul', // Belirlenecek
-        esek_adam_aciklama: 'Bu maçta beklenen performansı gösteremedi.',
-        video_aciklama: '2. hafta heyecanlı anları...', // Son Maçın Unutulmaz Anı açıklaması
-        performances: [
-            // A Takımı oyuncuları (7 kişi)
-            { playerId: 'can_atilgan', team: 'A', goals: 5, weeklyMVP: false },
-            { playerId: 'ömer_erdal', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'talha_bulbul', team: 'A', goals: 0, weeklyMVP: true },
-            { playerId: 'orhan_sariaydin', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'furkan_yilmaz', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'burak_kocabey', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'ahmet_sadıkoglu', team: 'A', goals: 3, weeklyMVP: false },
-
-            // B Takımı oyuncuları (7 kişi)
-           // { playerId:  'onur_mustafa', team: 'B', goals: 2, weeklyMVP: false },
-            { playerId: 'furkan_demiral', team: 'B', goals: 1, weeklyMVP: false },
-            { playerId: 'furkan_sevimli', team: 'B', goals: 1, weeklyMVP: false },
-            { playerId: 'emre_erdal', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'seyfeddin_bulbul', team: 'B', goals: 3, weeklyMVP: false },
-            { playerId: 'tayyip_erdogan_yilmaz', team: 'B', goals: 2, weeklyMVP: false },
-            { playerId: 'ibrahim_erdogdu', team: 'B', goals: 2, weeklyMVP: false },
-            // Maça katılmayan oyuncuları bu listeye eklemeyin.
-            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
-
-        ]
-    },
-    { // Üçüncü maç
-        id: 3, // Üçüncü maç
-        date: '29.10.2025', // Maç tarihi
-        teamAGoals: 3, // A Takımının attığı gol
-        teamBGoals: 2, // B Takımının attığı gol
-        macin_adami: 'ensar_bulbul', // Talha çok iyi kaleci performansı gösterdi
-        macin_adami_aciklama: 'Ensar harika savunma performansı gösterdi!',
-        esek_adam: 'ahmet_sadıkoglu', // Belirlenecek
-        esek_adam_aciklama: 'Bu hafta maalesef yetersiz kaldı.',
-        video_aciklama: '3. hafta sıkı mücadele...', // Son Maçın Unutulmaz Anı açıklaması
-        performances: [
-            // A Takımı oyuncuları (7 kişi)
-            // { playerId:  'onur_mustafa', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'ahmet_sadıkoglu', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'ensar_bulbul', team: 'A', goals: 0, weeklyMVP: true },
-            { playerId: 'furkan_sevimli', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'fatih_atalay', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'ozan_necipoglu', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'ibrahim_erdogdu', team: 'A', goals: 0, weeklyMVP: false },
-
-            // B Takımı oyuncuları (7 kişi)
-            { playerId: 'talha_bulbul', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'furkan_yilmaz', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'tayyip_erdogan_yilmaz', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'emre_erdal', team: 'B', goals: 1, weeklyMVP: false },
-            { playerId: 'seyfeddin_bulbul', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'ridvan_gumus', team: 'B', goals: 1, weeklyMVP: false },
-            // Maça katılmayan oyuncuları bu listeye eklemeyin.
-            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
-
-        ]
-    },
-    { // Dördüncü maç
-        id: 4, // Dördüncü maç
-        date: '02.11.2025', // Maç tarihi
-        teamAGoals: 7, // A Takımının attığı gol
-        teamBGoals: 19, // B Takımının attığı gol
-        macin_adami: 'huseyincan_yuksekdag', // Talha çok iyi kaleci performansı gösterdi
-        macin_adami_aciklama: 'Hüseyin Can inanılmaz bir performans sergiledi!',
-        esek_adam: 'seyfeddin_bulbul', // Belirlenecek
-        esek_adam_aciklama: 'Maalesef bu hafta etkili olamadı.',
-        video_aciklama: '4. hafta gol şov!', // Son Maçın Unutulmaz Anı açıklaması
-        performances: [
-            // A Takımı oyuncuları (7 kişi)
-            { playerId: 'furkan_sevimli', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'ibrahim_erdogdu', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'talha_bulbul', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'orhan_sariaydin', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'furkan_yilmaz', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'emre_erdal', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'seyfeddin_bulbul', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'ridvan_gumus', team: 'A', goals: 3, weeklyMVP: false },
-
-            // B Takımı oyuncuları (7 kişi)
-            // { playerId:  'onur_mustafa', team: 'B', goals: 1, weeklyMVP: false },
-            { playerId: 'furkan_demiral', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'burak_kocabey', team: 'B', goals: 6, weeklyMVP: false },
-            { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0, weeklyMVP: true },
-            { playerId: 'ahmet_sadıkoglu', team: 'B', goals: 6, weeklyMVP: false },
-            { playerId: 'tayyip_erdogan_yilmaz', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'ömer_erdal', team: 'B', goals: 4, weeklyMVP: false },
-            { playerId: 'ensar_bulbul', team: 'B', goals: 2, weeklyMVP: false },
-            // Maça katılmayan oyuncuları bu listeye eklemeyin.
-            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
-
-        ]
-    },
-        { // Beşinci maç
-        id: 5, // Dördüncü maç
-        date: '06.11.2025', // Maç tarihi
-        teamAGoals: 10, // A Takımının attığı gol
-        teamBGoals: 9, // B Takımının attığı gol
-        macin_adami: 'fatih_atalay', // Talha çok iyi kaleci performansı gösterdi
-        macin_adami_aciklama: 'Fatih mükemmel kaleci performansıyla maçı kazandırdı!',
-        esek_adam: 'ahmet_sadıkoglu', // Belirlenecek
-        esek_adam_aciklama: 'Bu hafta istenen performansı veremedi.',
-        video_aciklama: '5. hafta kritik anlar...', // Son Maçın Unutulmaz Anı açıklaması
-        performances: [
-            // A Takımı oyuncuları (7 kişi)
-            { playerId: 'ahmet_sadıkoglu', team: 'A', goals: 4, weeklyMVP: false },
-            { playerId: 'ibrahim_erdogdu', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'talha_bulbul', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'ensar_bulbul', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'berkin_tayy"ip_ceran', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'ozan_necipoglu', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'fatih_atalay', team: 'A', goals: 0, weeklyMVP: true },
-
-            // B Takımı oyuncuları (7 kişi)
-            // { playerId:  'onur_mustafa', team: 'B', goals: 6, weeklyMVP: false },
-            { playerId: 'emre_erdal', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'yakup_sunay', team: 'B', goals: 1, weeklyMVP: false },
-            { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'seyfeddin_bulbul', team: 'B', goals: 1, weeklyMVP: false },
-            { playerId: 'ömer_erdal', team: 'B', goals: 1, weeklyMVP: false },
-            // Maça katılmayan oyuncuları bu listeye eklemeyin.
-            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
-
-        ]
-    },
-    {  // Altıncı maç
-        id: 6, // Dördüncü maç
-        date: '12.11.2025', // Maç tarihi
-        teamAGoals: 8, // A Takımının attığı gol
-        teamBGoals: 25, // B Takımının attığı gol
-        macin_adami: 'ridvan_gumus', // Talha çok iyi kaleci performansı gösterdi
-        macin_adami_aciklama: 'Rıdvan 9 golle sahaya damgasını vurdu!',
-        esek_adam: 'talha_bulbul', // Belirlenecek
-        esek_adam_aciklama: 'Bu hafta savunmada zorlandı.',
-        video_aciklama: '6. hafta gol yağmuru!', // Son Maçın Unutulmaz Anı açıklaması
-        performances: [
-            // A Takımı oyuncuları (7 kişi)
-            { playerId: 'tayyip_erdogan_yilmaz', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'ensar_bulbul', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'ozan_necipoglu', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'talha_bulbul', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'furkan_demiral', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'seyfeddin_bulbul', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'fatih_atalay', team: 'A', goals: 1, weeklyMVP: false },
-            // B Takımı oyuncuları (7 kişi)
-            { playerId: 'ridvan_gumus', team: 'B', goals: 9, weeklyMVP: false },
-            { playerId: 'ibrahim_erdogdu', team: 'B', goals: 1, weeklyMVP: false },
-            { playerId: 'emre_erdal', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'yakup_sunay', team: 'B', goals: 1, weeklyMVP: false },
-            { playerId: 'ömer_erdal', team: 'B', goals: 8, weeklyMVP: false },
-            { playerId: 'orhan_sariaydin', team: 'B', goals: 6, weeklyMVP: true },
-            // Maça katılmayan oyuncuları bu listeye eklemeyin.
-            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
-
-        ]
-    },
-
-    { // Yedinci maç
-        id: 7, // Yedinci maç
-        date: '19.11.2025', // Maç tarihi
-        teamAGoals: 12, // A Takımının attığı gol
-        teamBGoals: 15, // B Takımının attığı gol
-      //  macin_adami: // 'onur_mustafa', // Onur çok iyi kaleci performansı gösterdi
-        macin_adami_aciklama: 'Onur 4 golle harika bir performans sergiledi!',
-        esek_adam: 'ibrahim_erdogdu', // Belirlenecek
-        esek_adam_aciklama: 'Bu hafta takıma yeterli katkıyı sağlayamadı.',
-        video_aciklama: '7. hafta nefes kesen anlar...', // Son Maçın Unutulmaz Anı açıklaması
-        performances: [
-            // A Takımı oyuncuları (7 kişi)
-            { playerId: 'tayyip_erdogan_yilmaz', team: 'A', goals: 4, weeklyMVP: false },
-            { playerId: 'ensar_bulbul', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'ridvan_gumus', team: 'A', goals: 3, weeklyMVP: false },
-            { playerId: 'emre_erdal', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'yakup_sunay', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'seyfeddin_bulbul', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'ibrahim_erdogdu', team: 'A', goals: 1, weeklyMVP: false },
-            // B Takımı oyuncuları (7 kişi)
-            { playerId: 'ahmet_sadıkoglu', team: 'B', goals: 6, weeklyMVP: false },
-            { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'furkan_sevimli', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'burak_kocabey', team: 'B', goals: 2, weeklyMVP: false },
-            { playerId: 'ömer_erdal', team: 'B', goals: 3, weeklyMVP: false },
-            // { playerId:  'onur_mustafa', team: 'B', goals: 4, weeklyMVP: true },
-            { playerId: 'talha_bulbul', team: 'B', goals: 0, weeklyMVP: false },
-            // Maça katılmayan oyuncuları bu listeye eklemeyin.
-            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
-
-        ]
-    },
-
-    { // Sekizinci maç
-        id: 8, // Yedinci maç
-        date: '03.12.2025', // Maç tarihi
-        teamAGoals: 9, // A Takımının attığı gol
-        teamBGoals: 11, // B Takımının attığı gol
-        macin_adami: 'huseyincan_yuksekdag', // Onur çok iyi kaleci performansı gösterdi
-        macin_adami_aciklama: 'Muhteşem kurtarışlarla maçı kazandırdı!',
-        esek_adam: 'furkan_sevimli', // Belirlenecek
-        esek_adam_aciklama: 'Bu hafta maalesef performans beklenenin altındaydı.',
-        video_aciklama: '8. hafta unutulmaz anları...', // Son Maçın Unutulmaz Anı açıklaması
-        performances: [
-            // A Takımı oyuncuları (7 kişi)
-            // { playerId:  'onur_mustafa', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'furkan_sevimli', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'furkan_demiral', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'ömer_erdal', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'ahmet_sadıkoglu', team: 'A', goals: 3, weeklyMVP: false },
-            { playerId: 'ibrahim_erdogdu', team: 'A', goals: 1, weeklyMVP: false },
-            // B Takımı oyuncuları (7 kişi)
-            { playerId: 'seyfeddin_bulbul', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0, weeklyMVP: true },
-            { playerId: 'eren_yilmaz', team: 'B', goals: 4, weeklyMVP: false },
-            { playerId: 'burak_kocabey', team: 'B', goals: 3, weeklyMVP: false },
-            { playerId: 'emre_erdal', team: 'B', goals: 2, weeklyMVP: false },
-            { playerId: 'ensar_bulbul', team: 'B', goals: 2, weeklyMVP: false },
-            { playerId: 'talha_bulbul', team: 'B', goals: 0, weeklyMVP: false },
-            // Maça katılmayan oyuncuları bu listeye eklemeyin.
-            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
-
-        ]
-    },
-
-    { // Dokuzuncu maç
-        id: 9, // Yedinci maç
-        date: '11.12.2025', // Maç tarihi
-        teamAGoals: 12, // A Takımının attığı gol
-        teamBGoals: 9, // B Takımının attığı gol
-        macin_adami: 'huseyincan_yuksekdag', // Onur çok iyi kalecicd performansı gösterdi
-        macin_adami_aciklama: 'Kaleci oyuncu defans adeta bir duvar ama dikkat edin her an ses kaydı atabilir !',
-      // esek_adam: // 'onur_mustafa', // Belirlenecek
-        esek_adam_aciklama: 'Yetenek,Güç,Yakışıklılık...Takım arkadaşları onu çok kıskandığı için oylamada onu seçti..',
-        video_aciklama: 'Yetişkin bir orhan dakikada yarım saat su içebilir...', // Son Maçın Unutulmaz Anı açıklaması
-        performances: [
-            // A Takımı oyuncuları (7 kişi)
-            // { playerId:  'onur_mustafa', team: 'A', goals: 5, weeklyMVP: false },
-            { playerId: 'ensar_bulbul', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'furkan_yilmaz', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'seyfeddin_bulbul', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'ömer_erdal', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'fatih_atalay', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'emre_erdal', team: 'A', goals: 2, weeklyMVP: false },
-            { playerId: 'huseyincan_yuksekdag', team: 'A', goals: 0, weeklyMVP: true },
-            // B Takımı oyuncuları (7 kişi)
-            { playerId: 'enes_altan', team: 'B', goals: 1, weeklyMVP: false },
-            { playerId: 'tayyip_erdogan_yilmaz', team: 'B', goals: 3, weeklyMVP: false },
-            { playerId: 'ahmet_sadıkoglu', team: 'B', goals: 3, weeklyMVP: false },
-            { playerId: 'furkan_demiral', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'yakup_sunay', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'orhan_sariaydin', team: 'B', goals: 2, weeklyMVP: false },
-            { playerId: 'talha_bulbul', team: 'B', goals: 0, weeklyMVP: false },
-            // Maça katılmayan oyuncuları bu listeye eklemeyin.
-            // Sadece o maçta oynayan 14 oyuncuyu ekleyin.
-
-        ]
-    },
-    { // Dokuzuncu maç
-        id: 10, // Yedinci maç
-        date: '18.12.2025', // Maç tarihi
-        teamAGoals: 12, // A Takımının attığı gol
-        teamBGoals: 6, // B Takımının attığı gol
-        macin_adami: 'emre_erdal', // Onur çok iyi kalecicd performansı gösterdi
-        macin_adami_aciklama: ' Onu geçmeye çalışan forvetler bile ona hayrandı...',
-        esek_adam: 'ensar_bulbul', // Belirlenecek
-        esek_adam_aciklama: 'Bu ligde lider olmak zor iş, bazen yük ağır gelir Boş kaleye gol atamamak gibi...',
-        video_aciklama: 'Ensarın Eşşek seçildiği o an...', // Son Maçın Unutulmaz Anı açıklaması
-        performances: [
-            // A Takımı oyuncuları (7 kişi)
-            // { playerId:  'onur_mustafa', team: 'A', goals: 4, weeklyMVP: false },
-            { playerId: 'ensar_bulbul', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'tayyip_erdogan_yilmaz', team: 'A', goals: 0, weeklyMVP: false },
-            { playerId: 'süleyman_yildirim', team: 'A', goals: 5, weeklyMVP: false },
-            { playerId: 'furkan_sevimli', team: 'A', goals: 1, weeklyMVP: false },
-            { playerId: 'mushap_karatas', team: 'B', goals: 2, weeklyMVP: false },
-            { playerId: 'emre_erdal', team: 'A', goals: 0, weeklyMVP: true },
-            { playerId: 'huseyincan_yuksekdag', team: 'A', goals: -1, weeklyMVP: false },
-            // B Takımı oyuncuları (7 kişi)
-            { playerId: 'ömer_erdal', team: 'B', goals: 1, weeklyMVP: false },
-            { playerId: 'ozan_necipoglu', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'ahmet_sadıkoglu', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'seyfeddin_bulbul', team: 'B', goals: 0, weeklyMVP: false },
-            { playerId: 'furkan_yilmaz', team: 'B', goals: 1, weeklyMVP: false },
-            { playerId: 'burak_kocabey', team: 'B', goals: 2, weeklyMVP: false },
-            { playerId: 'firatcan_solmaz', team: 'B', goals: 1, weeklyMVP: false },
-            { playerId: 'talha_bulbul', team: 'B', goals: 0, weeklyMVP: false },
-            
-
-
-        ]
-    },
-];
-
-// HAFTANIN ADAMI SİSTEMİ
-const weeklyHeroes = [
-    // Her hafta için haftanın adamı ve istatistikleri
-    {
-        week: 1, // Hafta numarası
-        date: '22.10.2025', // Hafta tarihi
-        playerId: 'ridvan_gumus', // Haftanın adamının ID'si
-        playerName: 'Rıdvan GÜMÜŞ', // Haftanın adamının adı
-        note: 'Bu hafta sahada adeta kasırga gibiydi! 8 gol atarak takımını zafere taşıdı.', // Haftanın adamı notu
-
-    },
-    {
-        week: 2, // Hafta numarası
-        date: '27.10.2025', // Hafta tarihi
-        playerId: 'talha_bulbul', // Haftanın adamının ID'si
-        playerName: 'Talha BÜLBÜL', // Haftanın adamının adı
-        note: 'Çok iyi kalecilik yaptı! Kritik kurtarışlarıyla takımının galibiyetinde büyük pay sahibi oldu.', // Haftanın adamı notu
-
-    },
-    {
-        week: 3, // Hafta numarası
-        date: '29.10.2025', // Hafta tarihi
-        playerId: 'ensar_bulbul', // Haftanın adamının ID'si
-        playerName: 'Ensar BULBUL', // Haftanın adamının adı
-        note: 'Bu hafta savunmada çok iyi oynadı! Rakip forvetlere geçit vermedi.', // Haftanın adamı notu
-
-    },
-        {
-        week: 4, // Hafta numarası
-        date: '03.11.2025', // Hafta tarihi
-        playerId: 'huseyincan_yuksekdag', // Haftanın adamının ID'si
-        playerName: 'HüseyinCAN YÜKSEKDAĞ', // Haftanın adamının adı
-        note: 'Çok iyi kalecilik yaptı! Kritik kurtarışlarıyla takımının galibiyetinde büyük pay sahibi oldu.', // Haftanın adamı notu
-
-    },
-        {
-        week: 5, // Hafta numarası
-        date: '06.11.2025', // Hafta tarihi
-        playerId: 'fatih_atalay', // Haftanın adamının ID'si
-        playerName: 'Fatih Atalay', // Haftanın adamının adı
-        note: 'Yaptığı Teknik paslar ve kurduğu oyunla takımını zafere taşıdı...', // Haftanın adamı notu
-        
-    },
-            {
-        week: 6, // Hafta numarası
-        date: '12.11.2025', // Hafta tarihi
-        playerId: 'ridvan_gumus', // Haftanın adamının ID'si
-        playerName: 'Rıdvan GÜMÜŞ', // Haftanın adamının adı
-        note: 'Yaptığı Teknik paslar ve kurduğu oyunla takımını zafere taşıdı...', // Haftanın adamı notu
-
-    },
-
-  //              {
-  //      week: 7, // Hafta numarası
-   //     date: '19.11.2025', // Hafta tarihi
-   //     playerId: // 'onur_mustafa', // Haftanın adamının ID'si
-  ////      playerName: 'Onur Mustafa KÖSE', // Haftanın adamının adı
-   //     note: 'Öyle bir oynadı ki, rakipler maç bitince ‘biz niye geldik ?’ dedi...', // Haftanın adamı notu
- //   },
-                    {
-        week: 8, // Hafta numarası
-        date: '03.12.2025', // Hafta tarihi
-        playerId: 'huseyincan_yuksekdag', // Haftanın adamının ID'si
-        playerName: 'HüseyinCAN YÜKSEKDAĞ', // Haftanın adamının adı
-        note: 'Hem kalede Hem oyunda Ahmetin kocası oldu...', // Haftanın adamı notu
-    },
-];
-
-// SEZON SİSTEMİ
-// Sezonlar 3 ayda bir sıfırlanır
-// İlk sezon 1 Ocak 2026'da sona erecek
-const seasonSettings = {
-    startDate: '01.10.2025', // İlk sezonun başlangıç tarihi
-    seasonDurationMonths: 3, // Sezon süresi (ay)
-    resetDay: 1, // Her sezonun başladığı gün (ayın kaçında)
-    // Sıfırlama ayları: Ocak, Nisan, Temmuz, Ekim
-    resetMonths: [1, 4, 7, 10]
-};
-
-// Geçmiş sezonlar ve mevcut sezon verileri
-const seasons = {
-    current: {
         id: 1,
-        name: 'BereketMarket Sezonu',
-        startDate: '01.11.2025',
-        endDate: '31.12.2025',
-        status: 'active' // active, completed
+        date: 'GG.AA.YYYY',
+        teamAGoals: 0,
+        teamBGoals: 0,
+        macin_adami: 'oyuncu_id',
+        macin_adami_aciklama: 'Aciklama...',
+        esek_adam: 'oyuncu_id',
+        esek_adam_aciklama: 'Aciklama...',
+        performances: [
+            { playerId: 'oyuncu_id', team: 'A', goals: 0 },
+            { playerId: 'oyuncu_id', team: 'B', goals: 0 },
+        ]
     },
-    history: [
-        // Gelecekteki sezonlar buraya eklenecek
-        // {
-        //     id: 1,
-        //     name: 'Sezon 1',
-        //     startDate: '01.11.2025',
-        //     endDate: '01.01.2026',
-        //     status: 'completed',
-        //     finalStandings: [...], // Sezon sonu puan durumu
-        //     champion: 'playerId', // Şampiyon oyuncu
-        //     topScorer: 'playerId', // En golcü
-        //     mvpCount: { playerId: count } // MVP sayıları
-        // }
-    ]
-};
+    */
+];
 
-// Sıradaki Maç Kadrosu - Buradan düzenleyebilirsiniz
+// Siradaki Mac Kadrosu
 const nextMatchLineup = {
     teamA: [
-        'süleyman_yildirim', // Süleyman Yıldırım
-        'ensar_bulbul',        // Ensar Bülbül
-        'fatih_atalay',          // Fatih Atalay
-        'emre_erdal',        // Emre Erdal
-        'huseyincan_yuksekdag',    // Hüseyin Can Yüksekdağ
-        'seyfeddin_bulbul', // Seyfeddin Bülbül
-        'yakup_sunay',    // Yakup Sunay
-        'tayyip_erdogan_yilmaz',      // Tayyip Erdoğan Yılmaz
-        'ahmet_sadıkoglu',      // Ahmet Sadıkoğlu
+        'suleyman_yildirim',
+        'ensar_bulbul',
+        'fatih_atalay',
+        'emre_erdal',
+        'huseyincan_yuksekdag',
+        'seyfeddin_bulbul',
+        'yakup_sunay',
     ],
     teamB: [
-        // 'onur_mustafa',        // Onur Mustafa Köse
-        'mushap_karatas',      // Mushap Karataş
-        'furkan_yilmaz',      // Furkan Sevimli
-        'talha_bulbul',        // Talha Bülbül
-        'ibrahim_erdogdu',      // İbrahim Erdoğdu
-        'eren_yilmaz',        // Eren Yılmaz
-        'kadir_dogan',        // Kadir Doğan
-        'omer_erdal',        // Ömer Erdal
-        'orhan_sariaydin',      // Orhan Sarıaydın
+        'mushap_karatas',
+        'furkan_yilmaz',
+        'talha_bulbul',
+        'ibrahim_erdogdu',
+        'eren_yilmaz',
+        'omer_erdal',
+        'orhan_sariaydin',
     ]
 };

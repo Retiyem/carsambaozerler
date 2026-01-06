@@ -228,7 +228,7 @@ function createFullBackup() {
             matches: matches || [],
             seasonData: seasonData || {},
             upcomingMatches: upcomingMatches || [],
-            seasons: seasons || { current: '2025-2026', all: ['2025-2026'] }
+            seasons: { current: 'Sezon 2', all: ['Sezon 1', 'Sezon 2'] }
         },
         userData: createUserDataBackup(),
         settings: {

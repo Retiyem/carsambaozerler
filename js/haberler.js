@@ -7,20 +7,21 @@
 
 const newsData = [
     {
-        title: "MVP Seçimindeki Büyük Mücadelede Kazanan Emre Erdal Oldu!",
-        description: " 12-6 biten mücadelede Maçın mvp si 'Emre mi? Süleyman mı ?' olacak sorusu uzun süre tartışıldı. Ancak sonunda Emre Erdal, Defans performansıyla rakip forvetlerin umudunu kırarak takımını zafere taşıdı. 'Onu geçmeye çalışan forvetler bile ona hayrandı...' diyerek başarısını taçlandırdı.",
-        images: ["img/Haber/Haber_1.jpg", "img/Haber/Haber_1.1.jpg"], 
-        date: "15.12.2025"
+        title: "Kral tacını bıraktı maçlara ara verdi !!",
+        description: " Her maçta olduğu gibi son oynadığı maçta takımını sırtlayan Onur, Kendi takımı tarafından ihanete uğradı. Rakip defansı adeta dans ettiren Onur, takım arkadaşlarının başarısızlığı sebebiyle macı kaybetti. Takım arkadaşları ve taraftarlar arasında büyük bir şaşkınlık yaratan bu olay, futbol tarihine geçecek türden...",
+        image: "img/Haber/Haber_1.jpg",
+       //images: ["img/Haber/Haber_1.jpg", "img/Haber/Haber_1.1.jpg"], 
+        date: "06.01.2026"
     },
     {
-        title: "LİGİN LİDERİ EŞŞEK SEÇİLDİ !",
-        description: "Ensar Bulbul, son maçta  aldığı zaferle  ligdeki liderliğini perçinledi. Boş kaleye gol atamamak gibi zorlu bir görevi başarıyla yerine getiren Ensar, takımının galibiyetinde hiçbir katkıda bulunmadı.Tek iyi haber bel fıtığı atmaması oldu...",
+        title: " ENSAR Super Ligin Sampiyonu oldu!",
+        description: " Ensar Bülbül, lig boyunca gösterdiği üstün performansla kendini şampiyonluğa taşıdı. Sürekli Eşşek seçilmesiyle , Defanstaki sağlam duruşu ve kritik müdahaleleriyle tanınan Ensar, sezon boyunca rakip forvetlere geçit vermedi. 'Takım oyunu her şeyden önemli.' diyen Ensar, bu başarının arkasında yatan en büyük etkenin takım ruhu olduğunu belirtti...",
         image: "img/Haber/Haber_2.jpg",
         date: "15.12.2025"
     },
     {
-        title: "Ahmet Liderliği kaybetti!",
-        description: " Ahmet Sadıkoğlu , son maçta aldığı mağlubiyetle ligdeki liderliğini kaybetti. Takımının performansı hayal kırıklığı yaratırken, Ahmet'in stratejileri de sorgulanmaya başlandı. 'Yapı var.' gibi açıklamalarda bulunan ahmet ligde 3. sıraya geriledi...",
+        title: "Herkes Can'a özeniyor !",
+        description: " Yönetim kurulu Başkanımız Sn Onur mustafa KÖSE'nin grupta yapmış olduğu bir ankette herkesin kendini canla kıyasladığını ve Can gibi olmak istediğini farketti. Can Atılgan'ın saha içindeki liderliği, soğukkanlılığı ve kritik anlarda yaptığı müdahaleler, takım arkadaşları ve rakipler tarafından büyük bir saygı görüyor. Can, 'Her zaman elimden gelenin en iyisini yapmaya çalışıyorum. Takımım için buradayım ve onlara liderlik etmek benim için bir onur.' dedi...",
         image: "img/Haber/Haber_3.jpg",
         date: "15.12.2025"
     },

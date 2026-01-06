@@ -10,9 +10,26 @@ function getPlayerNameById(playerId) {
 
 const MIN_MATCHES_THRESHOLD_GLOBAL = 5;
 
+// Oyuncunun temel güç ortalamasını hesapla (fizik, bitiricilik, teknik, oyunOkuma, dayaniklilik)
+function getPlayerBasePower(playerId) {
+    const player = players.find(p => p.id === playerId);
+    if (!player) return 50;
+    
+    const fizik = player.fizik || 50;
+    const bitiricilik = player.bitiricilik || 50;
+    const teknik = player.teknik || 50;
+    const oyunOkuma = player.oyunOkuma || 50;
+    const dayaniklilik = player.dayaniklilik || 50;
+    
+    return Math.round((fizik + bitiricilik + teknik + oyunOkuma + dayaniklilik) / 5);
+}
+
 function calculatePlayerPowerGlobal(playerId) {
+    // Oyuncunun temel güç değerlerini al
+    const basePower = getPlayerBasePower(playerId);
+    
     if (!matches || matches.length === 0) {
-        return 50;
+        return basePower;
     }
     
     // Oyuncunun mevkisini bul
@@ -65,7 +82,7 @@ function calculatePlayerPowerGlobal(playerId) {
     });
     
     if (totalMatches === 0) {
-        return 50;
+        return basePower;
     }
     
     // === MEVKİ BAZLI HESAPLAMA ===
@@ -243,43 +260,8 @@ function renderHistoricalSeasons() {
     
     if (!historicalSection || !historicalContent) return;
     
-    if (seasons.history && seasons.history.length > 0) {
-        historicalSection.style.display = 'block';
-        
-        let historyHTML = '';
-        seasons.history.forEach(season => {
-            historyHTML += `
-                <div class="season-card">
-                    <div class="season-card-header">
-                        <h3 class="season-card-title">${season.name}</h3>
-                        <span class="season-period">${season.startDate} - ${season.endDate}</span>
-                    </div>
-                    <div class="season-summary">
-                        <div class="summary-item">
-                            <div class="summary-label">Şampiyon</div>
-                            <div class="summary-value">${getPlayerNameById(season.champion) || 'Bilinmeyen'}</div>
-                        </div>
-                        <div class="summary-item">
-                            <div class="summary-label">En Golcü</div>
-                            <div class="summary-value">${getPlayerNameById(season.topScorer) || 'Bilinmeyen'}</div>
-                        </div>
-                        <div class="summary-item">
-                            <div class="summary-label">Toplam Maç</div>
-                            <div class="summary-value">${season.totalMatches || 0}</div>
-                        </div>
-                        <div class="summary-item">
-                            <div class="summary-label">Toplam Gol</div>
-                            <div class="summary-value">${season.totalGoals || 0}</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        
-        historicalContent.innerHTML = historyHTML;
-    } else {
-        historicalSection.style.display = 'none';
-    }
+    // Şu an geçmiş sezon yok, sadece gizle
+    historicalSection.style.display = 'none';
 }
 
 // Maç sonuçları tablosunu HTML'e yerleştirir
@@ -1639,14 +1621,12 @@ function getCurrentSeason() {
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth() + 1; // getMonth() 0-indexed
     
-    // Sezon 1: 1 Kasım 2025 - 31 Aralık 2025 (özel kısa sezon)
-    // Sonraki sezonlar: Her 3 ayda bir (Ocak, Nisan, Temmuz, Ekim)
+    // Sezon 2: Ocak 2026'dan itibaren başladı
+    // Her 3 ayda bir sezon değişiyor (Ocak, Nisan, Temmuz, Ekim)
     let seasonEndDate;
+    let seasonName = 'Sezon 2';
     
-    if (currentYear === 2025 && currentMonth >= 11) {
-        // İlk sezon: 31 Aralık 2025'te bitiyor
-        seasonEndDate = new Date(2025, 11, 31); // 31 Aralık 2025
-    } else if (currentMonth >= 1 && currentMonth < 4) {
+    if (currentMonth >= 1 && currentMonth < 4) {
         // Ocak-Mart: 31 Mart'ta bitiyor
         seasonEndDate = new Date(currentYear, 2, 31); // 31 Mart
     } else if (currentMonth >= 4 && currentMonth < 7) {
@@ -1661,7 +1641,7 @@ function getCurrentSeason() {
     }
     
     return {
-        currentSeason: seasons.current,
+        currentSeason: { name: seasonName },
         seasonEndDate: seasonEndDate,
         isSeasonActive: currentDate < seasonEndDate
     };
