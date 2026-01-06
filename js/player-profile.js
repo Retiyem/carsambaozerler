@@ -98,12 +98,23 @@ function getPowerClassProfile(power) {
 
 // Oyuncu güç skoru hesaplama (profil sayfası için)
 function calculatePlayerPowerProfile(playerId) {
+    // Oyuncunun temel güç değerlerini al
+    const player = players.find(p => p.id === playerId);
+    if (!player) return 50;
+    
+    const fizik = player.fizik || 50;
+    const bitiricilik = player.bitiricilik || 50;
+    const teknik = player.teknik || 50;
+    const oyunOkuma = player.oyunOkuma || 50;
+    const dayaniklilik = player.dayaniklilik || 50;
+    
+    const basePower = Math.round((fizik + bitiricilik + teknik + oyunOkuma + dayaniklilik) / 5);
+    
     if (!matches || matches.length === 0) {
-        return 50;
+        return basePower;
     }
     
     // Oyuncunun mevkisini bul
-    const player = players.find(p => p.id === playerId);
     const position = player ? player.mevki : 'Orta Saha';
     
     let totalMatches = 0;
@@ -149,7 +160,7 @@ function calculatePlayerPowerProfile(playerId) {
     });
     
     if (totalMatches === 0) {
-        return 50;
+        return basePower;
     }
     
     // === MEVKİ BAZLI HESAPLAMA ===

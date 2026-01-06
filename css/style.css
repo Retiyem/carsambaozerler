@@ -693,6 +693,43 @@ footer {
     font-weight: 500;
 }
 
+/* Önceki Sezon Şampiyonu */
+.previous-champion {
+    padding: 15px 25px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.champion-text {
+    margin: 0;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.champion-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.champion-name {
+    color: #FFD700;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 215, 0, 0.3);
+    animation: golden-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes golden-glow {
+    from {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+    to {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4);
+    }
+}
+
 /* Geçmiş Sezonlar */
 .historical-seasons {
     margin-top: 30px;
@@ -3279,7 +3316,6 @@ footer {
     .player.forvet {
         bottom: 285px;
     }
-}
 
 /* ===================================
    SEZON ŞAMPİYONU STİLLERİ - ULTRA PREMIUM
