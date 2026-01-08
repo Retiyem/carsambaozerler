@@ -557,6 +557,33 @@ tr.rank-1:hover, tr.rank-2:hover, tr.rank-3:hover {
     text-align: center;
     font-weight: bold;
     font-size: 1.1em;
+    position: relative;
+}
+
+/* Güç Değişikliği Badge */
+.power-change-badge {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 2px 5px;
+    border-radius: 3px;
+    line-height: 1;
+    z-index: 10;
+    white-space: nowrap;
+}
+
+.power-change-badge.positive {
+    background: #10b981;
+    color: white;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
+}
+
+.power-change-badge.negative {
+    background: #ef4444;
+    color: white;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
 }
 
 /* Güç Seviyelerine Göre Renkler */
