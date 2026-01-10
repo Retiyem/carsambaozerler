@@ -40,6 +40,21 @@
     <main class="container">
         <section class="match-history glassmorphism-card animate-fade-in">
             <h2 class="section-title">Geçmiş Maçlar <span class="icon">📅</span></h2>
+            
+            <!-- Sezon Seçme Butonları -->
+            <div class="season-selector">
+                <button class="season-btn" data-season="1" id="season1-btn">
+                    <span class="season-icon">🏆</span>
+                    1. Sezon
+                    <span class="season-info">(Ekim - Aralık 2025)</span>
+                </button>
+                <button class="season-btn active" data-season="2" id="season2-btn">
+                    <span class="season-icon">⚽</span>
+                    2. Sezon
+                    <span class="season-info">(Ocak 2026 - Devam)</span>
+                </button>
+            </div>
+            
             <div class="table-container">
                 <table id="match-results-table">
                     <thead>
@@ -47,7 +62,6 @@
                             <th>Tarih</th>
                             <th>Takım A</th>
                             <th>Takım B</th>
-                            <th>Skor</th>
                             <th>Kazanan</th>
                             <th>Detay</th>
                         </tr>
@@ -71,6 +85,7 @@
         </div>
     </footer>
 
+    <script src="js/Sezon1.js"></script>
     <script src="js/data.js"></script>
     <script src="js/enhanced-data.js"></script>
     <script src="js/script.js"></script>

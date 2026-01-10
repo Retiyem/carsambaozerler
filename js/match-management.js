@@ -1,5 +1,160 @@
 // MAÇ YÖNETİMİ VE GELİŞMİŞ ÖZELLİKLER
 
+// Aktif sezon (varsayılan: 2. Sezon)
+let currentSeason = 2;
+
+// Sezon değiştirme fonksiyonu
+function changeSeason(season) {
+    currentSeason = season;
+    
+    // Buton aktiflik durumunu güncelle
+    document.querySelectorAll('.season-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`[data-season="${season}"]`)?.classList.add('active');
+    
+    // Maç tablosunu güncelle
+    updateMatchTable(season);
+}
+
+// Maç tablosunu güncelle
+function updateMatchTable(season) {
+    const tbody = document.querySelector('#match-results-table tbody');
+    if (!tbody) return;
+    
+    // Sezona göre maç verisini seç
+    let matchData;
+    if (season === 1) {
+        matchData = typeof season1Matches !== 'undefined' ? season1Matches : [];
+    } else {
+        matchData = typeof matches !== 'undefined' ? matches : [];
+    }
+    
+    // Tabloyu temizle
+    tbody.innerHTML = '';
+    
+    if (matchData.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 40px; color: #999;">
+                    Bu sezona ait maç verisi bulunmuyor.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+    
+    // Maçları ters sırala (en son maç en üstte)
+    const sortedMatches = [...matchData].reverse();
+    
+    sortedMatches.forEach(match => {
+        const row = document.createElement('tr');
+        row.setAttribute('data-match-id', match.id);
+        row.setAttribute('data-season', season);
+        
+        // Kazananı belirle
+        let winner = 'Berabere';
+        let winnerClass = '';
+        if (match.teamAGoals > match.teamBGoals) {
+            winner = 'Takım A';
+            winnerClass = 'winner-a';
+        } else if (match.teamBGoals > match.teamAGoals) {
+            winner = 'Takım B';
+            winnerClass = 'winner-b';
+        }
+        
+        // Takım A oyuncuları
+        const teamAPlayers = match.performances
+            .filter(p => p.team === 'A')
+            .map(p => {
+                const player = players.find(pl => pl.id === p.playerId);
+                return player ? player.name.split(' ')[0] : p.playerId;
+            })
+            .slice(0, 3)
+            .join(', ');
+        
+        // Takım B oyuncuları
+        const teamBPlayers = match.performances
+            .filter(p => p.team === 'B')
+            .map(p => {
+                const player = players.find(pl => pl.id === p.playerId);
+                return player ? player.name.split(' ')[0] : p.playerId;
+            })
+            .slice(0, 3)
+            .join(', ');
+        
+        row.innerHTML = `
+            <td>${match.date}</td>
+            <td class="team-cell">
+                <div class="team-info">
+                    <span class="team-name" title="${teamAPlayers}...">Takım A</span>
+                    <span class="team-score ${match.teamAGoals > match.teamBGoals ? 'winner' : ''}">${match.teamAGoals}</span>
+                </div>
+            </td>
+            <td class="team-cell">
+                <div class="team-info">
+                    <span class="team-name" title="${teamBPlayers}...">Takım B</span>
+                    <span class="team-score ${match.teamBGoals > match.teamAGoals ? 'winner' : ''}">${match.teamBGoals}</span>
+                </div>
+            </td>
+            <td class="${winnerClass}">${winner}</td>
+            <td><button class="detail-btn" onclick="openMatchDetail('${match.id}', ${season})">📋 Detay</button></td>
+        `;
+        
+        tbody.appendChild(row);
+    });
+}
+
+// Sezon butonları event listener
+function initSeasonButtons() {
+    const season1Btn = document.getElementById('season1-btn');
+    const season2Btn = document.getElementById('season2-btn');
+    
+    if (season1Btn) {
+        season1Btn.addEventListener('click', () => changeSeason(1));
+    }
+    if (season2Btn) {
+        season2Btn.addEventListener('click', () => changeSeason(2));
+    }
+    
+    // Varsayılan olarak 2. sezon maçlarını yükle
+    updateMatchTable(2);
+}
+
+// Maç detayını aç (sezon parametresi ile)
+function openMatchDetail(matchId, season) {
+    let matchData;
+    if (season === 1) {
+        matchData = typeof season1Matches !== 'undefined' ? season1Matches : [];
+    } else {
+        matchData = typeof matches !== 'undefined' ? matches : [];
+    }
+    
+    const match = matchData.find(m => m.id === matchId || m.id.toString() === matchId.toString());
+    if (!match) {
+        console.log('Maç bulunamadı:', matchId, 'Sezon:', season);
+        return;
+    }
+    
+    // Modal'ı DOM'a ekle (henüz yoksa)
+    if (!document.getElementById('match-detail-modal')) {
+        document.body.insertAdjacentHTML('beforeend', matchDetailModalHTML);
+    }
+    
+    // Modal verilerini doldur
+    populateMatchDetailModal(match);
+    
+    // Modal'ı göster
+    const modal = document.getElementById('match-detail-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    
+    // Animasyon
+    setTimeout(() => {
+        modal.classList.add('active');
+    }, 10);
+}
+
 // Gelecek maçlar HTML'i ana sayfaya eklenecek
 const upcomingMatchesHTML = `
     <section class="upcoming-matches glassmorphism-card animate-fade-in">
@@ -37,7 +192,25 @@ const matchDetailModalHTML = `
                         <div class="match-meta">
                             <p><strong>Tarih:</strong> <span id="modal-match-date">-</span></p>
                             <p><strong>Kazanan:</strong> <span id="modal-match-winner">-</span></p>
-                            <p><strong>MVP:</strong> <span id="modal-match-mvp">-</span></p>
+                        </div>
+                        
+                        <div class="match-awards">
+                            <div class="award-card mvp-card">
+                                <span class="award-icon">🏆</span>
+                                <div class="award-info">
+                                    <span class="award-title">Maçın Adamı</span>
+                                    <span class="award-name" id="modal-match-mvp">-</span>
+                                    <span class="award-desc" id="modal-mvp-desc">-</span>
+                                </div>
+                            </div>
+                            <div class="award-card esek-card">
+                                <span class="award-icon">🫏</span>
+                                <div class="award-info">
+                                    <span class="award-title">Maçın Eşşeği</span>
+                                    <span class="award-name" id="modal-match-esek">-</span>
+                                    <span class="award-desc" id="modal-esek-desc">-</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -194,7 +367,7 @@ function createUpcomingMatchCard(match) {
 
 // Takım gücü hesaplama
 function calculateTeamStrength(teamPlayerIds) {
-    if (!Array.isArray(teamPlayerIds) || typeof enhancedPlayers === 'undefined') {
+    if (!Array.isArray(teamPlayerIds) || teamPlayerIds.length === 0) {
         return 75; // Default değer
     }
     
@@ -202,13 +375,26 @@ function calculateTeamStrength(teamPlayerIds) {
     let playerCount = 0;
     
     teamPlayerIds.forEach(playerId => {
-        const player = enhancedPlayers.find(p => p.id === playerId);
-        if (player && player.rating) {
-            totalRating += player.rating;
+        // Önce players dizisinden ara (stats verileri burada)
+        const player = typeof players !== 'undefined' ? players.find(p => p.id === playerId) : null;
+        
+        if (player && player.fizik) {
+            // Oyuncunun 5 stat'ının ortalamasını al
+            const avgRating = Math.round(
+                (player.fizik + player.bitiricilik + player.teknik + player.oyunOkuma + player.dayaniklilik) / 5
+            );
+            totalRating += avgRating;
             playerCount++;
         } else {
-            totalRating += 75; // Default rating
-            playerCount++;
+            // Eğer player bulunamazsa enhancedPlayers'a bak
+            const enhancedPlayer = typeof enhancedPlayers !== 'undefined' ? enhancedPlayers.find(p => p.id === playerId) : null;
+            if (enhancedPlayer && enhancedPlayer.rating) {
+                totalRating += enhancedPlayer.rating;
+                playerCount++;
+            } else {
+                totalRating += 75; // Default rating
+                playerCount++;
+            }
         }
     });
     
@@ -253,16 +439,33 @@ function startCountdowns() {
 }
 
 // Maç detay modalını aç
-// MODAL FONKSİYONLARI - DEVRE DIŞI BIRAKILDI
-
-function openMatchDetailModal(matchId) {
-    // Modal özelliği kaldırıldı
+function openMatchDetailModal(element) {
+    // Butondan veya direkt ID ile çağrılabilir
+    let matchId, season;
     
-    return;
+    if (element && element.dataset) {
+        matchId = element.dataset.matchId;
+        season = parseInt(element.dataset.season);
+    } else if (typeof element === 'string') {
+        matchId = element;
+        season = currentSeason;
+    }
     
-    /*
-    const match = matches.find(m => m.id == matchId);
-    if (!match) return;
+    if (!matchId) return;
+    
+    // Sezona göre maç verisini seç
+    let matchData;
+    if (season === 1) {
+        matchData = typeof season1Matches !== 'undefined' ? season1Matches : [];
+    } else {
+        matchData = typeof matches !== 'undefined' ? matches : [];
+    }
+    
+    const match = matchData.find(m => m.id === matchId || m.id.toString() === matchId.toString());
+    if (!match) {
+        console.log('Maç bulunamadı:', matchId);
+        return;
+    }
     
     // Modal'ı DOM'a ekle (henüz yoksa)
     if (!document.getElementById('match-detail-modal')) {
@@ -281,7 +484,6 @@ function openMatchDetailModal(matchId) {
     setTimeout(() => {
         modal.classList.add('active');
     }, 10);
-    */
 }
 
 // Maç detay modalını doldur
@@ -298,10 +500,25 @@ function populateMatchDetailModal(match) {
     else if (match.teamBGoals > match.teamAGoals) winner = 'Takım B';
     document.getElementById('modal-match-winner').textContent = winner;
     
-    // MVP
-    const mvpPerformance = match.performances.find(p => p.mvp);
-    const mvpName = mvpPerformance ? getPlayerNameById(mvpPerformance.playerId) : 'Yok';
+    // MVP (Maçın Adamı)
+    let mvpName = 'Belirlenmedi';
+    let mvpDesc = '';
+    if (match.macin_adami) {
+        mvpName = getPlayerNameById(match.macin_adami);
+        mvpDesc = match.macin_adami_aciklama || '';
+    }
     document.getElementById('modal-match-mvp').textContent = mvpName;
+    document.getElementById('modal-mvp-desc').textContent = mvpDesc;
+    
+    // Eşşek (Maçın Eşşeği)
+    let esekName = 'Belirlenmedi';
+    let esekDesc = '';
+    if (match.esek_adam) {
+        esekName = getPlayerNameById(match.esek_adam);
+        esekDesc = match.esek_adam_aciklama || '';
+    }
+    document.getElementById('modal-match-esek').textContent = esekName;
+    document.getElementById('modal-esek-desc').textContent = esekDesc;
     
     // Takım güçleri
     const teamAPlayers = match.performances.filter(p => p.team === 'A').map(p => p.playerId);
@@ -375,11 +592,6 @@ function switchPerformanceTab(team) {
 
 // Maç detay modalını kapat
 function closeMatchDetailModal() {
-    // Modal özelliği kaldırıldı
-    
-    return;
-    
-    /*
     const modal = document.getElementById('match-detail-modal');
     if (!modal) return;
     
@@ -388,7 +600,6 @@ function closeMatchDetailModal() {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
     }, 300);
-    */
 }
 
 // Tarih formatla
@@ -451,3 +662,15 @@ window.closeMatchDetailModal = closeMatchDetailModal;
 window.switchPerformanceTab = switchPerformanceTab;
 window.calculateTeamStrength = calculateTeamStrength;
 window.addMatchClickEvents = addMatchClickEvents;
+window.changeSeason = changeSeason;
+window.updateMatchTable = updateMatchTable;
+window.initSeasonButtons = initSeasonButtons;
+window.openMatchDetail = openMatchDetail;
+
+// Sayfa yüklendiğinde sezon butonlarını başlat
+document.addEventListener('DOMContentLoaded', function() {
+    // Sezon butonları varsa başlat
+    if (document.querySelector('.season-selector')) {
+        initSeasonButtons();
+    }
+});

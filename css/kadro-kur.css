@@ -314,8 +314,22 @@
     }
 }
 
-.selected-player-item .player-name {
+.selected-player-item .player-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
     flex: 1;
+}
+
+.selected-player-item .player-name {
+    font-weight: 600;
+}
+
+.player-position-small {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    opacity: 0.7;
+    font-style: italic;
 }
 
 .guest-badge {
@@ -634,6 +648,158 @@
     .selected-players-panel {
         min-height: auto;
     }
+}
+
+/* Skor Tahmini Stilleri - Ana sayfadan kopyalandı */
+.score-prediction-container {
+    margin-top: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(15, 76, 117, 0.3), rgba(224, 123, 57, 0.2));
+    border-radius: 15px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    text-align: center;
+}
+
+.prediction-title {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    color: #FFD700;
+    font-weight: 600;
+}
+
+.score-prediction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.prediction-score-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+}
+
+.prediction-team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 25px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    min-width: 120px;
+}
+
+.prediction-team-name {
+    font-size: 14px;
+    color: #CCCCCC;
+    margin-bottom: 8px;
+}
+
+.prediction-score {
+    font-size: 42px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.prediction-details {
+    width: 100%;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.prediction-stats {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.prediction-stat {
+    text-align: center;
+    padding: 10px;
+}
+
+.prediction-stat-label {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 5px;
+}
+
+.prediction-stat-value {
+    font-size: 16px;
+    color: #FFD700;
+    font-weight: 600;
+}
+
+.prediction-confidence {
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.confidence-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.confidence-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FFD700, #FFA500);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.confidence-text {
+    font-size: 12px;
+    color: #CCCCCC;
+}
+
+.top-scorers-prediction {
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.top-scorers-title {
+    font-size: 12px;
+    color: #FFD700;
+    margin-bottom: 8px;
+}
+
+.top-scorer-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 12px;
+    color: #CCCCCC;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.top-scorer-item:last-child {
+    border-bottom: none;
+}
+
+.scorer-name {
+    flex: 1;
+}
+
+.scorer-prediction {
+    color: #FFD700;
+    font-weight: 600;
 }
 
 @media (max-width: 768px) {

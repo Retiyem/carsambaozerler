@@ -781,6 +781,7 @@ window.addEventListener('load', function() {
 
 /**
  * Oyuncunun gol ortalamasını hesaplar (Skor tahmini için)
+ * Hem 2. sezon hem de 1. sezon maçlarını dahil eder
  * @param {string} playerId - Oyuncu ID'si
  * @returns {Object} - {goalsPerMatch, totalGoals, totalMatches, mvpCount}
  */
@@ -789,7 +790,10 @@ function calculatePlayerGoalStats(playerId) {
     let totalMatches = 0;
     let mvpCount = 0;
     
-    matches.forEach(match => {
+    // Tüm maçları birleştir (hem güncel sezon hem eski sezon)
+    const allMatches = [...(previousSeasonMatches || []), ...matches];
+    
+    allMatches.forEach(match => {
         const performance = match.performances.find(p => p.playerId === playerId);
         if (performance) {
             totalGoals += performance.goals;
@@ -812,6 +816,7 @@ function calculatePlayerGoalStats(playerId) {
 
 /**
  * Oyuncunun belirli rakiplere karşı performansını hesaplar
+ * Hem 2. sezon hem de 1. sezon maçlarını dahil eder
  * @param {string} playerId - Oyuncu ID'si
  * @param {Array} opponentIds - Rakip oyuncu ID'leri
  * @returns {Object} - {goalsAgainstOpponents, matchesAgainstOpponents, avgGoalsVsOpponents}
@@ -820,7 +825,10 @@ function calculatePerformanceVsOpponents(playerId, opponentIds) {
     let goalsAgainstOpponents = 0;
     let matchesAgainstOpponents = 0;
     
-    matches.forEach(match => {
+    // Tüm maçları birleştir (hem güncel sezon hem eski sezon)
+    const allMatches = [...(previousSeasonMatches || []), ...matches];
+    
+    allMatches.forEach(match => {
         const playerPerf = match.performances.find(p => p.playerId === playerId);
         if (!playerPerf) return;
         
@@ -852,6 +860,7 @@ function calculatePerformanceVsOpponents(playerId, opponentIds) {
 
 /**
  * Oyuncunun belirli takım arkadaşlarıyla performansını hesaplar
+ * Hem 2. sezon hem de 1. sezon maçlarını dahil eder
  * @param {string} playerId - Oyuncu ID'si
  * @param {Array} teammateIds - Takım arkadaşı ID'leri
  * @returns {Object} - {goalsWithTeammates, matchesWithTeammates, avgGoalsWithTeammates}
@@ -860,7 +869,10 @@ function calculatePerformanceWithTeammates(playerId, teammateIds) {
     let goalsWithTeammates = 0;
     let matchesWithTeammates = 0;
     
-    matches.forEach(match => {
+    // Tüm maçları birleştir (hem güncel sezon hem eski sezon)
+    const allMatches = [...(previousSeasonMatches || []), ...matches];
+    
+    allMatches.forEach(match => {
         const playerPerf = match.performances.find(p => p.playerId === playerId);
         if (!playerPerf) return;
         
@@ -907,7 +919,7 @@ function getPositionMultiplier(mevki) {
 
 
 /**
- * Takımın tahmini gol sayısını hesaplar (Rakip analizi + Takım arkadaşı uyumu dahil)
+ * Takımın tahmini gol sayısını hesaplar (Rakip analizi + Takım arkadaşı uyumu + Oyuncu gücü dahil)
  * @param {Array} teamPlayerIds - Takım oyuncu ID'leri
  * @param {Array} opponentIds - Rakip takım oyuncu ID'leri
  * @returns {Object} - {predictedGoals, topScorers, teamStrength}
@@ -932,17 +944,37 @@ function calculateTeamPrediction(teamPlayerIds, opponentIds) {
         // Takım arkadaşı uyumu - Bu takım arkadaşlarıyla nasıl oynadı?
         const withTeammates = calculatePerformanceWithTeammates(playerId, teamPlayerIds.filter(id => id !== playerId));
         
-        // Tahmini gol hesaplama
-        let playerPrediction = stats.goalsPerMatch; // Temel: genel gol ortalaması
+        // Oyuncu gücü hesapla (base stats)
+        const playerPower = Math.round((player.fizik + player.bitiricilik + player.teknik + player.oyunOkuma + player.dayaniklilik) / 5);
+        
+        // Güç bazlı temel tahmin (0-3 gol arası, güce göre normalize)
+        // 50 güç = 0.5 gol, 85 güç = 1.7 gol, 95 güç = 2.4 gol potansiyeli
+        const powerBasedPrediction = (playerPower / 100) * 2.5;
+        
+        // Performans bazlı tahmin (geçmiş gol ortalaması)
+        let performanceBasedPrediction = stats.goalsPerMatch;
         
         // Rakip analizi etkisi (%40 ağırlık - eğer veri varsa)
         if (vsOpponents.avgGoalsVsOpponents !== null && vsOpponents.matchesAgainstOpponents >= 2) {
-            playerPrediction = (playerPrediction * 0.6) + (vsOpponents.avgGoalsVsOpponents * 0.4);
+            performanceBasedPrediction = (performanceBasedPrediction * 0.6) + (vsOpponents.avgGoalsVsOpponents * 0.4);
         }
         
         // Takım arkadaşı uyumu etkisi (%30 ağırlık - eğer veri varsa)
         if (withTeammates.avgGoalsWithTeammates !== null && withTeammates.matchesWithTeammates >= 2) {
-            playerPrediction = (playerPrediction * 0.7) + (withTeammates.avgGoalsWithTeammates * 0.3);
+            performanceBasedPrediction = (performanceBasedPrediction * 0.7) + (withTeammates.avgGoalsWithTeammates * 0.3);
+        }
+        
+        // Hibrit tahmin: Güç ve performansı dengeli birleştir
+        let playerPrediction;
+        if (stats.totalMatches >= 5) {
+            // Çok maç deneyimi varsa: %60 performans, %40 güç
+            playerPrediction = (performanceBasedPrediction * 0.6) + (powerBasedPrediction * 0.4);
+        } else if (stats.totalMatches >= 2) {
+            // Orta deneyim: %50 performans, %50 güç
+            playerPrediction = (performanceBasedPrediction * 0.5) + (powerBasedPrediction * 0.5);
+        } else {
+            // Az deneyim: %30 performans, %70 güç (güce daha çok güven)
+            playerPrediction = (performanceBasedPrediction * 0.3) + (powerBasedPrediction * 0.7);
         }
         
         // Mevki çarpanı uygula
@@ -964,6 +996,7 @@ function calculateTeamPrediction(teamPlayerIds, opponentIds) {
             name: player.name,
             prediction: playerPrediction,
             goalsPerMatch: stats.goalsPerMatch,
+            playerPower: playerPower,
             vsOpponentsAvg: vsOpponents.avgGoalsVsOpponents,
             vsOpponentsMatches: vsOpponents.matchesAgainstOpponents,
             withTeammatesAvg: withTeammates.avgGoalsWithTeammates,
@@ -992,8 +1025,11 @@ function displayScorePrediction() {
     const container = document.getElementById('score-prediction');
     if (!container) return;
     
+    // Toplam maç sayısını hesapla (hem eski sezon hem yeni sezon)
+    const totalMatchData = (previousSeasonMatches?.length || 0) + (matches?.length || 0);
+    
     // Maç verisi yoksa
-    if (!matches || matches.length === 0) {
+    if (totalMatchData === 0) {
         container.innerHTML = `
             <p style="color: #CCCCCC; text-align: center;">
                 Henüz yeterli maç verisi yok.<br>
@@ -1008,7 +1044,6 @@ function displayScorePrediction() {
     const teamBPrediction = calculateTeamPrediction(nextMatchLineup.teamB, nextMatchLineup.teamA);
     
     // Güven oranı hesapla (maç sayısına göre)
-    const totalMatchData = matches.length;
     const confidencePercent = Math.min(95, 30 + (totalMatchData * 5));
     
     // Kazanan tahmini (sonra güncellenecek)
@@ -1203,6 +1238,31 @@ function groupPlayersByPosition(teamPlayers) {
 }
 
 /**
+ * Oyuncu adını formatlar (Sadece ilk isim + soyadın baş harfi)
+ * Örnek: "Onur Mustafa KÖSE" -> "Onur K."
+ * Örnek: "Furkan SEVİMLİ" -> "Furkan S."
+ * Örnek: "Berkin Tayyip CERAN" -> "Berkin C."
+ * @param {string} fullName - Tam isim
+ * @returns {string} - Formatlanmış isim
+ */
+function formatPlayerName(fullName) {
+    const nameParts = fullName.trim().split(' ');
+    
+    if (nameParts.length === 1) {
+        // Tek isim (misafir vb.)
+        return nameParts[0];
+    } else {
+        // İki veya daha fazla kelime: İlk isim + soyadın baş harfi
+        // "Furkan SEVİMLİ" -> "Furkan S."
+        // "Onur Mustafa KÖSE" -> "Onur K."
+        // "Berkin Tayyip CERAN" -> "Berkin C."
+        const firstName = nameParts[0];
+        const lastName = nameParts[nameParts.length - 1];
+        return `${firstName} ${lastName.charAt(0)}.`;
+    }
+}
+
+/**
  * Oyuncu elementi oluşturur
  * @param {Object} player - Oyuncu verisi
  * @param {string} team - Takım ('A' veya 'B')
@@ -1215,13 +1275,33 @@ function createPlayerElement(player, team, mevki, index, mevkiCount) {
     const playerDiv = document.createElement('div');
     playerDiv.className = `player ${getMevkiClass(mevki)}`;
     
-    // Oyuncu adını kısalt - sadece ilk isim veya soyadı
-    let displayName = player.name.split(' ')[0];
-    if (displayName.length > 8) {
-        displayName = displayName.substring(0, 7) + '.';
-    }
+    // Fotoğraf elementi oluştur
+    const photoDiv = document.createElement('div');
+    photoDiv.className = 'player-photo';
     
-    playerDiv.textContent = displayName;
+    // Fotoğraf yolu - img/oyuncular/{player.id}.jpg
+    const photoImg = document.createElement('img');
+    photoImg.src = `img/oyuncular/${player.id}.jpg`;
+    photoImg.alt = player.name;
+    photoImg.onerror = function() {
+        // Fotoğraf yoksa baş harfleri göster
+        this.style.display = 'none';
+        const initials = player.name.split(' ').map(n => n[0]).join('').substring(0, 2);
+        photoDiv.textContent = initials;
+        photoDiv.classList.add('no-photo');
+    };
+    
+    photoDiv.appendChild(photoImg);
+    
+    // İsim elementi oluştur
+    const nameDiv = document.createElement('div');
+    nameDiv.className = 'player-name-label';
+    nameDiv.textContent = formatPlayerName(player.name);
+    
+    // Elementleri birleştir
+    playerDiv.appendChild(photoDiv);
+    playerDiv.appendChild(nameDiv);
+    
     playerDiv.dataset.playerId = player.id;
     playerDiv.dataset.team = team;
     playerDiv.title = player.name; // Tam isim tooltip olarak
@@ -1594,12 +1674,12 @@ function calculateCurrentSeasonPlayerStats() {
 
             // Attığı gol ve asistleri ekle
             stats.GF += performance.goals;
-
-            // MVP sayısını güncelle
-            if (performance.weeklyMVP) {
-                stats.MVP++;
-            }
         });
+
+        // MVP sayısını güncelle - macin_adami kontrolü ile
+        if (match.macin_adami && playerStats[match.macin_adami]) {
+            playerStats[match.macin_adami].MVP++;
+        }
 
         // Haftanın Eşşeği sayısını güncelle
         if (match.esek_adam && playerStats[match.esek_adam]) {

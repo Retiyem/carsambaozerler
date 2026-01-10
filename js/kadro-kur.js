@@ -289,8 +289,11 @@ function renderPlayerList() {
         const power = playerPowers[player.id] || 50;
         const isSelected = selectedPlayers.some(p => p.id === player.id);
         
+        // Seçili oyuncuları listeden gizle
+        if (isSelected) return;
+        
         const playerItem = document.createElement('div');
-        playerItem.className = `player-item ${isSelected ? 'selected' : ''}`;
+        playerItem.className = 'player-item';
         playerItem.dataset.playerId = player.id;
         playerItem.dataset.playerName = player.name.toLowerCase();
         
@@ -307,7 +310,7 @@ function renderPlayerList() {
             </div>
             <div class="player-power">${power}</div>
             <button class="btn-add-player" onclick="togglePlayerSelection('${player.id}')">
-                ${isSelected ? 'Çıkar' : 'Ekle'}
+                Ekle
             </button>
         `;
         
@@ -326,12 +329,13 @@ function togglePlayerSelection(playerId) {
         // Oyuncuyu çıkar
         selectedPlayers.splice(existingIndex, 1);
     } else {
-        // Oyuncuyu ekle
-        const power = calculatePlayerPower(playerId);
+        // Oyuncuyu ekle - data.js'den base stats'ı kullan
+        const basePower = Math.round((player.fizik + player.bitiricilik + player.teknik + player.oyunOkuma + player.dayaniklilik) / 5);
         selectedPlayers.push({
             id: player.id,
             name: player.name,
-            power: power,
+            mevki: player.mevki || 'Orta Saha',
+            power: basePower,
             isGuest: false
         });
     }
@@ -369,6 +373,7 @@ function renderSelectedPlayers() {
                     ${player.name}
                     ${player.isGuest ? '<span class="guest-badge">Misafir</span>' : ''}
                 </span>
+                <span class="player-position-small">${player.mevki || 'Orta Saha'}</span>
             </div>
             <span class="player-power">${player.power}</span>
             <button class="btn-remove-player" onclick="removeSelectedPlayer(${index})">
@@ -485,15 +490,34 @@ function updateCreateButton() {
     }
 }
 
-// Takımları oluştur
+// Takımları oluştur - Pozisyon ve Güç Dengeli
 function createTeams() {
     if (selectedPlayers.length < 4) {
         alert('En az 4 oyuncu seçmelisiniz!');
         return;
     }
     
-    // Oyuncuları güce göre sırala (yüksekten düşüğe)
-    const sortedPlayers = [...selectedPlayers].sort((a, b) => b.power - a.power);
+    // Oyuncuları pozisyonlara göre grupla
+    const positions = {
+        'Kaleci': [],
+        'Defans': [],
+        'Orta Saha': [],
+        'Forvet': []
+    };
+    
+    selectedPlayers.forEach(player => {
+        const pos = player.mevki || 'Orta Saha';
+        if (positions[pos]) {
+            positions[pos].push(player);
+        } else {
+            positions['Orta Saha'].push(player); // Bilinmeyen pozisyonlar orta sahaya
+        }
+    });
+    
+    // Her pozisyondaki oyuncuları güce göre sırala
+    Object.keys(positions).forEach(pos => {
+        positions[pos].sort((a, b) => b.power - a.power);
+    });
     
     // Takımları oluştur
     const teamA = [];
@@ -501,91 +525,114 @@ function createTeams() {
     let teamAPower = 0;
     let teamBPower = 0;
     
-    // Adil dağılım algoritması
-    // İlk iki oyuncu: 1. A'ya, 2. B'ye
-    // Sonraki oyuncular: Toplam gücü düşük olan takıma
-    sortedPlayers.forEach((player, index) => {
-        if (index === 0) {
-            // En güçlü oyuncu A'ya
-            teamA.push(player);
-            teamAPower += player.power;
-        } else if (index === 1) {
-            // İkinci güçlü B'ye
-            teamB.push(player);
-            teamBPower += player.power;
-        } else {
-            // Geri kalanlar: Toplam gücü düşük olana
-            if (teamAPower <= teamBPower) {
+    // Pozisyon dengeli dağıtım
+    // Her pozisyondan sırayla: 1. oyuncu A'ya, 2. oyuncu B'ye, 3. oyuncu gücü düşük olana...
+    Object.keys(positions).forEach(position => {
+        const posPlayers = positions[position];
+        
+        posPlayers.forEach((player, index) => {
+            if (index === 0) {
+                // İlk oyuncu A'ya
                 teamA.push(player);
                 teamAPower += player.power;
-            } else {
+            } else if (index === 1) {
+                // İkinci oyuncu B'ye
                 teamB.push(player);
                 teamBPower += player.power;
+            } else {
+                // Sonrakiler gücü düşük olan takıma
+                if (teamAPower <= teamBPower) {
+                    teamA.push(player);
+                    teamAPower += player.power;
+                } else {
+                    teamB.push(player);
+                    teamBPower += player.power;
+                }
             }
-        }
+        });
     });
     
     // Sonuçları göster
     displayTeams(teamA, teamB, teamAPower, teamBPower);
 }
 
-// Yeniden kadro kur (tamamen farklı dağılım)
+// Yeniden kadro kur (pozisyon dengeli rastgele dağılım)
 function regenerateTeams() {
     if (selectedPlayers.length < 4) {
         alert('En az 4 oyuncu seçmelisiniz!');
         return;
     }
     
-    // Oyuncuları karıştır (Fisher-Yates shuffle)
-    const shuffledPlayers = [...selectedPlayers];
-    for (let i = shuffledPlayers.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffledPlayers[i], shuffledPlayers[j]] = [shuffledPlayers[j], shuffledPlayers[i]];
-    }
+    // Oyuncuları pozisyonlara göre grupla
+    const positions = {
+        'Kaleci': [],
+        'Defans': [],
+        'Orta Saha': [],
+        'Forvet': []
+    };
     
-    // Karıştırılmış oyuncuları güce göre sırala
-    shuffledPlayers.sort((a, b) => b.power - a.power);
+    selectedPlayers.forEach(player => {
+        const pos = player.mevki || 'Orta Saha';
+        if (positions[pos]) {
+            positions[pos].push(player);
+        } else {
+            positions['Orta Saha'].push(player);
+        }
+    });
     
+    // Her pozisyondaki oyuncuları karıştır
+    Object.keys(positions).forEach(pos => {
+        const posPlayers = positions[pos];
+        // Fisher-Yates shuffle
+        for (let i = posPlayers.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [posPlayers[i], posPlayers[j]] = [posPlayers[j], posPlayers[i]];
+        }
+        // Güce göre sırala
+        posPlayers.sort((a, b) => b.power - a.power);
+    });
+    
+    // Takımları oluştur
     const teamA = [];
     const teamB = [];
     let teamAPower = 0;
     let teamBPower = 0;
     
-    // Rastgele başlangıç takımı
+    // Rastgele başlangıç
     const startWithB = Math.random() > 0.5;
     
-    // Her oyuncu için rastgele faktör ekleyerek dağıt
-    shuffledPlayers.forEach((player, index) => {
-        // İlk iki oyuncu için rastgele takım seçimi
-        if (index === 0) {
-            if (startWithB) {
-                teamB.push(player);
-                teamBPower += player.power;
+    // Her pozisyondan dengeli dağıt
+    Object.keys(positions).forEach(position => {
+        const posPlayers = positions[position];
+        
+        posPlayers.forEach((player, index) => {
+            if (index === 0) {
+                if (startWithB) {
+                    teamB.push(player);
+                    teamBPower += player.power;
+                } else {
+                    teamA.push(player);
+                    teamAPower += player.power;
+                }
+            } else if (index === 1) {
+                if (startWithB) {
+                    teamA.push(player);
+                    teamAPower += player.power;
+                } else {
+                    teamB.push(player);
+                    teamBPower += player.power;
+                }
             } else {
-                teamA.push(player);
-                teamAPower += player.power;
+                // Geri kalanlar gücü düşük olan takıma
+                if (teamAPower <= teamBPower) {
+                    teamA.push(player);
+                    teamAPower += player.power;
+                } else {
+                    teamB.push(player);
+                    teamBPower += player.power;
+                }
             }
-        } else if (index === 1) {
-            if (startWithB) {
-                teamA.push(player);
-                teamAPower += player.power;
-            } else {
-                teamB.push(player);
-                teamBPower += player.power;
-            }
-        } else {
-            // Diğer oyuncular için: Güç dengesine göre + rastgelelik
-            // Rastgele faktör: -10 ile +10 arası
-            const randomOffset = (Math.random() - 0.5) * 20;
-            
-            if (teamAPower + randomOffset <= teamBPower) {
-                teamA.push(player);
-                teamAPower += player.power;
-            } else {
-                teamB.push(player);
-                teamBPower += player.power;
-            }
-        }
+        });
     });
     
     // Sonuçları göster
@@ -650,6 +697,9 @@ function displayTeams(teamA, teamB, teamAPower, teamBPower) {
     // Denge göstergesini güncelle
     updateBalanceIndicator(teamAPower, teamBPower);
     
+    // Skor tahminini göster
+    displayKadroScorePrediction(teamA, teamB, teamAPower, teamBPower);
+    
     // Sonuca scroll et
     resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -701,4 +751,297 @@ function clearSelection() {
     renderSelectedPlayers();
     updateCreateButton();
     hideTeamsResult();
+}
+
+// =====================================================
+// SKOR TAHMİNİ FONKSİYONLARI
+// =====================================================
+
+/**
+ * Kadro Kur için skor tahmini - Ana sayfadaki mantıkla aynı
+ */
+function displayKadroScorePrediction(teamA, teamB, teamAPower, teamBPower) {
+    const container = document.getElementById('kadro-score-prediction');
+    if (!container) return;
+    
+    // Toplam maç sayısını hesapla (hem eski sezon hem yeni sezon)
+    const totalMatchData = (typeof previousSeasonMatches !== 'undefined' ? previousSeasonMatches.length : 0) + 
+                          (typeof matches !== 'undefined' ? matches.length : 0);
+    
+    // Maç verisi yoksa basit tahmin
+    if (totalMatchData === 0) {
+        // Güç bazlı basit tahmin
+        const scoreA = Math.round(teamAPower / 15); // Basit formül
+        const scoreB = Math.round(teamBPower / 15);
+        
+        displaySimplePrediction(container, scoreA, scoreB, 0);
+        return;
+    }
+    
+    // Detaylı tahmin hesapla
+    const teamAPrediction = calculateKadroTeamPrediction(teamA, teamB);
+    const teamBPrediction = calculateKadroTeamPrediction(teamB, teamA);
+    
+    // Güven oranı hesapla (maç sayısına göre)
+    const confidencePercent = Math.min(95, 30 + (totalMatchData * 5));
+    
+    // Skorları hesapla
+    const scoreA = calculateRoundedScore(teamAPrediction.topScorers);
+    const scoreB = calculateRoundedScore(teamBPrediction.topScorers);
+    
+    // Kazanan tahmini
+    let winnerText = '';
+    if (scoreA > scoreB) {
+        winnerText = '🏆 Takım A kazanır';
+    } else if (scoreB > scoreA) {
+        winnerText = '🏆 Takım B kazanır';
+    } else {
+        winnerText = '🤝 Berabere biter';
+    }
+    
+    container.innerHTML = `
+        <div class="prediction-score-row">
+            <div class="prediction-team">
+                <span class="prediction-team-name">Takım A</span>
+                <span class="prediction-score">${scoreA}</span>
+            </div>
+            <div class="prediction-team">
+                <span class="prediction-team-name">Takım B</span>
+                <span class="prediction-score">${scoreB}</span>
+            </div>
+        </div>
+        
+        <div class="prediction-details">
+            <div class="prediction-stats">
+                <div class="prediction-stat">
+                    <div class="prediction-stat-label">Tahmin</div>
+                    <div class="prediction-stat-value">${winnerText}</div>
+                </div>
+            </div>
+            
+            <div class="prediction-confidence">
+                <span class="confidence-text">Tahmin Güveni: %${confidencePercent} (${totalMatchData} maç verisi)</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: ${confidencePercent}%"></div>
+                </div>
+            </div>
+            
+            <div class="top-scorers-prediction">
+                <div class="top-scorers-title">⚽ Gol Atma Potansiyeli Yüksek Oyuncular</div>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 150px;">
+                        <div style="font-size: 11px; color: #999; margin-bottom: 5px;">Takım A</div>
+                        ${generateTopScorersHTML(teamAPrediction.topScorers)}
+                    </div>
+                    <div style="flex: 1; min-width: 150px;">
+                        <div style="font-size: 11px; color: #999; margin-bottom: 5px;">Takım B</div>
+                        ${generateTopScorersHTML(teamBPrediction.topScorers)}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Basit skor tahmini göster (maç verisi olmadan)
+ */
+function displaySimplePrediction(container, scoreA, scoreB, confidence) {
+    let winnerText = '';
+    if (scoreA > scoreB) {
+        winnerText = '🏆 Takım A kazanır';
+    } else if (scoreB > scoreA) {
+        winnerText = '🏆 Takım B kazanır';
+    } else {
+        winnerText = '🤝 Berabere biter';
+    }
+    
+    container.innerHTML = `
+        <div class="prediction-score-row">
+            <div class="prediction-team">
+                <span class="prediction-team-name">Takım A</span>
+                <span class="prediction-score">${scoreA}</span>
+            </div>
+            <div class="prediction-team">
+                <span class="prediction-team-name">Takım B</span>
+                <span class="prediction-score">${scoreB}</span>
+            </div>
+        </div>
+        
+        <div class="prediction-details">
+            <div class="prediction-stats">
+                <div class="prediction-stat">
+                    <div class="prediction-stat-label">Tahmin</div>
+                    <div class="prediction-stat-value">${winnerText}</div>
+                </div>
+            </div>
+            
+            <p style="color: #CCCCCC; text-align: center; font-size: 12px; margin-top: 10px;">
+                Tahmin oyuncu güç skorlarına göre hesaplanmıştır.<br>
+                <small>Daha detaylı tahmin için maç geçmişi gereklidir.</small>
+            </p>
+        </div>
+    `;
+}
+
+/**
+ * Takımın tahmini gol sayısını hesaplar
+ */
+function calculateKadroTeamPrediction(team, opponentTeam) {
+    let topScorers = [];
+    
+    team.forEach(player => {
+        // Oyuncu gerçek mi misafir mi kontrol et
+        const realPlayer = players.find(p => p.id === player.id);
+        
+        if (player.isGuest || !realPlayer) {
+            // Misafir oyuncu - güce göre basit tahmin
+            const prediction = (player.power / 100) * 2; // Güce göre 0-2 gol arası
+            topScorers.push({
+                id: player.id,
+                name: player.name,
+                prediction: prediction
+            });
+        } else {
+            // Gerçek oyuncu - hibrit tahmin (performans + güç)
+            const stats = calculateKadroPlayerGoalStats(player.id);
+            const positionMultiplier = getKadroPositionMultiplier(player.mevki);
+            
+            // Güç bazlı tahmin
+            const powerBasedPrediction = (player.power / 100) * 2.5;
+            
+            // Performans bazlı tahmin
+            let performanceBasedPrediction = stats.goalsPerMatch * positionMultiplier;
+            
+            // Hibrit tahmin: Deneyime göre ağırlık
+            let playerPrediction;
+            if (stats.totalMatches >= 5) {
+                // Çok maç deneyimi: %60 performans, %40 güç
+                playerPrediction = (performanceBasedPrediction * 0.6) + (powerBasedPrediction * 0.4);
+            } else if (stats.totalMatches >= 2) {
+                // Orta deneyim: %50 performans, %50 güç
+                playerPrediction = (performanceBasedPrediction * 0.5) + (powerBasedPrediction * 0.5);
+            } else {
+                // Az deneyim: %30 performans, %70 güç
+                playerPrediction = (performanceBasedPrediction * 0.3) + (powerBasedPrediction * 0.7);
+            }
+            
+            // Mevki çarpanını tekrar uygula (güç kısmı için)
+            playerPrediction *= positionMultiplier;
+            
+            // MVP bonusu
+            if (stats.mvpCount > 0) {
+                playerPrediction *= (1 + stats.mvpCount * 0.1);
+            }
+            
+            topScorers.push({
+                id: player.id,
+                name: player.name,
+                prediction: playerPrediction,
+                goalsPerMatch: stats.goalsPerMatch,
+                playerPower: player.power
+            });
+        }
+    });
+    
+    // En çok gol atacak tahmini yapılanları sırala
+    topScorers.sort((a, b) => b.prediction - a.prediction);
+    
+    return { topScorers };
+}
+
+/**
+ * Oyuncunun gol istatistiklerini hesaplar
+ * Hem 2. sezon hem de 1. sezon maçlarını dahil eder
+ */
+function calculateKadroPlayerGoalStats(playerId) {
+    let totalGoals = 0;
+    let totalMatches = 0;
+    let mvpCount = 0;
+    
+    // Tüm maçları birleştir (hem güncel sezon hem eski sezon)
+    const allMatches = [...(typeof previousSeasonMatches !== 'undefined' ? previousSeasonMatches : []), 
+                        ...(typeof matches !== 'undefined' ? matches : [])];
+    
+    allMatches.forEach(match => {
+        const performance = match.performances.find(p => p.playerId === playerId);
+        if (performance) {
+            totalGoals += performance.goals || 0;
+            totalMatches++;
+        }
+        
+        // MVP sayısı
+        if (match.macin_adami === playerId) {
+            mvpCount++;
+        }
+    });
+    
+    const goalsPerMatch = totalMatches > 0 ? totalGoals / totalMatches : 0;
+    
+    return {
+        totalGoals,
+        totalMatches,
+        goalsPerMatch,
+        mvpCount
+    };
+}
+
+/**
+ * Mevkiye göre gol potansiyeli çarpanı
+ */
+function getKadroPositionMultiplier(mevki) {
+    const mevkiLower = (mevki || '').toLowerCase();
+    if (mevkiLower.includes('forvet')) return 1.3;
+    if (mevkiLower.includes('orta')) return 1.0;
+    if (mevkiLower.includes('defans')) return 0.6;
+    if (mevkiLower.includes('kaleci')) return 0.1;
+    return 0.8;
+}
+
+/**
+ * Skorları yuvarlanmış oyuncu gollerinden hesapla
+ */
+function calculateRoundedScore(scorers) {
+    return scorers.reduce((total, s) => {
+        const roundedGoals = Math.round(s.prediction);
+        return total + Math.max(0, Math.min(5, roundedGoals));
+    }, 0);
+}
+
+/**
+ * Top scorers HTML oluştur
+ */
+function generateTopScorersHTML(scorers) {
+    // Sadece en az 1 gol atacak oyuncuları filtrele
+    const scoringPlayers = scorers.filter(s => Math.round(s.prediction) >= 1);
+    
+    if (scoringPlayers.length === 0) {
+        return '<div style="font-size: 11px; color: #888;">Gol beklenen oyuncu yok</div>';
+    }
+    
+    return scoringPlayers.map((s, i) => {
+        // Tahmini gol sayısını yuvarla
+        let predictedGoals = Math.round(s.prediction);
+        // Minimum 1, maksimum 5 gol
+        predictedGoals = Math.max(1, Math.min(5, predictedGoals));
+        
+        // Gol tahmini metni
+        let goalText = '';
+        if (predictedGoals >= 3) {
+            goalText = `${predictedGoals} gol atar 🔥`;
+        } else if (predictedGoals >= 2) {
+            goalText = `${predictedGoals} gol atar ⚽`;
+        } else {
+            goalText = `1 gol atar`;
+        }
+        
+        // İsmin ilk kelimesini al
+        const firstName = s.name.split(' ')[0];
+        
+        return `
+        <div class="top-scorer-item">
+            <span class="scorer-name">${i + 1}. ${firstName}</span>
+            <span class="scorer-prediction">${goalText}</span>
+        </div>
+    `}).join('');
 }

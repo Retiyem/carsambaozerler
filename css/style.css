@@ -1336,10 +1336,11 @@ footer {
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        padding-top: 80px;
+        padding-top: 70px; /* 80px'den 70px'e düşür */
         transition: left 0.3s ease;
         box-shadow: 2px 0 10px rgba(0,0,0,0.3);
         z-index: 999;
+        overflow-y: auto; /* Kaydırma ekle */
     }
     
     nav.active {
@@ -1348,24 +1349,30 @@ footer {
 
     nav ul {
         flex-direction: column;
-        gap: 20px;
+        gap: 12px; /* 20px'den 12px'e düşür */
         margin-top: 0;
-        padding: 0;
+        padding: 0 0 20px 0; /* Alt padding ekle */
         align-items: center;
         width: 100%;
     }
 
     .nav-link {
-        padding: 18px 30px;
-        font-size: 1.1rem;
+        padding: 15px 25px; /* 18px 30px'den 15px 25px'e düşür */
+        font-size: 1.05rem; /* 1.1rem'den biraz küçült */
         width: 85%;
+        max-width: 300px; /* Maksimum genişlik ekle */
+        min-height: 55px; /* 60px'den 55px'e düşür */
         text-align: center;
         border-radius: 20px;
         background: linear-gradient(135deg, rgba(15, 76, 117, 0.3), rgba(224, 123, 57, 0.2));
         border: 2px solid rgba(255, 255, 255, 0.1);
-        margin: 5px 0;
+        margin: 0 auto; /* 5px auto'dan 0 auto'ya */
         backdrop-filter: blur(15px);
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        display: flex; /* Flex ekle */
+        align-items: center; /* Dikey ortala */
+        justify-content: center; /* Yatay ortala */
+        white-space: nowrap; /* Metni tek satırda tut */
     }
     
     .nav-link:hover {
@@ -2366,77 +2373,132 @@ footer {
     height: 100%;
 }
 
-/* Oyuncu Stili - Büyütülmüş */
+/* Oyuncu Stili - Büyütülmüş ve Fotoğraf Destekli */
 .player {
     position: absolute;
-    width: 65px;
-    height: 65px;
+    width: 90px;
+    height: 115px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 5;
+}
+
+/* Oyuncu Fotoğrafı */
+.player-photo {
+    width: 70px;
+    height: 70px;
+    min-width: 70px;
+    min-height: 70px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    position: relative;
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
+}
+
+.player-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
+
+/* Fotoğraf yoksa baş harfleri göster */
+.player-photo.no-photo {
+    font-size: 24px;
+    font-weight: 700;
     color: white;
-    font-size: 11px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Oyuncu İsim Etiketi */
+.player-name-label {
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 14px;
+    font-size: 12px;
     font-weight: 700;
     text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 3px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
-    z-index: 5;
-    line-height: 1;
-    padding: 3px;
-    box-sizing: border-box;
+    white-space: nowrap;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.5px;
+    max-width: 140px;
+    overflow: visible;
+    text-overflow: clip;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    line-height: 1.3;
+    min-height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* A Takımı Oyuncuları (Kırmızı) */
-.team-a-field .player {
+.team-a-field .player-photo {
     background: linear-gradient(135deg, #DC143C, #B22222);
 }
 
-.team-a-field .player:hover {
+.team-a-field .player:hover .player-photo {
     background: linear-gradient(135deg, #FF1493, #DC143C);
-    transform: scale(1.1);
-    box-shadow: 0 4px 16px rgba(220, 20, 60, 0.6);
+    transform: scale(1.15);
+    box-shadow: 0 6px 20px rgba(220, 20, 60, 0.7);
+}
+
+.team-a-field .player:hover .player-name-label {
+    background: rgba(220, 20, 60, 0.95);
 }
 
 /* B Takımı Oyuncuları (Mavi) */
-.team-b-field .player {
+.team-b-field .player-photo {
     background: linear-gradient(135deg, #1E90FF, #0066CC);
 }
 
-.team-b-field .player:hover {
+.team-b-field .player:hover .player-photo {
     background: linear-gradient(135deg, #00BFFF, #1E90FF);
-    transform: scale(1.1);
-    box-shadow: 0 4px 16px rgba(30, 144, 255, 0.6);
+    transform: scale(1.15);
+    box-shadow: 0 6px 20px rgba(30, 144, 255, 0.7);
+}
+
+.team-b-field .player:hover .player-name-label {
+    background: rgba(30, 144, 255, 0.95);
 }
 
 /* Mevki Bazında Pozisyonlandırma - Tam Saha Orantılı */
 /* Kaleci */
 .player.kaleci {
-    font-size: 9px;
-    bottom: 15px;
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
 }
 
-/* Defans - Orta çizgiden 180px aşağıda */
+/* Defans - Artan mesafe ile */
 .player.defans {
-    font-size: 9px;
-    bottom: 120px;
+    bottom: 225px;
 }
 
-/* Orta Saha - Orta çizgi referansında (±50px) */
+/* Orta Saha - Daha fazla mesafe */
 .player.orta-saha {
-    font-size: 9px;
-    bottom: 280px;
+    bottom: 415px;
 }
 
-/* Forvet - Orta çizgiden 180px yukarıda */
+/* Forvet - Sahayı tam kullan */
 .player.forvet {
-    font-size: 9px;
-    bottom: 460px;
+    bottom: 605px;
 }
 
 /* Oyuncu Tooltip */
@@ -2691,18 +2753,48 @@ footer {
         height: 500px;
     }
     
+    /* Mobil için oyuncu container boyutu */
     .player {
-        width: 55px;
-        height: 55px;
-        font-size: 10px;
-        font-weight: bold;
-        border: 2px solid #fff;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 15px rgba(255,255,255,0.3);
+        width: 75px;
+        height: 100px;
+        gap: 5px;
     }
-
-    .player .player-name {
-        font-size: 9px;
-        line-height: 1.1;
+    
+    /* Mobil için fotoğraf tam yuvarlak olsun */
+    .player-photo {
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+        min-height: 60px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.9);
+        flex-shrink: 0;
+    }
+    
+    .player-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    
+    /* Mobil için baş harfleri */
+    .player-photo.no-photo {
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Mobil için isim etiketi */
+    .player-name-label {
+        font-size: 11px;
+        padding: 4px 9px;
+        max-width: 85px;
+        font-weight: 700;
+        min-height: 20px;
+        line-height: 1.3;
+        overflow: visible;
     }
     
     /* Mobil için sahayı daha iyi çiz */
@@ -2738,19 +2830,19 @@ footer {
     
     /* Mevki pozisyonları mobil için ayarla - orta çizgi referansında */
     .player.kaleci {
-        bottom: 12px;
+        bottom: 35px;
     }
     
     .player.defans {
-        bottom: 90px;
+        bottom: 145px;
     }
     
     .player.orta-saha {
-        bottom: 220px;
+        bottom: 280px;
     }
     
     .player.forvet {
-        bottom: 350px;
+        bottom: 415px;
     }
 }
 
@@ -2769,17 +2861,37 @@ footer {
     }
     
     .player {
-        width: 45px;
-        height: 45px;
-        font-size: 8px;
-        font-weight: bold;
-        border: 2px solid #fff;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.3), 0 0 12px rgba(255,255,255,0.3);
+        width: 65px;
+        height: 90px;
+        gap: 4px;
     }
-
-    .player .player-name {
-        font-size: 7px;
-        line-height: 1.0;
+    
+    /* 480px için fotoğraf boyutu */
+    .player-photo {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        min-height: 50px;
+        border: 2px solid rgba(255, 255, 255, 0.9);
+    }
+    
+    .player-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    
+    .player-photo.no-photo {
+        font-size: 18px;
+    }
+    
+    /* 480px için isim etiketi */
+    .player-name-label {
+        font-size: 9px;
+        padding: 3px 6px;
+        max-width: 65px;
+        min-height: 18px;
     }
 
     /* Küçük ekranlarda saha elementleri */
@@ -2806,19 +2918,19 @@ footer {
 
     /* Mevki pozisyonları çok küçük ekranlar için */
     .player.kaleci {
-        bottom: 10px;
+        bottom: 0px;
     }
     
     .player.defans {
-        bottom: 75px;
+        bottom: 120px;
     }
     
     .player.orta-saha {
-        bottom: 185px;
+        bottom: 240px;
     }
     
     .player.forvet {
-        bottom: 295px;
+        bottom: 360px;
     }
 }
 
@@ -3357,7 +3469,7 @@ footer {
     
     /* Mobil pozisyon ayarları - orta çizgi referansında */
     .player.kaleci {
-        bottom: 10px;
+        bottom: 0px;
     }
     
     .player.defans {

@@ -29,13 +29,13 @@ const players = [
     { id: 'tayyip_erdogan_yilmaz', name: 'Tayyip Erdoğan YILMAZ', mevki: 'Orta Saha', fizik: 82, bitiricilik: 85, teknik: 85, oyunOkuma: 85, dayaniklilik: 84 },
     { id: 'firatcan_solmaz', name: 'Fıratcan SOLMAZ', mevki: 'Defans', fizik: 83, bitiricilik: 82, teknik: 87, oyunOkuma: 87, dayaniklilik: 91 },
     { id: 'can_atilgan', name: 'Can ATILGAN', mevki: 'Defans', fizik: 95, bitiricilik: 95, teknik: 97, oyunOkuma: 95, dayaniklilik: 98 },
-    { id: 'yakup_sunay', name: 'Yakup SUNAY', mevki: 'Orta Saha', fizik: 80, bitiricilik: 82, teknik: 83, oyunOkuma: 87, dayaniklilik: 87 },
+    { id: 'yakup_sunay', name: 'Yakup SUNAY', mevki: 'Defans', fizik: 80, bitiricilik: 82, teknik: 83, oyunOkuma: 87, dayaniklilik: 87 },
     { id: 'eren_yilmaz', name: 'Eren YILMAZ', mevki: 'Orta Saha', fizik: 88, bitiricilik: 87, teknik: 84, oyunOkuma: 87, dayaniklilik: 83 },
     { id: 'huseyincan_yuksekdag', name: 'Hüseyin Can YÜKSEKDAĞ', mevki: 'Kaleci', fizik: 85, bitiricilik: 80, teknik: 90, oyunOkuma: 94, dayaniklilik: 99 },
 ];
 
-// Maclar ve oyuncu performanslari
-// 2. Sezon basladi - Tum veriler sifirlandi
+// 2. Sezon Maç Verileri (Güncel Sezon)
+// Sezon Başlangıcı: 07.01.2026
 const matches = [
     // Yeni mac eklemek icin asagidaki formati kullanin:
     /*
@@ -78,7 +78,7 @@ const matches = [
             { playerId: 'furkan_yilmaz', team: 'B', goals: 0 },
             { playerId: 'yakup_sunay', team: 'B', goals: 1 },
             { playerId: 'furkan_sevimli', team: 'B', goals: 0 },
-            { playerId: 'eren_yilmaz', team: 'B', goals: 2, weeklyMVP: true },
+            { playerId: 'eren_yilmaz', team: 'B', goals: 2 },
             { playerId: 'fatih_atalay', team: 'B', goals: 2 },
         ]
     },
@@ -125,7 +125,7 @@ const nextMatchLineup = {
         'onur_mustafa',
         'ömer_erdal',
         'tayyip_erdogan_yilmaz',
-        'fıratcan_solmaz',
+        'firatcan_solmaz',
         'furkan_demiral',
         'Misafir_3',
         'muratcan_solmaz',
