@@ -513,8 +513,143 @@ function hidePlayerPerformance() {
     }
 }
 
-// Export fonksiyonu
+// ==================== SEZON BAZLI SON MAÇLAR ====================
+
+// Aktif profil sezonu
+let currentProfileSeason = 2;
+
+/**
+ * Sezon bazlı oyuncu maçlarını hesapla
+ */
+function calculateSeasonPlayerMatches(playerId, season) {
+    const player = players.find(p => p.id === playerId);
+    if (!player) return [];
+
+    // Sezona göre maç verisini seç
+    const matchData = season === 1 
+        ? (typeof season1Matches !== 'undefined' ? season1Matches : [])
+        : (typeof matches !== 'undefined' ? matches : []);
+
+    const playerMatches = [];
+
+    matchData.forEach(match => {
+        if (!match.performances || !Array.isArray(match.performances)) return;
+        
+        const performance = match.performances.find(p => p.playerId === playerId);
+        
+        if (performance) {
+            const goals = performance.goals || 0;
+
+            // Maç sonucunu hesapla
+            let result = 'Berabere';
+            if (performance.team === 'A') {
+                if (match.teamAGoals > match.teamBGoals) result = 'Galibiyet';
+                else if (match.teamAGoals < match.teamBGoals) result = 'Mağlubiyet';
+            } else {
+                if (match.teamBGoals > match.teamAGoals) result = 'Galibiyet';
+                else if (match.teamBGoals < match.teamAGoals) result = 'Mağlubiyet';
+            }
+
+            playerMatches.push({
+                date: match.date,
+                matchId: match.id,
+                team: performance.team,
+                goals: goals,
+                result: result,
+                teamScore: performance.team === 'A' ? match.teamAGoals : match.teamBGoals,
+                opponentScore: performance.team === 'A' ? match.teamBGoals : match.teamAGoals
+            });
+        }
+    });
+
+    return playerMatches;
+}
+
+/**
+ * Sezon bazlı son maçlar tablosunu güncelle
+ */
+function updateSeasonRecentMatchesTable(playerId, season) {
+    const tableBody = document.getElementById('recent-matches-body');
+    if (!tableBody) return;
+
+    const playerMatches = calculateSeasonPlayerMatches(playerId, season);
+    
+    tableBody.innerHTML = '';
+
+    if (playerMatches.length === 0) {
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 30px; color: #999;">
+                    Bu sezonda maç verisi bulunmuyor.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    // Maçları ters sırada göster (son maç üstte)
+    const sortedMatches = [...playerMatches].reverse();
+
+    sortedMatches.forEach(match => {
+        const row = document.createElement('tr');
+        
+        row.innerHTML = `
+            <td>${match.date}</td>
+            <td><span class="team-badge team-${match.team.toLowerCase()}">Takım ${match.team}</span></td>
+            <td style="text-align: center; font-weight: 600; color: #4ecdc4;">${match.teamScore || 0}-${match.opponentScore || 0}</td>
+            <td style="text-align: center; font-weight: 600; color: ${match.goals > 0 ? '#ff6b6b' : '#888'};">${match.goals}</td>
+            <td><span class="match-result result-${match.result.toLowerCase().replace('ğ', 'g').replace('ı', 'i')}">${match.result}</span></td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+}
+
+/**
+ * Profil sezon değiştirme fonksiyonu
+ */
+function changeProfileSeason(season) {
+    currentProfileSeason = season;
+    
+    // Buton aktiflik durumunu güncelle
+    document.querySelectorAll('.profile-season-selector .season-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`.profile-season-selector [data-season="${season}"]`)?.classList.add('active');
+    
+    // URL'den oyuncu ID'sini al
+    const urlParams = new URLSearchParams(window.location.search);
+    const playerId = urlParams.get('id') || 'onur_mustafa';
+    
+    // Tabloyu güncelle
+    updateSeasonRecentMatchesTable(playerId, season);
+}
+
+/**
+ * Profil sezon butonlarını başlat
+ */
+function initProfileSeasonButtons() {
+    const season1Btn = document.getElementById('profile-season1-btn');
+    const season2Btn = document.getElementById('profile-season2-btn');
+    
+    if (season1Btn) {
+        season1Btn.addEventListener('click', () => changeProfileSeason(1));
+    }
+    if (season2Btn) {
+        season2Btn.addEventListener('click', () => changeProfileSeason(2));
+    }
+}
+
+// Sayfa yüklendiğinde sezon butonlarını başlat
+document.addEventListener('DOMContentLoaded', () => {
+    initProfileSeasonButtons();
+});
+
+// Export fonksiyonları
 window.initializePlayerPerformance = initializePlayerPerformance;
+window.changeProfileSeason = changeProfileSeason;
+window.updateSeasonRecentMatchesTable = updateSeasonRecentMatchesTable;
+window.initProfileSeasonButtons = initProfileSeasonButtons;
 
 
 

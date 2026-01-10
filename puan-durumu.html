@@ -41,6 +41,16 @@
         <section class="scoreboard glassmorphism-card animate-fade-in">
             <h2 class="section-title">Puan Durumu <span class="icon"></span></h2>
             
+            <!-- Sezon Seçici Butonları -->
+            <div class="season-selector standings-season-selector">
+                <button id="standings-season1-btn" class="season-btn" data-season="1">
+                    <span class="season-icon">🏆</span> 1. Sezon
+                </button>
+                <button id="standings-season2-btn" class="season-btn active" data-season="2">
+                    <span class="season-icon">⚽</span> 2. Sezon
+                </button>
+            </div>
+            
             <!-- Sezon Bilgileri -->
             <div class="season-info">
                 <div class="current-season-banner">
@@ -48,7 +58,7 @@
                     <p id="season-end-info" class="season-end-text">Sezon 2 Mart 2026'da bitecektir</p>
                 </div>
                 <!-- Sezon 1 Şampiyonu -->
-                <div class="previous-champion">
+                <div class="previous-champion" id="champion-banner">
                     <div class="champion-text">
                         <div class="champion-label">Sezon 1 Şampiyonu</div>
                         <div class="champion-name">🏆 Ensar BÜLBÜL 🏆</div>
@@ -102,6 +112,7 @@
         </div>
     </footer>
 
+    <script src="js/Sezon1.js"></script>
     <script src="js/data.js"></script>
     <script src="js/enhanced-data.js"></script>
     <script src="js/script.js"></script>

@@ -1,21 +1,20 @@
-// 1. Sezon Maç Verileri
+﻿// 1. Sezon Mac Verileri
 // Tarih: 22.10.2025 - 18.12.2025
-// Toplam 10 Maç
+// Toplam 10 Mac
 
 const season1Matches = [
-    // MAC 1 - 22.10.2025
     {
         id: 'S1_1',
         date: '22.10.2025',
         teamAGoals: 14,
         teamBGoals: 13,
         macin_adami: 'ridvan_gumus',
-        macin_adami_aciklama: '8 gol atarak takımını galibiyete taşıdı.',
+        macin_adami_aciklama: 'Sahada adeta kasirga gibiydi! 8 gol atarak takimini zafere tasidi.',
         esek_adam: 'orhan_sariaydin',
-        esek_adam_aciklama: '',
+        esek_adam_aciklama: 'Bu hafta performans beklenenden dusuktu.',
         performances: [
             { playerId: 'ridvan_gumus', team: 'A', goals: 8 },
-            { playerId: 'ömer_erdal', team: 'A', goals: 0 },
+            { playerId: 'omer_erdal', team: 'A', goals: 0 },
             { playerId: 'ahmet_sadikoglu', team: 'A', goals: 3 },
             { playerId: 'emre_erdal', team: 'A', goals: 0 },
             { playerId: 'orhan_sariaydin', team: 'A', goals: 3 },
@@ -27,46 +26,46 @@ const season1Matches = [
             { playerId: 'seyfeddin_bulbul', team: 'B', goals: 3 },
             { playerId: 'ibrahim_erdogdu', team: 'B', goals: 0 },
             { playerId: 'berkin_tayyip_ceran', team: 'B', goals: 0 },
-            { playerId: 'ozan_necipoglu', team: 'B', goals: 1 },
+            { playerId: 'ozan_necipoglu', team: 'B', goals: 1 }
         ]
     },
-    // MAC 2 - 27.10.2025
     {
         id: 'S1_2',
         date: '27.10.2025',
         teamAGoals: 11,
         teamBGoals: 11,
         macin_adami: 'talha_bulbul',
-        macin_adami_aciklama: 'Kalesinde müthiş bir performans sergiledi.',
+        macin_adami_aciklama: 'Talha muhtesem kurtarislarla maci kurtardi!',
         esek_adam: 'ensar_bulbul',
-        esek_adam_aciklama: '',
+        esek_adam_aciklama: 'Bu macta beklenen performansi gosteremedi.',
         performances: [
             { playerId: 'can_atilgan', team: 'A', goals: 5 },
-            { playerId: 'ömer_erdal', team: 'A', goals: 0 },
+            { playerId: 'omer_erdal', team: 'A', goals: 0 },
             { playerId: 'talha_bulbul', team: 'A', goals: 0 },
             { playerId: 'orhan_sariaydin', team: 'A', goals: 1 },
             { playerId: 'furkan_yilmaz', team: 'A', goals: 0 },
             { playerId: 'burak_kocabey', team: 'A', goals: 2 },
             { playerId: 'ahmet_sadikoglu', team: 'A', goals: 3 },
+            { playerId: 'onur_mustafa', team: 'B', goals: 2 },
             { playerId: 'furkan_demiral', team: 'B', goals: 1 },
             { playerId: 'furkan_sevimli', team: 'B', goals: 1 },
             { playerId: 'emre_erdal', team: 'B', goals: 0 },
             { playerId: 'seyfeddin_bulbul', team: 'B', goals: 3 },
             { playerId: 'tayyip_erdogan_yilmaz', team: 'B', goals: 2 },
-            { playerId: 'ibrahim_erdogdu', team: 'B', goals: 2 },
+            { playerId: 'ibrahim_erdogdu', team: 'B', goals: 2 }
         ]
     },
-    // MAC 3 - 29.10.2025
     {
         id: 'S1_3',
         date: '29.10.2025',
         teamAGoals: 3,
         teamBGoals: 2,
         macin_adami: 'ensar_bulbul',
-        macin_adami_aciklama: 'Defansıyla takımın kalesi önünde dağ gibi durdu.',
+        macin_adami_aciklama: 'Ensar harika savunma performansi gosterdi!',
         esek_adam: 'ahmet_sadikoglu',
-        esek_adam_aciklama: '',
+        esek_adam_aciklama: 'Bu hafta maalesef yetersiz kaldi.',
         performances: [
+            { playerId: 'onur_mustafa', team: 'A', goals: 2 },
             { playerId: 'ahmet_sadikoglu', team: 'A', goals: 1 },
             { playerId: 'ensar_bulbul', team: 'A', goals: 0 },
             { playerId: 'furkan_sevimli', team: 'A', goals: 0 },
@@ -79,19 +78,18 @@ const season1Matches = [
             { playerId: 'emre_erdal', team: 'B', goals: 1 },
             { playerId: 'seyfeddin_bulbul', team: 'B', goals: 0 },
             { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0 },
-            { playerId: 'ridvan_gumus', team: 'B', goals: 1 },
+            { playerId: 'ridvan_gumus', team: 'B', goals: 1 }
         ]
     },
-    // MAC 4 - 02.11.2025
     {
         id: 'S1_4',
         date: '02.11.2025',
         teamAGoals: 7,
         teamBGoals: 19,
         macin_adami: 'huseyincan_yuksekdag',
-        macin_adami_aciklama: 'Kalesinde harikalar yarattı, o olmasaydı fark daha büyük olurdu.',
+        macin_adami_aciklama: 'Huseyin Can inanilmaz bir performans sergiledi!',
         esek_adam: 'seyfeddin_bulbul',
-        esek_adam_aciklama: '',
+        esek_adam_aciklama: 'Maalesef bu hafta etkili olamadi.',
         performances: [
             { playerId: 'furkan_sevimli', team: 'A', goals: 2 },
             { playerId: 'ibrahim_erdogdu', team: 'A', goals: 0 },
@@ -100,26 +98,26 @@ const season1Matches = [
             { playerId: 'furkan_yilmaz', team: 'A', goals: 0 },
             { playerId: 'emre_erdal', team: 'A', goals: 1 },
             { playerId: 'seyfeddin_bulbul', team: 'A', goals: 1 },
-            { playerId: 'ridvan_gumus', team: 'A', goals: 3 },
+            { playerId: 'ridvan_gumus', team: 'A', goals: 1 },
+            { playerId: 'onur_mustafa', team: 'B', goals: 1 },
             { playerId: 'furkan_demiral', team: 'B', goals: 0 },
             { playerId: 'burak_kocabey', team: 'B', goals: 6 },
             { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0 },
             { playerId: 'ahmet_sadikoglu', team: 'B', goals: 6 },
             { playerId: 'tayyip_erdogan_yilmaz', team: 'B', goals: 0 },
-            { playerId: 'ömer_erdal', team: 'B', goals: 4 },
-            { playerId: 'ensar_bulbul', team: 'B', goals: 2 },
+            { playerId: 'omer_erdal', team: 'B', goals: 4 },
+            { playerId: 'ensar_bulbul', team: 'B', goals: 2 }
         ]
     },
-    // MAC 5 - 06.11.2025
     {
         id: 'S1_5',
         date: '06.11.2025',
         teamAGoals: 10,
         teamBGoals: 9,
         macin_adami: 'fatih_atalay',
-        macin_adami_aciklama: 'Orta sahada oyunu kontrol etti.',
+        macin_adami_aciklama: 'Fatih mukemmel kaleci performansiyla maci kazandirdi!',
         esek_adam: 'ahmet_sadikoglu',
-        esek_adam_aciklama: '',
+        esek_adam_aciklama: 'Bu hafta istenen performansi veremedi.',
         performances: [
             { playerId: 'ahmet_sadikoglu', team: 'A', goals: 4 },
             { playerId: 'ibrahim_erdogdu', team: 'A', goals: 2 },
@@ -128,23 +126,23 @@ const season1Matches = [
             { playerId: 'berkin_tayyip_ceran', team: 'A', goals: 0 },
             { playerId: 'ozan_necipoglu', team: 'A', goals: 1 },
             { playerId: 'fatih_atalay', team: 'A', goals: 0 },
+            { playerId: 'onur_mustafa', team: 'B', goals: 6 },
             { playerId: 'emre_erdal', team: 'B', goals: 0 },
             { playerId: 'yakup_sunay', team: 'B', goals: 1 },
             { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0 },
             { playerId: 'seyfeddin_bulbul', team: 'B', goals: 1 },
-            { playerId: 'ömer_erdal', team: 'B', goals: 1 },
+            { playerId: 'omer_erdal', team: 'B', goals: 1 }
         ]
     },
-    // MAC 6 - 12.11.2025
     {
         id: 'S1_6',
         date: '12.11.2025',
         teamAGoals: 8,
         teamBGoals: 25,
         macin_adami: 'orhan_sariaydin',
-        macin_adami_aciklama: '6 gol ile takımının en skorer ismi oldu.',
+        macin_adami_aciklama: 'Ridvan 9 golle sahaya damgasini vurdu!',
         esek_adam: 'talha_bulbul',
-        esek_adam_aciklama: '',
+        esek_adam_aciklama: 'Bu hafta savunmada zorlandi.',
         performances: [
             { playerId: 'tayyip_erdogan_yilmaz', team: 'A', goals: 2 },
             { playerId: 'ensar_bulbul', team: 'A', goals: 2 },
@@ -157,20 +155,19 @@ const season1Matches = [
             { playerId: 'ibrahim_erdogdu', team: 'B', goals: 1 },
             { playerId: 'emre_erdal', team: 'B', goals: 0 },
             { playerId: 'yakup_sunay', team: 'B', goals: 1 },
-            { playerId: 'ömer_erdal', team: 'B', goals: 8 },
-            { playerId: 'orhan_sariaydin', team: 'B', goals: 6 },
+            { playerId: 'omer_erdal', team: 'B', goals: 8 },
+            { playerId: 'orhan_sariaydin', team: 'B', goals: 6 }
         ]
     },
-    // MAC 7 - 19.11.2025
     {
         id: 'S1_7',
         date: '19.11.2025',
         teamAGoals: 12,
         teamBGoals: 15,
-        macin_adami: null,
-        macin_adami_aciklama: 'Belirlenmedi.',
+        macin_adami: 'onur_mustafa',
+        macin_adami_aciklama: 'Onur 4 golle harika bir performans sergiledi!',
         esek_adam: 'ibrahim_erdogdu',
-        esek_adam_aciklama: '',
+        esek_adam_aciklama: 'Bu hafta takima yeterli katkiyi saglayamadi.',
         performances: [
             { playerId: 'tayyip_erdogan_yilmaz', team: 'A', goals: 4 },
             { playerId: 'ensar_bulbul', team: 'A', goals: 1 },
@@ -183,50 +180,51 @@ const season1Matches = [
             { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0 },
             { playerId: 'furkan_sevimli', team: 'B', goals: 0 },
             { playerId: 'burak_kocabey', team: 'B', goals: 2 },
-            { playerId: 'ömer_erdal', team: 'B', goals: 3 },
-            { playerId: 'talha_bulbul', team: 'B', goals: 0 },
+            { playerId: 'omer_erdal', team: 'B', goals: 3 },
+            { playerId: 'onur_mustafa', team: 'B', goals: 4 },
+            { playerId: 'talha_bulbul', team: 'B', goals: 0 }
         ]
     },
-    // MAC 8 - 03.12.2025
     {
         id: 'S1_8',
         date: '03.12.2025',
         teamAGoals: 9,
         teamBGoals: 11,
         macin_adami: 'huseyincan_yuksekdag',
-        macin_adami_aciklama: 'Kalesinde müthiş kurtarışlar yaptı.',
+        macin_adami_aciklama: 'Muhtesem kurtarislarla maci kazandirdi!',
         esek_adam: 'furkan_sevimli',
-        esek_adam_aciklama: '',
+        esek_adam_aciklama: 'Bu hafta maalesef performans beklenenin altindaydi.',
         performances: [
+            { playerId: 'onur_mustafa', team: 'A', goals: 2 },
             { playerId: 'furkan_sevimli', team: 'A', goals: 2 },
             { playerId: 'furkan_demiral', team: 'A', goals: 1 },
-            { playerId: 'ömer_erdal', team: 'A', goals: 1 },
+            { playerId: 'omer_erdal', team: 'A', goals: 1 },
             { playerId: 'ahmet_sadikoglu', team: 'A', goals: 3 },
-            { playerId: 'ibrahim_erdogdu', team: 'A', goals: 1 },
+            { playerId: 'ibrahim_erdogdu', team: 'A', goals: 0 },
             { playerId: 'seyfeddin_bulbul', team: 'B', goals: 0 },
             { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0 },
             { playerId: 'eren_yilmaz', team: 'B', goals: 4 },
             { playerId: 'burak_kocabey', team: 'B', goals: 3 },
             { playerId: 'emre_erdal', team: 'B', goals: 2 },
             { playerId: 'ensar_bulbul', team: 'B', goals: 2 },
-            { playerId: 'talha_bulbul', team: 'B', goals: 0 },
+            { playerId: 'talha_bulbul', team: 'B', goals: 0 }
         ]
     },
-    // MAC 9 - 11.12.2025
     {
         id: 'S1_9',
         date: '11.12.2025',
         teamAGoals: 12,
         teamBGoals: 9,
         macin_adami: 'huseyincan_yuksekdag',
-        macin_adami_aciklama: 'Kritik anlarda takımını kurtardı.',
-        esek_adam: null,
-        esek_adam_aciklama: 'Belirlenmedi.',
+        macin_adami_aciklama: 'Kaleci oyuncu defans adeta bir duvar ama dikkat edin her an ses kaydi atabilir!',
+        esek_adam: 'onur_mustafa',
+        esek_adam_aciklama: 'Yetenek, Guc, Yakisiklilik... Takim arkadaslari onu cok kiskandigi icin oylamada onu secti..',
         performances: [
+            { playerId: 'onur_mustafa', team: 'A', goals: 5 },
             { playerId: 'ensar_bulbul', team: 'A', goals: 1 },
             { playerId: 'furkan_yilmaz', team: 'A', goals: 0 },
             { playerId: 'seyfeddin_bulbul', team: 'A', goals: 2 },
-            { playerId: 'ömer_erdal', team: 'A', goals: 2 },
+            { playerId: 'omer_erdal', team: 'A', goals: 2 },
             { playerId: 'emre_erdal', team: 'A', goals: 2 },
             { playerId: 'huseyincan_yuksekdag', team: 'A', goals: 0 },
             { playerId: 'fatih_atalay', team: 'B', goals: 0 },
@@ -236,20 +234,20 @@ const season1Matches = [
             { playerId: 'furkan_demiral', team: 'B', goals: 0 },
             { playerId: 'yakup_sunay', team: 'B', goals: 0 },
             { playerId: 'orhan_sariaydin', team: 'B', goals: 2 },
-            { playerId: 'talha_bulbul', team: 'B', goals: 0 },
+            { playerId: 'talha_bulbul', team: 'B', goals: 0 }
         ]
     },
-    // MAC 10 - 18.12.2025
     {
         id: 'S1_10',
         date: '18.12.2025',
         teamAGoals: 12,
         teamBGoals: 6,
         macin_adami: 'emre_erdal',
-        macin_adami_aciklama: 'Defansıyla rakip ataklarını durdurdu.',
+        macin_adami_aciklama: 'Onu gecmeye calisan forvetler bile ona hayran kaldi...',
         esek_adam: 'ensar_bulbul',
-        esek_adam_aciklama: '',
+        esek_adam_aciklama: 'Bu ligde lider olmak zor is, bazen yuk agir gelir. Bos kaleye gol atamamak gibi...',
         performances: [
+            { playerId: 'onur_mustafa', team: 'A', goals: 4 },
             { playerId: 'ensar_bulbul', team: 'A', goals: 0 },
             { playerId: 'tayyip_erdogan_yilmaz', team: 'A', goals: 0 },
             { playerId: 'suleyman_yildirim', team: 'A', goals: 5 },
@@ -257,27 +255,14 @@ const season1Matches = [
             { playerId: 'emre_erdal', team: 'A', goals: 0 },
             { playerId: 'huseyincan_yuksekdag', team: 'A', goals: -1 },
             { playerId: 'mushap_karatas', team: 'B', goals: 2 },
-            { playerId: 'ömer_erdal', team: 'B', goals: 1 },
+            { playerId: 'omer_erdal', team: 'B', goals: 1 },
             { playerId: 'ozan_necipoglu', team: 'B', goals: 0 },
             { playerId: 'ahmet_sadikoglu', team: 'B', goals: 0 },
             { playerId: 'seyfeddin_bulbul', team: 'B', goals: 0 },
             { playerId: 'furkan_yilmaz', team: 'B', goals: 1 },
             { playerId: 'burak_kocabey', team: 'B', goals: 2 },
-            { playerId: 'firatcan_solmaz', team: 'B', goals: 1 },
-            { playerId: 'talha_bulbul', team: 'B', goals: 0 },
+            { playerId: 'firatcan_solmaz', team: 'B', goals: 0 },
+            { playerId: 'talha_bulbul', team: 'B', goals: 0 }
         ]
-    },
+    }
 ];
-
-// 1. Sezon İstatistikleri
-const season1Stats = {
-    seasonName: '1. Sezon',
-    startDate: '22.10.2025',
-    endDate: '18.12.2025',
-    totalMatches: 10,
-    totalGoals: 206,
-    champion: null, // Şampiyon belirlenmedi (takım bazlı değil)
-};
-
-// Geriye uyumluluk için previousSeasonMatches değişkenini de tanımla
-const previousSeasonMatches = season1Matches;

@@ -50,60 +50,8 @@ function renderScoreboard() {
     // Sezon bilgilerini güncelle
     updateSeasonInfo();
 
-    const sortedPlayers = calculatePlayerStats();
-    scoreboardBody.innerHTML = ''; // Mevcut içeriği temizle
-
-    sortedPlayers.forEach((player, index) => {
-        // Oyuncu ID'sini bul
-        const playerData = players.find(p => p.name === player.name);
-        const playerId = playerData ? playerData.id : player.name.toLowerCase().replace(/\s+/g, '_');
-        
-        // Güç skorunu hesapla
-        const playerPower = calculatePlayerPowerGlobal(playerId);
-        
-        // Güç değişikliğini hesapla
-        const powerChange = getPowerChange(playerId, playerPower);
-        const powerChangeBadge = powerChange !== 0 
-            ? `<span class="power-change-badge ${powerChange > 0 ? 'positive' : 'negative'}">
-                ${powerChange > 0 ? '+' : ''}${powerChange}
-               </span>` 
-            : '';
-        
-        // Güç seviyesine göre renk sınıfı belirle
-        const powerClass = getPowerClass(playerPower);
-        
-        // Rank class'ını belirle
-        let rankClass = '';
-        if (index === 0) rankClass = 'rank-1';
-        else if (index === 1) rankClass = 'rank-2';
-        else if (index === 2) rankClass = 'rank-3';
-        
-        const row = `
-            <tr class="${rankClass}">
-                <td>${player.P}</td>
-                <td class="player-name-cell">
-                    <img src="img/oyuncular/${playerId}.jpg" alt="${player.name}" class="player-avatar" onerror="this.src='img/oyuncular/default.svg'">
-                    <span class="player-name">
-                        <a href="oyuncu-profili.html?id=${playerId}" class="player-link">${player.name}</a>
-                    </span>
-                </td>
-                <td class="power-cell ${powerClass}">
-                    ${powerChangeBadge}
-                    <strong>${playerPower}</strong>
-                </td>
-                <td>${player.M}</td>
-                <td>${player.W}</td>
-                <td>${player.D}</td>
-                <td>${player.L}</td>
-                <td>${player.GF}</td>
-                <td class="avg-goals-cell">${player.M > 0 ? (player.GF / player.M).toFixed(1) : '0.0'}</td>
-                <td class="mvp-cell">${player.MVP}</td>
-                <td class="donkey-cell">${player.DONKEY}</td>
-                <td class="points-cell"><strong>${player.PTS}</strong></td>
-            </tr>
-        `;
-        scoreboardBody.insertAdjacentHTML('beforeend', row);
-    });
+    // Yeni sezon bazlı tabloya yönlendir
+    renderSeasonScoreboard(currentStandingsSeason || 2);
 }
 
 // Güç seviyesine göre CSS sınıfı döndür
@@ -535,6 +483,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (path.includes('puan-durumu.html')) {
         renderScoreboard();
+        // Sezon butonlarını başlat
+        initStandingsSeasonButtons();
         // Maç click eventleri için - MODAL ÖZELLİĞİ KALDIRILDI
         // addMatchClickEvents();
     } else if (path.includes('maclar.html')) {
@@ -1724,3 +1674,186 @@ function calculateCurrentSeasonPlayerStats() {
 
     return sortedPlayers;
 }
+
+// ==================== SEZON BAZLI PUAN DURUMU ====================
+
+// Aktif puan durumu sezonu
+let currentStandingsSeason = 2;
+
+// Sezon 1 şampiyonu
+const SEASON1_CHAMPION = 'ensar_bulbul';
+
+// Sezon bazlı istatistik hesaplama
+function calculateSeasonPlayerStats(season) {
+    const playerStats = {};
+    
+    // Sezona göre maç verisini seç
+    const matchData = season === 1 
+        ? (typeof season1Matches !== 'undefined' ? season1Matches : [])
+        : (typeof matches !== 'undefined' ? matches : []);
+    
+    matchData.forEach(match => {
+        const teamAResult = match.teamAGoals > match.teamBGoals ? 'W' : (match.teamAGoals === match.teamBGoals ? 'D' : 'L');
+        const teamBResult = match.teamBGoals > match.teamAGoals ? 'W' : (match.teamBGoals === match.teamAGoals ? 'D' : 'L');
+        
+        match.performances.forEach(perf => {
+            const player = players.find(p => p.id === perf.playerId);
+            const playerName = player ? player.name : perf.playerId;
+            
+            if (!playerStats[playerName]) {
+                playerStats[playerName] = { 
+                    name: playerName, 
+                    id: perf.playerId,
+                    M: 0, W: 0, D: 0, L: 0, GF: 0, GA: 0, GD: 0, 
+                    PTS: 0, MVP: 0, DONKEY: 0 
+                };
+            }
+            
+            const stats = playerStats[playerName];
+            stats.M++;
+            stats.GF += perf.goals || 0;
+            
+            // MVP sayısı - macin_adami alanından kontrol
+            if (match.macin_adami === perf.playerId) {
+                stats.MVP++;
+            }
+            
+            // Eşşek sayısı - esek_adam alanından kontrol
+            if (match.esek_adam === perf.playerId) {
+                stats.DONKEY++;
+            }
+            
+            // Takım sonucuna göre puan
+            if (perf.team === 'A') {
+                if (teamAResult === 'W') { stats.W++; stats.PTS += 3; }
+                else if (teamAResult === 'D') { stats.D++; stats.PTS += 1; }
+                else { stats.L++; }
+                stats.GA += match.teamBGoals;
+            } else {
+                if (teamBResult === 'W') { stats.W++; stats.PTS += 3; }
+                else if (teamBResult === 'D') { stats.D++; stats.PTS += 1; }
+                else { stats.L++; }
+                stats.GA += match.teamAGoals;
+            }
+        });
+    });
+
+    // Gol farkı ve sıralama
+    Object.values(playerStats).forEach(stats => {
+        stats.GD = stats.GF - stats.GA;
+    });
+
+    const sortedPlayers = Object.values(playerStats).sort((a, b) => {
+        if (b.PTS !== a.PTS) return b.PTS - a.PTS;
+        if (b.GD !== a.GD) return b.GD - a.GD;
+        return b.GF - a.GF;
+    });
+
+    sortedPlayers.forEach((player, index) => {
+        player.P = index + 1;
+    });
+
+    return sortedPlayers;
+}
+
+// Sezon değiştirme fonksiyonu (Puan Durumu)
+function changeStandingsSeason(season) {
+    currentStandingsSeason = season;
+    
+    // Buton aktiflik durumunu güncelle
+    document.querySelectorAll('.standings-season-selector .season-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`.standings-season-selector [data-season="${season}"]`)?.classList.add('active');
+    
+    // Sezon bilgilerini güncelle
+    const seasonTitle = document.getElementById('current-season-title');
+    const seasonEndInfo = document.getElementById('season-end-info');
+    const championBanner = document.getElementById('champion-banner');
+    
+    if (season === 1) {
+        if (seasonTitle) seasonTitle.textContent = 'Sezon 1 (Tamamlandı)';
+        if (seasonEndInfo) seasonEndInfo.textContent = '22.10.2025 - 18.12.2025';
+        if (championBanner) championBanner.style.display = 'block';
+    } else {
+        if (seasonTitle) seasonTitle.textContent = 'Sezon 2';
+        if (seasonEndInfo) seasonEndInfo.textContent = 'Sezon 2 Mart 2026\'da bitecektir';
+        if (championBanner) championBanner.style.display = 'block';
+    }
+    
+    // Tabloyu güncelle
+    renderSeasonScoreboard(season);
+}
+
+// Sezon bazlı puan durumu tablosu
+function renderSeasonScoreboard(season) {
+    const scoreboardBody = document.getElementById('player-scoreboard')?.querySelector('tbody');
+    if (!scoreboardBody) return;
+
+    const sortedPlayers = calculateSeasonPlayerStats(season);
+    scoreboardBody.innerHTML = '';
+
+    sortedPlayers.forEach((player, index) => {
+        const playerId = player.id || player.name.toLowerCase().replace(/\s+/g, '_');
+        const playerPower = calculatePlayerPowerGlobal(playerId);
+        const powerClass = getPowerClass(playerPower);
+        
+        // Şampiyon kontrolü (sadece 1. sezon için)
+        const isChampion = season === 1 && playerId === SEASON1_CHAMPION;
+        
+        // Rank class'ını belirle
+        let rankClass = '';
+        if (index === 0) rankClass = 'rank-1';
+        else if (index === 1) rankClass = 'rank-2';
+        else if (index === 2) rankClass = 'rank-3';
+        
+        // Şampiyon için extra class
+        if (isChampion) rankClass += ' season-champion';
+        
+        const championBadge = isChampion ? '<span class="champion-badge">🏆</span>' : '';
+        
+        const row = `
+            <tr class="${rankClass}">
+                <td>${player.P}</td>
+                <td class="player-name-cell">
+                    <img src="img/oyuncular/${playerId}.jpg" alt="${player.name}" class="player-avatar" onerror="this.src='img/oyuncular/default.svg'">
+                    <span class="player-name">
+                        <a href="oyuncu-profili.html?id=${playerId}" class="player-link">${player.name}</a>
+                        ${championBadge}
+                    </span>
+                </td>
+                <td class="power-cell ${powerClass}">
+                    <strong>${playerPower}</strong>
+                </td>
+                <td>${player.M}</td>
+                <td>${player.W}</td>
+                <td>${player.D}</td>
+                <td>${player.L}</td>
+                <td>${player.GF}</td>
+                <td class="avg-goals-cell">${player.M > 0 ? (player.GF / player.M).toFixed(1) : '0.0'}</td>
+                <td class="mvp-cell">${player.MVP}</td>
+                <td class="donkey-cell">${player.DONKEY}</td>
+                <td class="points-cell"><strong>${player.PTS}</strong></td>
+            </tr>
+        `;
+        scoreboardBody.insertAdjacentHTML('beforeend', row);
+    });
+}
+
+// Puan durumu sezon butonlarını başlat
+function initStandingsSeasonButtons() {
+    const season1Btn = document.getElementById('standings-season1-btn');
+    const season2Btn = document.getElementById('standings-season2-btn');
+    
+    if (season1Btn) {
+        season1Btn.addEventListener('click', () => changeStandingsSeason(1));
+    }
+    if (season2Btn) {
+        season2Btn.addEventListener('click', () => changeStandingsSeason(2));
+    }
+}
+
+// Export
+window.changeStandingsSeason = changeStandingsSeason;
+window.renderSeasonScoreboard = renderSeasonScoreboard;
+window.initStandingsSeasonButtons = initStandingsSeasonButtons;

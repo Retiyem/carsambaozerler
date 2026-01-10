@@ -150,6 +150,17 @@
             <!-- Son Maçlar Tablosu -->
             <div class="recent-matches" id="recent-matches-section" style="display: none;">
                 <h4 class="matches-title">📋 Son Maçlar</h4>
+                
+                <!-- Sezon Seçici Butonları -->
+                <div class="season-selector profile-season-selector">
+                    <button id="profile-season1-btn" class="season-btn" data-season="1">
+                        <span class="season-icon">🏆</span> 1. Sezon
+                    </button>
+                    <button id="profile-season2-btn" class="season-btn active" data-season="2">
+                        <span class="season-icon">⚽</span> 2. Sezon
+                    </button>
+                </div>
+                
                 <div class="matches-table-container">
                     <table class="recent-matches-table">
                         <thead>
@@ -184,6 +195,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     
     <!-- Veri dosyaları -->
+    <script src="js/Sezon1.js"></script>
     <script src="js/data.js"></script>
     <script src="js/enhanced-data-simple.js"></script>
     <script src="js/script.js"></script>
