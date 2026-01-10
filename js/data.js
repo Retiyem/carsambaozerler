@@ -78,7 +78,7 @@ const matches = [
             { playerId: 'furkan_yilmaz', team: 'B', goals: 0 },
             { playerId: 'yakup_sunay', team: 'B', goals: 1 },
             { playerId: 'furkan_sevimli', team: 'B', goals: 0 },
-            { playerId: 'eren_yilmaz', team: 'B', goals: 2 },
+            { playerId: 'eren_yilmaz', team: 'B', goals: 2, weeklyMVP: true },
             { playerId: 'fatih_atalay', team: 'B', goals: 2 },
         ]
     },
