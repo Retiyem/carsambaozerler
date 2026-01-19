@@ -741,7 +741,7 @@ function calculatePlayerGoalStats(playerId) {
     let mvpCount = 0;
     
     // Tüm maçları birleştir (hem güncel sezon hem eski sezon)
-    const allMatches = [...(previousSeasonMatches || []), ...matches];
+    const allMatches = [...(typeof season1Matches !== 'undefined' ? season1Matches : []), ...matches];
     
     allMatches.forEach(match => {
         const performance = match.performances.find(p => p.playerId === playerId);
@@ -776,7 +776,7 @@ function calculatePerformanceVsOpponents(playerId, opponentIds) {
     let matchesAgainstOpponents = 0;
     
     // Tüm maçları birleştir (hem güncel sezon hem eski sezon)
-    const allMatches = [...(previousSeasonMatches || []), ...matches];
+    const allMatches = [...(typeof season1Matches !== 'undefined' ? season1Matches : []), ...matches];
     
     allMatches.forEach(match => {
         const playerPerf = match.performances.find(p => p.playerId === playerId);
@@ -820,7 +820,7 @@ function calculatePerformanceWithTeammates(playerId, teammateIds) {
     let matchesWithTeammates = 0;
     
     // Tüm maçları birleştir (hem güncel sezon hem eski sezon)
-    const allMatches = [...(previousSeasonMatches || []), ...matches];
+    const allMatches = [...(typeof season1Matches !== 'undefined' ? season1Matches : []), ...matches];
     
     allMatches.forEach(match => {
         const playerPerf = match.performances.find(p => p.playerId === playerId);
@@ -976,7 +976,7 @@ function displayScorePrediction() {
     if (!container) return;
     
     // Toplam maç sayısını hesapla (hem eski sezon hem yeni sezon)
-    const totalMatchData = (previousSeasonMatches?.length || 0) + (matches?.length || 0);
+    const totalMatchData = (typeof season1Matches !== 'undefined' ? season1Matches.length : 0) + (matches?.length || 0);
     
     // Maç verisi yoksa
     if (totalMatchData === 0) {

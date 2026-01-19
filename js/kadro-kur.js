@@ -765,7 +765,7 @@ function displayKadroScorePrediction(teamA, teamB, teamAPower, teamBPower) {
     if (!container) return;
     
     // Toplam maç sayısını hesapla (hem eski sezon hem yeni sezon)
-    const totalMatchData = (typeof previousSeasonMatches !== 'undefined' ? previousSeasonMatches.length : 0) + 
+    const totalMatchData = (typeof season1Matches !== 'undefined' ? season1Matches.length : 0) + 
                           (typeof matches !== 'undefined' ? matches.length : 0);
     
     // Maç verisi yoksa basit tahmin
@@ -960,7 +960,7 @@ function calculateKadroPlayerGoalStats(playerId) {
     let mvpCount = 0;
     
     // Tüm maçları birleştir (hem güncel sezon hem eski sezon)
-    const allMatches = [...(typeof previousSeasonMatches !== 'undefined' ? previousSeasonMatches : []), 
+    const allMatches = [...(typeof season1Matches !== 'undefined' ? season1Matches : []), 
                         ...(typeof matches !== 'undefined' ? matches : [])];
     
     allMatches.forEach(match => {
