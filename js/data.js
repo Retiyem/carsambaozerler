@@ -115,8 +115,8 @@ const matches = [
                {
         id: 3,
         date: '18.01.2026',
-        teamAGoals: 20,
-        teamBGoals: 13,
+        teamAGoals: 13,
+        teamBGoals: 20,
         macin_adami: 'can_atilgan',
         macin_adami_aciklama: 'Muhtesem bir performans..',
         esek_adam: 'furkan_sevimli',
@@ -170,7 +170,7 @@ const previousPowerScores = {
     'talha_bulbul': 80,          // (89+70+70+70+100)/5 = 79.8 → 80
     'tayyip_erdogan_yilmaz': 85, // (82+86+86+86+84)/5 = 84.8 → 85
     'firatcan_solmaz': 84,       // (81+82+86+85+88)/5 = 84.4 → 84
-    'can_atilgan': 95,           // (95+93+97+94+98)/5 = 95.4 → 95
+    'can_atilgan': 94,           // (95+93+97+94+98)/5 = 95.4 → 95
     'yakup_sunay': 82,           // (80+76+80+87+87)/5 = 82
     'eren_yilmaz': 84,           // (88+87+84+84+80)/5 = 84.6 → 85
     'huseyincan_yuksekdag': 90,  // (85+80+90+94+99)/5 = 89.6 → 90
