@@ -2,6 +2,7 @@
 const players = [
     { id: 'onur_mustafa', name: 'Onur Mustafa KÖSE', mevki: 'Defans', fizik: 96, bitiricilik: 93, teknik: 95, oyunOkuma: 96, dayaniklilik: 88 },
     { id: 'ensar_bulbul', name: 'Ensar BÜLBÜL', mevki: 'Defans', fizik: 82, bitiricilik: 74, teknik: 80, oyunOkuma: 78, dayaniklilik: 91 },
+    { id: 'enes_gundogdu', name: 'Enes GÜNDOĞDU', mevki: 'Forvet', fizik: 94, bitiricilik: 95, teknik: 96, oyunOkuma: 93, dayaniklilik: 87 },
     { id: 'ahmet_sadikoglu', name: 'Ahmet SADIKOĞLU', mevki: 'Forvet', fizik: 84, bitiricilik: 89, teknik: 82, oyunOkuma: 82, dayaniklilik: 81 },
     { id: 'burak_kocabey', name: 'Burak KOCABEY', mevki: 'Forvet', fizik: 74, bitiricilik: 94, teknik: 96, oyunOkuma: 93, dayaniklilik: 91 },
     { id: 'furkan_demiral', name: 'Furkan DEMİRAL', mevki: 'Defans', fizik: 73, bitiricilik: 82, teknik: 79, oyunOkuma: 80, dayaniklilik: 74 },
@@ -96,14 +97,14 @@ const matches = [
             { playerId: 'seyfeddin_bulbul', team: 'A', goals: 1 },
             { playerId: 'huseyincan_yuksekdag', team: 'A', goals: 0 },
             { playerId: 'ömer_erdal', team: 'A', goals: 1 },
-            { playerId: 'furkan_sevimli', team: 'B', goals: 0 },
-            { playerId: 'ensar_bulbul', team: 'B', goals: 0 },
-            { playerId: 'furkan_yilmaz', team: 'B', goals: 0 },
+            { playerId: 'furkan_sevimli', team: 'A', goals: 0 },
+            { playerId: 'ensar_bulbul', team: 'A', goals: 0 },
+            { playerId: 'furkan_yilmaz', team: 'A', goals: 0 },
             
 
-            { playerId: 'muratcan_solmaz', team: 'A', goals: 0 },
-            { playerId: 'firatcan_solmaz', team: 'A', goals: 1 },
-            { playerId: 'emre_erdal', team: 'A', goals: 1 },
+            { playerId: 'muratcan_solmaz', team: 'B', goals: 0 },
+            { playerId: 'firatcan_solmaz', team: 'B', goals: 1 },
+            { playerId: 'emre_erdal', team: 'B', goals: 1 },
             { playerId: 'tayyip_erdogan_yilmaz', team: 'B', goals: 3 },
             { playerId: 'can_atilgan', team: 'B', goals: 2 },
             { playerId: 'ibrahim_erdogdu', team: 'B', goals: 0 },
@@ -131,13 +132,39 @@ const matches = [
             { playerId: 'emre_erdal', team: 'A', goals: 0 },
 
             
-            { playerId: 'ensar_bulbul', team: 'A', goals: 2 },
-            { playerId: 'ömer_erdal', team: 'A', goals: 4 },
+            { playerId: 'ensar_bulbul', team: 'B', goals: 2 },
+            { playerId: 'ömer_erdal', team: 'B', goals: 4 },
             { playerId: 'can_atilgan', team: 'B', goals: 5 },
-            { playerId: 'huseyincan_yuksekdag', team: 'A', goals: 0 },
+            { playerId: 'huseyincan_yuksekdag', team: 'B', goals: 0 },
             { playerId: 'fatih_atalay', team: 'B', goals: 2 },
             { playerId: 'furkan_yilmaz', team: 'B', goals: 6 },
             { playerId: 'yakup_sunay', team: 'B', goals: 1 },
+        ]
+    },
+                   {
+        id: 4,
+        date: '29.01.2026',
+        teamAGoals: 11,
+        teamBGoals: 10,
+        macin_adami: 'enes_gundogdu',
+        macin_adami_aciklama: 'Bir frikik atıyor ki sormayın gitsin...',
+        esek_adam: 'tayyip_erdogan_yilmaz',
+        esek_adam_aciklama: 'bir gün o da mvp olacak...',
+        performances: [
+            { playerId: 'onur_mustafa', team: 'A', goals: 3 },
+            { playerId: 'enes_gundogdu', team: 'A', goals: 4 },
+            { playerId: 'furkan_sevimli', team: 'A', goals: 1 },
+            { playerId: 'huseyincan_yuksekdag', team: 'A', goals: -1 },
+            { playerId: 'emre_erdal', team: 'A', goals: 1 },
+            { playerId: 'ömer_erdal', team: 'A', goals: 2 },
+
+            
+            { playerId: 'tayyip_erdogan_yilmaz', team: 'B', goals: 2 },
+            { playerId: 'burak_kocabey', team: 'B', goals: 2 },
+            { playerId: 'can_atilgan', team: 'B', goals: 5 },
+            { playerId: 'ibrahim_erdogdu', team: 'B', goals: 0 },
+            { playerId: 'furkan_yilmaz', team: 'B', goals: 0 },
+            { playerId: 'ozan_necipoglu', team: 'B', goals: 0 },
         ]
     },
 ];
