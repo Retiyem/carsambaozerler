@@ -8,7 +8,7 @@ const players = [
     { id: 'furkan_demiral', name: 'Furkan DEMİRAL', mevki: 'Defans', fizik: 73, bitiricilik: 82, teknik: 79, oyunOkuma: 80, dayaniklilik: 74 },
     { id: 'emre_erdal', name: 'Emre ERDAL', mevki: 'Defans', fizik: 86, bitiricilik: 76, teknik: 83, oyunOkuma: 83, dayaniklilik: 84 },
     { id: 'enes_altan', name: 'Enes Altan ARICI', mevki: 'Defans', fizik: 86, bitiricilik: 76, teknik: 76, oyunOkuma: 75, dayaniklilik: 78 },
-    { id: 'ömer_erdal', name: 'Ömer ERDAL', mevki: 'Forvet', fizik: 81, bitiricilik: 83, teknik: 84, oyunOkuma: 82, dayaniklilik: 79 },
+    { id: 'ömer_erdal', name: 'Ömer ERDAL', mevki: 'Forvet', fizik: 81, bitiricilik: 86, teknik: 84, oyunOkuma: 82, dayaniklilik: 79 },
     { id: 'furkan_sevimli', name: 'Furkan SEVİMLİ', mevki: 'Orta Saha', fizik: 79, bitiricilik: 81, teknik: 85, oyunOkuma: 87, dayaniklilik: 84 },
     { id: 'misafir_1', name: 'Misafir 1', mevki: 'Forvet', fizik: 50, bitiricilik: 50, teknik: 50, oyunOkuma: 50, dayaniklilik: 50 },
     { id: 'misafir_2', name: 'Misafir 2', mevki: 'Orta Saha', fizik: 50, bitiricilik: 50, teknik: 50, oyunOkuma: 50, dayaniklilik: 50 },
@@ -165,6 +165,33 @@ const matches = [
             { playerId: 'ibrahim_erdogdu', team: 'B', goals: 0 },
             { playerId: 'furkan_yilmaz', team: 'B', goals: 0 },
             { playerId: 'ozan_necipoglu', team: 'B', goals: 0 },
+        ]
+    },                   {
+        id: 5,
+        date: '29.01.2026',
+        teamAGoals: 12,
+        teamBGoals: 10,
+        macin_adami: 'can_atilgan',
+        macin_adami_aciklama: 'Tam bir savascı ruhuyla oynadı, her pozisyona girdi ve takımını sırtladı.',
+        esek_adam: 'furkan_demiral',
+        esek_adam_aciklama: 'Kendine oy vermis essek ahahaha...',
+        performances: [
+            { playerId: 'can_atilgan', team: 'A', goals: 6 },
+            { playerId: 'yakup_sunay', team: 'A', goals: 3 },
+            { playerId: 'furkan_demiral', team: 'A', goals: 1 },
+            { playerId: 'huseyincan_yuksekdag', team: 'A', goals: 0 },
+            { playerId: 'firatcan_solmaz', team: 'A', goals: 0 },
+            { playerId: 'furkan_yilmaz', team: 'A', goals: 2 },
+            { playerId: 'ahmet_sadikoglu', team: 'A', goals: 0 },
+
+            
+            { playerId: 'muratcan_solmaz', team: 'B', goals: 0 },
+            { playerId: 'enes_gundogdu', team: 'B', goals: 4 },
+            { playerId: 'emre_erdal', team: 'B', goals: 0 },
+            { playerId: 'ibrahim_erdogdu', team: 'B', goals: 0 },
+            { playerId: 'omer_erdal', team: 'B', goals: 4 },
+            { playerId: 'suleyman_yildirim', team: 'B', goals: 2 },
+            { playerId: 'kadir_yoney', team: 'B', goals: 0 },
         ]
     },
 ];
